@@ -5,23 +5,17 @@ EGASUB is a command line tool assists ICGC members submitting their NGS sequence
 
 ##Installation
 
-### install pipsi
 ```
+# install pipsi
 curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
-```
 
-### clone the source code
-```
+# clone the source code
 git clone git@github.com:junjun-zhang/egasub.git
-```
 
-### install egasub
-```
+# install egasub
 cd egasub
 pipsi install
-```
 
-### run egasub
-```
+# run egasub
 egasub
 ```
