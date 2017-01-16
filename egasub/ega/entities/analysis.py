@@ -16,7 +16,7 @@ Analysis
   "analysisTypeId": "", → /enums/analysis_types
   "files": [
     {
-    “fileId”: “”,
+    "fileId": "",
       "fileName": "",
       "checksum": "",
       "unencryptedChecksum": ""

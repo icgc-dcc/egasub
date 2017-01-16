@@ -13,6 +13,10 @@ def main(ctx, debug):
     ctx.obj['IS_TEST'] = False
     if ctx.obj['DEBUG']: click.echo('Debug is on.', err=True)
 
+    ctx.obj['CURRENT_DIR'] = os.getcwd()
+    ctx.obj['IS_TEST_PROJ'] = None
+    ctx.obj['WORKSPACE_PATH'] = utils.find_workspace_root(cwd=ctx.obj['CURRENT_DIR'])
+
 
 @main.command()
 @click.argument('source', type=click.Path(exists=True), nargs=-1)
