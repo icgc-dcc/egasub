@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/junjun-zhang/egasub.png)](https://travis-ci.org/junjun-zhang/egasub)
+
 #EGASUB - ICGC EGA Submission CLI
 
 EGASUB is a command line tool assists ICGC members submitting their NGS sequence data to EGA repository.
@@ -14,7 +16,7 @@ git clone git@github.com:junjun-zhang/egasub.git
 
 # install egasub
 cd egasub
-pipsi install
+pipsi install .
 
 # run egasub
 egasub
