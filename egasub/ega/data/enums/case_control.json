@@ -1,0 +1,41 @@
+{
+  "header" : {
+    "apiVersion" : "v1",
+    "code" : "200",
+    "service" : "submitterportal",
+    "developerMessage" : "",
+    "userMessage" : "OK",
+    "errorCode" : "1",
+    "docLink" : "https://ega.crg.eu",
+    "errorStack" : ""
+  },
+  "response" : {
+    "numTotalResults" : 4,
+    "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result" : [ {
+      "tag" : "0",
+      "value" : "case",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "1",
+      "value" : "control",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "2",
+      "value" : "both",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "3",
+      "value" : "NA",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    } ]
+  }
+}

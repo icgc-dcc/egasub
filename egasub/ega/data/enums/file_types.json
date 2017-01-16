@@ -1,0 +1,120 @@
+{
+  "header": {
+    "apiVersion": "v1",
+    "code": "200",
+    "service": "submitterportal",
+    "developerMessage": "",
+    "userMessage": "OK",
+    "errorCode": "1",
+    "docLink": "https://ega.crg.eu",
+    "errorStack": ""
+  },
+  "response": {
+    "numTotalResults": 9,
+    "resultType": "eu.crg.ega.microservice.dto.submitter.FileTypeData",
+    "result": [
+      {
+        "tag": "0",
+        "value": "BAM",
+        "csvColumnNames": [
+          "Sample alias",
+          "BAM File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": false
+      },
+      {
+        "tag": "1",
+        "value": "Complete Genomics",
+        "csvColumnNames": [
+          "Sample alias",
+          "File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": true
+      },
+      {
+        "tag": "2",
+        "value": "CRAM",
+        "csvColumnNames": [
+          "Sample alias",
+          "CRAM File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": false
+      },
+      {
+        "tag": "3",
+        "value": "Fasta",
+        "csvColumnNames": [
+          "Sample alias",
+          "Fasta File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": false
+      },
+      {
+        "tag": "4",
+        "value": "One Fastq file (Single)",
+        "csvColumnNames": [
+          "Sample alias",
+          "Fastq File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": false
+      },
+      {
+        "tag": "6",
+        "value": "PacBio HDF5",
+        "csvColumnNames": [
+          "Sample alias",
+          "PacBio HDF5 file",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": true
+      },
+      {
+        "tag": "7",
+        "value": "SFF",
+        "csvColumnNames": [
+          "Sample alias",
+          "SFF File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": false
+      },
+      {
+        "tag": "8",
+        "value": "SRF",
+        "csvColumnNames": [
+          "Sample alias",
+          "SRF File",
+          "Checksum",
+          "Unencrypted checksum"
+        ],
+        "directoryName": false
+      },
+      {
+        "tag": "5",
+        "value": "Two Fastq files (Paired)",
+        "csvColumnNames": [
+          "Sample alias",
+          "First Fastq File",
+          "First Checksum",
+          "First Unencrypted checksum",
+          "Second Fastq File",
+          "Second Checksum",
+          "Second Unencrypted checksum"
+        ],
+        "directoryName": false
+      }
+    ]
+  }
+}

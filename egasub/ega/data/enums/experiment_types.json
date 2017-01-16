@@ -1,0 +1,47 @@
+{
+  "header" : {
+    "apiVersion" : "v1",
+    "code" : "200",
+    "service" : "submitterportal",
+    "developerMessage" : "",
+    "userMessage" : "OK",
+    "errorCode" : "1",
+    "docLink" : "https://ega.crg.eu",
+    "errorStack" : ""
+  },
+  "response" : {
+    "numTotalResults" : 5,
+    "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result" : [ {
+      "tag" : "4",
+      "value" : "Curation",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "1",
+      "value" : "Exome sequencing",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "2",
+      "value" : "Genotyping by array",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "0",
+      "value" : "Whole genome sequencing",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "3",
+      "value" : "transcriptomics",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    } ]
+  }
+}

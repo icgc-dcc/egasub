@@ -1,0 +1,109 @@
+{
+  "header": {
+    "apiVersion": "v1",
+    "code": "200",
+    "service": "submitterportal",
+    "developerMessage": "",
+    "userMessage": "OK",
+    "errorCode": "1",
+    "docLink": "https://ega.crg.eu",
+    "errorStack": ""
+  },
+  "response": {
+    "numTotalResults": 13,
+    "resultType": "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result": [
+      {
+        "tag": "5",
+        "value": "Amplicon sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "11",
+        "value": "Chromatin accessibility profiling by high-throughput sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "1",
+        "value": "Exome sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "10",
+        "value": "Genomic variant calling",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "2",
+        "value": "Genotyping by array",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "12",
+        "value": "Histone modification profiling by high-throughput sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "6",
+        "value": "Methylation binding domain sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "7",
+        "value": "Methylation profiling by high-throughput sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "8",
+        "value": "Phenotype information",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "9",
+        "value": "Study summary information",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "4",
+        "value": "Transcriptome profiling by array",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "3",
+        "value": "Transcriptome profiling by high-throughput sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      },
+      {
+        "tag": "0",
+        "value": "Whole genome sequencing",
+        "label": null,
+        "unit": null,
+        "group": null
+      }
+    ]
+  }
+}
