@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/junjun-zhang/egasub.png)](https://travis-ci.org/junjun-zhang/egasub)
+[![Build Status](https://travis-ci.org/icgc-dcc/egasub.png)](https://travis-ci.org/icgc-dcc/egasub)
 
 #EGASUB - ICGC EGA Submission CLI
 
