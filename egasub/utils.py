@@ -15,10 +15,6 @@ import tarfile
 
 
 def initialize_app(ctx):
-    ctx.obj['CURRENT_DIR'] = os.getcwd()
-    ctx.obj['IS_TEST_PROJ'] = None
-    ctx.obj['WORKSPACE_PATH'] = find_workspace_root(cwd=ctx.obj['CURRENT_DIR'])
-
     if not ctx.obj['WORKSPACE_PATH']:
         click.echo('Error: not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.', err=True)
         ctx.abort()
