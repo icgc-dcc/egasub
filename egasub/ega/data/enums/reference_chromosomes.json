@@ -1,0 +1,2321 @@
+{
+  "header" : {
+    "apiVersion" : "v1",
+    "code" : "200",
+    "service" : "submitterportal",
+    "developerMessage" : "",
+    "userMessage" : "OK",
+    "errorCode" : "1",
+    "docLink" : "https://ega.crg.eu",
+    "errorStack" : ""
+  },
+  "response" : {
+    "numTotalResults" : 384,
+    "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result" : [ {
+      "tag" : "24",
+      "value" : "CM000663.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "25",
+      "value" : "CM000664.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "26",
+      "value" : "CM000665.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "27",
+      "value" : "CM000666.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "28",
+      "value" : "CM000667.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "29",
+      "value" : "CM000668.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "30",
+      "value" : "CM000669.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "31",
+      "value" : "CM000670.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "32",
+      "value" : "CM000671.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "33",
+      "value" : "CM000672.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "34",
+      "value" : "CM000673.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "35",
+      "value" : "CM000674.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "36",
+      "value" : "CM000675.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "37",
+      "value" : "CM000676.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "38",
+      "value" : "CM000677.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "39",
+      "value" : "CM000678.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "40",
+      "value" : "CM000679.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "41",
+      "value" : "CM000680.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "42",
+      "value" : "CM000681.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "43",
+      "value" : "CM000682.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "44",
+      "value" : "CM000683.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "45",
+      "value" : "CM000684.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "46",
+      "value" : "CM000685.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "47",
+      "value" : "CM000686.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "0"
+    }, {
+      "tag" : "0",
+      "value" : "CM000663.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "1",
+      "value" : "CM000664.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "2",
+      "value" : "CM000665.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "3",
+      "value" : "CM000666.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "4",
+      "value" : "CM000667.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "5",
+      "value" : "CM000668.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "6",
+      "value" : "CM000669.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "7",
+      "value" : "CM000670.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "8",
+      "value" : "CM000671.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "9",
+      "value" : "CM000672.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "10",
+      "value" : "CM000673.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "11",
+      "value" : "CM000674.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "12",
+      "value" : "CM000675.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "13",
+      "value" : "CM000676.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "14",
+      "value" : "CM000677.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "15",
+      "value" : "CM000678.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "16",
+      "value" : "CM000679.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "17",
+      "value" : "CM000680.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "18",
+      "value" : "CM000681.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "19",
+      "value" : "CM000682.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "20",
+      "value" : "CM000683.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "21",
+      "value" : "CM000684.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "22",
+      "value" : "CM000685.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "23",
+      "value" : "CM000686.2",
+      "label" : null,
+      "unit" : null,
+      "group" : "1"
+    }, {
+      "tag" : "240",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "241",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "242",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "243",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "244",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "245",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "246",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "247",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "248",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "249",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "250",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "251",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "252",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "253",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "254",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "255",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "256",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "257",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "258",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "259",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "260",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "261",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "262",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "263",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "10"
+    }, {
+      "tag" : "264",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "265",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "266",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "267",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "268",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "269",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "270",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "271",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "272",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "273",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "274",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "275",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "276",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "277",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "278",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "279",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "280",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "281",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "282",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "283",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "284",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "285",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "286",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "287",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "11"
+    }, {
+      "tag" : "288",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "289",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "290",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "291",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "292",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "293",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "294",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "295",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "296",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "297",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "298",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "299",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "300",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "301",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "302",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "303",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "304",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "305",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "306",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "307",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "308",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "309",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "310",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "311",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "12"
+    }, {
+      "tag" : "312",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "313",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "314",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "315",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "316",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "317",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "318",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "319",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "320",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "321",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "322",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "323",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "324",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "325",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "326",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "327",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "328",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "329",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "330",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "331",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "332",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "333",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "334",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "335",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "13"
+    }, {
+      "tag" : "336",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "337",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "338",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "339",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "340",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "341",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "342",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "343",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "344",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "345",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "346",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "347",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "348",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "349",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "350",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "351",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "352",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "353",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "354",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "355",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "356",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "357",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "358",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "359",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "14"
+    }, {
+      "tag" : "360",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "361",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "362",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "363",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "364",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "365",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "366",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "367",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "368",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "369",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "370",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "371",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "372",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "373",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "374",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "375",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "376",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "377",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "378",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "379",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "380",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "381",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "382",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "383",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "15"
+    }, {
+      "tag" : "48",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "49",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "50",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "51",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "52",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "53",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "54",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "55",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "56",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "57",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "58",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "59",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "60",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "61",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "62",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "63",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "64",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "65",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "66",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "67",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "68",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "69",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "70",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "71",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "2"
+    }, {
+      "tag" : "72",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "73",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "74",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "75",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "76",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "77",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "78",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "79",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "80",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "81",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "82",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "83",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "84",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "85",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "86",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "87",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "88",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "89",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "90",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "91",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "92",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "93",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "94",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "95",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "3"
+    }, {
+      "tag" : "96",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "97",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "98",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "99",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "100",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "101",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "102",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "103",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "104",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "105",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "106",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "107",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "108",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "109",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "110",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "111",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "112",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "113",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "114",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "115",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "116",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "117",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "118",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "119",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "4"
+    }, {
+      "tag" : "120",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "121",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "122",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "123",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "124",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "125",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "126",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "127",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "128",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "129",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "130",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "131",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "132",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "133",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "134",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "135",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "136",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "137",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "138",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "139",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "140",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "141",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "142",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "143",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "5"
+    }, {
+      "tag" : "144",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "145",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "146",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "147",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "148",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "149",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "150",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "151",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "152",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "153",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "154",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "155",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "156",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "157",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "158",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "159",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "160",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "161",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "162",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "163",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "164",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "165",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "166",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "167",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "6"
+    }, {
+      "tag" : "168",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "169",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "170",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "171",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "172",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "173",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "174",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "175",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "176",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "177",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "178",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "179",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "180",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "181",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "182",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "183",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "184",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "185",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "186",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "187",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "188",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "189",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "190",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "191",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "7"
+    }, {
+      "tag" : "192",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "193",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "194",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "195",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "196",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "197",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "198",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "199",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "200",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "201",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "202",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "203",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "204",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "205",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "206",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "207",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "208",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "209",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "210",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "211",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "212",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "213",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "214",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "215",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "8"
+    }, {
+      "tag" : "216",
+      "value" : "CM000663.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "217",
+      "value" : "CM000664.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "218",
+      "value" : "CM000665.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "219",
+      "value" : "CM000666.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "220",
+      "value" : "CM000667.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "221",
+      "value" : "CM000668.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "222",
+      "value" : "CM000669.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "223",
+      "value" : "CM000670.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "224",
+      "value" : "CM000671.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "225",
+      "value" : "CM000672.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "226",
+      "value" : "CM000673.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "227",
+      "value" : "CM000674.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "228",
+      "value" : "CM000675.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "229",
+      "value" : "CM000676.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "230",
+      "value" : "CM000677.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "231",
+      "value" : "CM000678.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "232",
+      "value" : "CM000679.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "233",
+      "value" : "CM000680.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "234",
+      "value" : "CM000681.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "235",
+      "value" : "CM000682.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "236",
+      "value" : "CM000683.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "237",
+      "value" : "CM000684.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "238",
+      "value" : "CM000685.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    }, {
+      "tag" : "239",
+      "value" : "CM000686.1",
+      "label" : null,
+      "unit" : null,
+      "group" : "9"
+    } ]
+  }
+}

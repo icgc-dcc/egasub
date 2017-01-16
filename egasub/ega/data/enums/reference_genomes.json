@@ -1,0 +1,113 @@
+{
+  "header" : {
+    "apiVersion" : "v1",
+    "code" : "200",
+    "service" : "submitterportal",
+    "developerMessage" : "",
+    "userMessage" : "OK",
+    "errorCode" : "1",
+    "docLink" : "https://ega.crg.eu",
+    "errorStack" : ""
+  },
+  "response" : {
+    "numTotalResults" : 16,
+    "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result" : [ {
+      "tag" : "15",
+      "value" : "GRCh37",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "14",
+      "value" : "GRCh37.p1",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "5",
+      "value" : "GRCh37.p10",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "4",
+      "value" : "GRCh37.p11",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "3",
+      "value" : "GRCh37.p12",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "2",
+      "value" : "GRCh37.p13",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "13",
+      "value" : "GRCh37.p2",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "12",
+      "value" : "GRCh37.p3",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "11",
+      "value" : "GRCh37.p4",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "10",
+      "value" : "GRCh37.p5",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "9",
+      "value" : "GRCh37.p6",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "8",
+      "value" : "GRCh37.p7",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "7",
+      "value" : "GRCh37.p8",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "6",
+      "value" : "GRCh37.p9",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "1",
+      "value" : "GRCh38",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "0",
+      "value" : "GRCh38.p1",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    } ]
+  }
+}

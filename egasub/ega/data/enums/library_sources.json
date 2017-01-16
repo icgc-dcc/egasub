@@ -1,0 +1,59 @@
+{
+  "header" : {
+    "apiVersion" : "v1",
+    "code" : "200",
+    "service" : "submitterportal",
+    "developerMessage" : "",
+    "userMessage" : "OK",
+    "errorCode" : "1",
+    "docLink" : "https://ega.crg.eu",
+    "errorStack" : ""
+  },
+  "response" : {
+    "numTotalResults" : 7,
+    "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result" : [ {
+      "tag" : "0",
+      "value" : "GENOMIC",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "2",
+      "value" : "METAGENOMIC",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "3",
+      "value" : "METATRANSCRIPTOMIC",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "6",
+      "value" : "OTHER",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "4",
+      "value" : "SYNTHETIC",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "1",
+      "value" : "TRANSCRIPTOMIC",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "5",
+      "value" : "VIRAL RNA",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    } ]
+  }
+}

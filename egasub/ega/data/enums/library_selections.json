@@ -10,185 +10,161 @@
     "errorStack" : ""
   },
   "response" : {
-    "numTotalResults" : 30,
+    "numTotalResults" : 26,
     "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
     "result" : [ {
-      "tag" : "9",
-      "value" : "AMPLICON",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "15",
-      "value" : "Bisulfite-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "7",
-      "value" : "CLONE",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "10",
-      "value" : "CLONEEND",
+      "tag" : "16",
+      "value" : "5-methylcytidine antibody",
       "label" : null,
       "unit" : null,
       "group" : null
     }, {
       "tag" : "18",
-      "value" : "CTS",
+      "value" : "CAGE",
       "label" : null,
       "unit" : null,
       "group" : null
     }, {
-      "tag" : "27",
-      "value" : "ChIA-PET",
+      "tag" : "10",
+      "value" : "ChIP",
       "label" : null,
       "unit" : null,
       "group" : null
     }, {
       "tag" : "12",
-      "value" : "ChIP-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "14",
-      "value" : "DNase-Hypersensitivity",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "16",
-      "value" : "EST",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "24",
-      "value" : "FAIRE-seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "11",
-      "value" : "FINISHING",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "17",
-      "value" : "FL-cDNA",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "21",
-      "value" : "MBD-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "13",
-      "value" : "MNase-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "19",
-      "value" : "MRE-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "20",
-      "value" : "MeDIP-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "29",
-      "value" : "OTHER",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "8",
-      "value" : "POOLCLONE",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "28",
-      "value" : "RAD-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "26",
-      "value" : "RIP-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "3",
-      "value" : "RNA-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "25",
-      "value" : "SELEX",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "22",
-      "value" : "Tn-Seq",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "23",
-      "value" : "VALIDATION",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "6",
-      "value" : "WCS",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "1",
-      "value" : "WGA",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "0",
-      "value" : "WGS",
-      "label" : null,
-      "unit" : null,
-      "group" : null
-    }, {
-      "tag" : "2",
-      "value" : "WXS",
+      "value" : "DNase",
       "label" : null,
       "unit" : null,
       "group" : null
     }, {
       "tag" : "4",
-      "value" : "miRNA-Seq",
+      "value" : "HMPR",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "13",
+      "value" : "Hybrid Selection",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "23",
+      "value" : "Inverse rRNA selection",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "17",
+      "value" : "MBD2 protein methyl-CpG binding domain",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "20",
+      "value" : "MDA",
       "label" : null,
       "unit" : null,
       "group" : null
     }, {
       "tag" : "5",
-      "value" : "ncRNA-Seq",
+      "value" : "MF",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "11",
+      "value" : "MNase",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "8",
+      "value" : "MSLL",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "22",
+      "value" : "Oligo-dT",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "1",
+      "value" : "PCR",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "19",
+      "value" : "RACE",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "0",
+      "value" : "RANDOM",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "2",
+      "value" : "RANDOM PCR",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "3",
+      "value" : "RT-PCR",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "14",
+      "value" : "Reduced Representation",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "15",
+      "value" : "Restriction Digest",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "9",
+      "value" : "cDNA",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "24",
+      "value" : "other",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "21",
+      "value" : "padlock probes capture method",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "6",
+      "value" : "repeat fractionation",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "7",
+      "value" : "size fractionation",
+      "label" : null,
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "25",
+      "value" : "unspecified",
       "label" : null,
       "unit" : null,
       "group" : null

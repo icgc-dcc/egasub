@@ -1,0 +1,317 @@
+{
+  "header" : {
+    "apiVersion" : "v1",
+    "code" : "200",
+    "service" : "submitterportal",
+    "developerMessage" : "",
+    "userMessage" : "OK",
+    "errorCode" : "1",
+    "docLink" : "https://ega.crg.eu",
+    "errorStack" : ""
+  },
+  "response" : {
+    "numTotalResults" : 50,
+    "resultType" : "eu.crg.ega.microservice.dto.submitter.AttributeData",
+    "result" : [ {
+      "tag" : "26",
+      "value" : "AB 5500 Genetic Analyzer",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "27",
+      "value" : "AB 5500xl Genetic Analyzer",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "22",
+      "value" : "AB SOLiD 3 Plus System",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "23",
+      "value" : "AB SOLiD 4 System",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "24",
+      "value" : "AB SOLiD 4hq System",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "25",
+      "value" : "AB SOLiD PI System",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "19",
+      "value" : "AB SOLiD System",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "20",
+      "value" : "AB SOLiD System 2.0",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "21",
+      "value" : "AB SOLiD System 3.0",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "28",
+      "value" : "unspecified",
+      "label" : "ABI SOLID Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "6",
+      "value" : "AB 310 Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "5",
+      "value" : "AB 3130 Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "4",
+      "value" : "AB 3130xL Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "3",
+      "value" : "AB 3500 Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "2",
+      "value" : "AB 3500xL Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "1",
+      "value" : "AB 3730 Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "0",
+      "value" : "AB 3730xL Genetic Analyzer",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "7",
+      "value" : "unspecified",
+      "label" : "CAPILLARY Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "17",
+      "value" : "Complete Genomics",
+      "label" : "COMPLETE GENOMICS Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "18",
+      "value" : "unspecified",
+      "label" : "COMPLETE GENOMICS Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "29",
+      "value" : "Helicos HeliScope",
+      "label" : "HELICOS Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "30",
+      "value" : "unspecified",
+      "label" : "HELICOS Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "40",
+      "value" : "HiSeq X Ten",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "31",
+      "value" : "Illumina Genome Analyzer",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "32",
+      "value" : "Illumina Genome Analyzer II",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "33",
+      "value" : "Illumina Genome Analyzer IIx",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "39",
+      "value" : "Illumina HiScanSQ",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "37",
+      "value" : "Illumina HiSeq 1000",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "36",
+      "value" : "Illumina HiSeq 1500",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "35",
+      "value" : "Illumina HiSeq 2000",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "34",
+      "value" : "Illumina HiSeq 2500",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "38",
+      "value" : "Illumina MiSeq",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "41",
+      "value" : "NextSeq 500",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "42",
+      "value" : "unspecified",
+      "label" : "ILLUMINA Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "11",
+      "value" : "Ion Torrent PGM",
+      "label" : "ION TORRENT Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "12",
+      "value" : "Ion Torrent Proton",
+      "label" : "ION TORRENT Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "13",
+      "value" : "unspecified",
+      "label" : "ION TORRENT Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "43",
+      "value" : "454 GS",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "44",
+      "value" : "454 GS 20",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "45",
+      "value" : "454 GS FLX",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "47",
+      "value" : "454 GS FLX Titanium",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "46",
+      "value" : "454 GS FLX+",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "48",
+      "value" : "454 GS Junior",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "49",
+      "value" : "unspecified",
+      "label" : "LS454 Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "9",
+      "value" : "GridION",
+      "label" : "OXFORD NANOPORE Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "8",
+      "value" : "MinION",
+      "label" : "OXFORD NANOPORE Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "10",
+      "value" : "unspecified",
+      "label" : "OXFORD NANOPORE Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "14",
+      "value" : "PacBio RS",
+      "label" : "PACBIO SMRT Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "15",
+      "value" : "PacBio RS II",
+      "label" : "PACBIO SMRT Models",
+      "unit" : null,
+      "group" : null
+    }, {
+      "tag" : "16",
+      "value" : "unspecified",
+      "label" : "PACBIO SMRT Models",
+      "unit" : null,
+      "group" : null
+    } ]
+  }
+}
