@@ -1,5 +1,3 @@
-from test.inspect_fodder import Tit
-
 
 class Study(object):
     def __init__(self,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags):
@@ -19,7 +17,7 @@ class Study(object):
             'studyAbstract' : self.study_abstract,
             'ownTerm' : self.own_term,
             'pubMedIds' : self.pub_med_ids,
-            'customTags' : self.custom_tags
+            'customTags' : map(lambda tag: tag.to_dict(), self.custom_tags)
             }
         
     def to_xml(self):

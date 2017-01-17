@@ -1,6 +1,4 @@
 
-
-
 class Experiment(object):
     def __init__(self, title, instrument_model_id, library_source_id, library_selection_id,
                  library_strategy_id, design_description, library_name, library_construction_protocol,
@@ -24,7 +22,7 @@ class Experiment(object):
         return {
             'title' : self.title,
             'instrumentModelId' : self.instrument_model_id,
-            'librarySourceId' : self.instrument_source_id,
+            'librarySourceId' : self.library_source_id,
             'librarySelectionId' : self.library_selection_id,
             'libraryStrategyId' : self.library_strategy_id,
             'designDescription' :self.design_description,

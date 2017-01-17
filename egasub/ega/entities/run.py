@@ -12,7 +12,7 @@ class Run(object):
             'sampleId' : self.sample_id,
             'runFileTypeId' : self.run_file_type_id,
             'experimentId' : self.experiment_id,
-            'files' : self.files
+            'files' : map(lambda file: file.to_dict(), self.files)
             }
         
     def to_xml(self):

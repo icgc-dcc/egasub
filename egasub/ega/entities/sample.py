@@ -34,7 +34,7 @@ class Sample(object):
             'biosampleId' : self.biosample_id,
             'sampleAge' : self.sample_age,
             'sampleDetail' : self.sample_detail,
-            'attributes' : self.attributes
+            'attributes' : map(lambda attribute: attribute.to_dict(), attributes)
             }
         
     def to_xml(self):
