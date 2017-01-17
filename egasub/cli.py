@@ -1,6 +1,7 @@
 import os
 import click
 import utils
+from submission import init_workspace
 
 
 @click.group()
@@ -53,6 +54,8 @@ def init(ctx):
     if ctx.obj.get('WORKSPACE_PATH'):
         click.echo('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
+
+    init_workspace(ctx)
 
 
 if __name__ == '__main__':
