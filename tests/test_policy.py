@@ -1,6 +1,6 @@
 from egasub.ega.entities.policy import Policy
 
-policy = Policy(123,'Title of DAC','Text about the policy','http://www.example.com')
+policy = Policy(123,'Title of DAC','Text about the policy','http://www.example.com','an alias')
 
 def test_dac_id():
     assert policy.dac_id == 123
@@ -15,4 +15,7 @@ def test_url():
     assert policy.url == "http://www.example.com"
     
 def test_to_dict():
-    assert cmp({'dacId':123,'title':'Title of DAC','policyText':'Text about the policy','url':'http://www.example.com'}, policy.to_dict()) == 0
+    assert cmp({'dacId':123,'title':'Title of DAC','policyText':'Text about the policy','url':'http://www.example.com','alias':'an alias'}, policy.to_dict()) == 0
+    
+def test_alias():
+    assert 'an alias' == policy.alias

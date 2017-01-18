@@ -1,8 +1,8 @@
 from egasub.ega.entities.submission import Submission
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 
-subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11])
-submission = Submission('a title', 'a description', subset)
+subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11],'an alias')
+submission = Submission('a title', 'a description', subset,'an alias')
 
 def test_title():
     assert 'a title' == submission.title
@@ -18,5 +18,9 @@ def test_to_dict():
         {
             'title' : 'a title',
             'description':'a description',
-            'submissionSubset' : subset.to_dict()
+            'submissionSubset' : subset.to_dict(),
+            'alias' : 'an alias'
         }, submission.to_dict()) == 0
+        
+def test_alias():
+    assert 'an alias' == submission.alias
