@@ -18,8 +18,8 @@ class Dataset(object):
             'runsReferences' : self.runs_references,
             'analysisReferences' : self.analysis_references,
             'title' : self.title,
-            'datasetLinks' : self.dataset_links,
-            'attributes' : self.attributes
+            'datasetLinks' : map(lambda dataset_link: dataset_link.to_dict(), self.dataset_links),
+            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes)
         }
         
     def to_xml(self):

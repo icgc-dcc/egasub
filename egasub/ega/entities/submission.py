@@ -9,7 +9,7 @@ class Submission(object):
         return {
             'title' : self.title,
             'description' : self.description,
-            'submissionSubset' : self.submission_subset
+            'submissionSubset' : self.submission_subset.to_dict()
             }
         
     def to_xml(self):
