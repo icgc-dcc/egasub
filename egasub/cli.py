@@ -1,7 +1,8 @@
 import os
 import click
 import utils
-from submission import init_workspace
+from click import echo
+from submission import init_workspace, perform_submission
 
 
 @click.group()
@@ -25,10 +26,14 @@ def main(ctx, debug):
 def submit(ctx, source):
     utils.initialize_app(ctx)
     if not ctx.obj.get('WORKSPACE_PATH'):
-        click.echo('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
+        echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
-    click.echo(source)
+    if not source:
+        echo('Error: You must specify at least one submission directory.')
+        ctx.abort()
+
+    perform_submission(ctx.obj, source)
 
 
 @main.command()
@@ -40,7 +45,7 @@ def report(ctx, source):
         click.echo('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
-    click.echo(source)
+    echo(source)
 
 
 @main.command()
@@ -49,7 +54,6 @@ def init(ctx):
     """
     Run once to create a submission workspace.
     """
-    # To be implemented
 
     if ctx.obj.get('WORKSPACE_PATH'):
         click.echo('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])

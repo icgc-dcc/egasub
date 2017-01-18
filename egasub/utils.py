@@ -2,36 +2,28 @@ import os
 import re
 import yaml
 import glob
-import csv
-import click
-import copy
-import xmltodict
-import subprocess
 import ftplib
-import calendar
-import time
-import uuid
-import tarfile
+from click import echo
 
 
 def initialize_app(ctx):
     if not ctx.obj['WORKSPACE_PATH']:
-        click.echo('Error: not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.', err=True)
+        echo('Error: not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.', err=True)
         ctx.abort()
     else:
-        click.echo('Info: workspace %s' % ctx.obj['WORKSPACE_PATH'])
+        echo('Info: workspace is \'%s\'' % ctx.obj['WORKSPACE_PATH'])
 
     # read the settings
     ctx.obj['SETTINGS'] = get_settings(ctx.obj['WORKSPACE_PATH'])
     if not ctx.obj['SETTINGS']:
-        click.echo('Error: unable to read config file, or config file invalid!', err=True)
+        echo('Error: unable to read config file, or config file invalid!', err=True)
         ctx.abort()
 
     # figure out the current dir type, e.g., study, sample or analysis
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
-    click.echo(ctx.obj['CURRENT_DIR_TYPE'])
+    echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])
     if not ctx.obj['CURRENT_DIR_TYPE']:
-        click.echo('Error: the current working directory does not associate with any supported EGA data types: FQ, BAM, VCF', err=True)
+        echo('Error: the current working directory does not associate with any supported EGA data types: FQ, BAM, VCF', err=True)
         ctx.abort()
 
 
@@ -73,7 +65,7 @@ def get_current_dir_type(ctx):
     workplace = ctx.obj['WORKSPACE_PATH']
     current_dir = ctx.obj['CURRENT_DIR']
 
-    pattern = re.compile('%s/(FQ|BAM|VCF)\.' % workplace)
+    pattern = re.compile('%s/(unaligned|alignment|variation)\.' % workplace)
     m = re.match(pattern, current_dir)
     if m and m.group(1):
         return m.group(1)
@@ -99,7 +91,7 @@ def ftp_files(path, ctx):
     try:
         files = ftp.nlst(path)
     except ftplib.error_perm, resp:
-        click.echo('Error: unable to connect to FTP server.', err=True)
+        echo('Error: unable to connect to FTP server.', err=True)
         ctx.abort()
 
     return files

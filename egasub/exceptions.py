@@ -1,6 +1,7 @@
 __all__ = [
     'ImproperlyConfigured',
-    'EgaSubmissionException'
+    'EgaSubmissionError',
+    'EgaObjectExistsError'
 ]
 
 
