@@ -1,5 +1,4 @@
-import pytest
-from custom_tag import CustomTag
+from egasub.ega.entities.custom_tag import CustomTag
 
 tag = CustomTag('tag1', 'value1')
 

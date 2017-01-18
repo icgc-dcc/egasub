@@ -1,5 +1,4 @@
-import pytest
-from chromosome_reference import ChromosomeReference
+from egasub.ega.entities.chromosome_reference import ChromosomeReference
 
 reference = ChromosomeReference('the value','the label')
 

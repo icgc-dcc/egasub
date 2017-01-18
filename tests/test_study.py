@@ -1,6 +1,5 @@
-import pytest
-from study import Study
-from custom_tag import CustomTag
+from egasub.ega.entities.study import Study
+from egasub.ega.entities.custom_tag import CustomTag
 
 tags = [CustomTag('tag1','value1'),CustomTag('tag2','value2')]
 study = Study(33,'Short name','the title','the abstract','own term',[1,2,3],tags)

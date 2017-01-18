@@ -1,9 +1,8 @@
-import pytest
-from analysis import Analysis
-from file import File
-from chromosome_reference import ChromosomeReference
-from sample_reference import SampleReference
-from attribute import Attribute
+from egasub.ega.entities.analysis import Analysis
+from egasub.ega.entities.file import File
+from egasub.ega.entities.chromosome_reference import ChromosomeReference
+from egasub.ega.entities.sample_reference import SampleReference
+from egasub.ega.entities.attribute import Attribute
 
 files = [File(32,'file name1','CheckSum1','UnencryptedChecksum1','md5'),
          File(33,'file name2','CheckSum2','UnencryptedChecksum2','md5')]

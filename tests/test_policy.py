@@ -1,5 +1,4 @@
-import pytest
-from policy import Policy
+from egasub.ega.entities.policy import Policy
 
 policy = Policy(123,'Title of DAC','Text about the policy','http://www.example.com')
 

@@ -1,7 +1,6 @@
-import pytest
-from dataset import Dataset
-from dataset_link import DatasetLink
-from attribute import Attribute
+from egasub.ega.entities.dataset import Dataset
+from egasub.ega.entities.dataset_link import DatasetLink
+from egasub.ega.entities.attribute import Attribute
 
 links = [DatasetLink('label 1','url1'),DatasetLink('label 2','url2')]
 attributes = [Attribute('The tag 1','The value 1','an unit'),Attribute('The tag 2','The value 2','an unit')]

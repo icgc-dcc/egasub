@@ -1,5 +1,4 @@
-import pytest
-from attribute import Attribute
+from egasub.ega.entities.attribute import Attribute
 
 attribute = Attribute('The tag','The value','an unit')
 

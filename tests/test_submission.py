@@ -1,6 +1,5 @@
-import pytest
-from submission import Submission
-from submission_subset_data import SubmissionSubsetData
+from egasub.ega.entities.submission import Submission
+from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 
 subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11])
 submission = Submission('a title', 'a description', subset)

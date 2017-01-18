@@ -1,5 +1,4 @@
-import pytest
-from sample_reference import SampleReference
+from egasub.ega.entities.sample_reference import SampleReference
 
 reference = SampleReference('a value','a label')
 

@@ -1,6 +1,5 @@
-import pytest
-from run import Run
-from file import File
+from egasub.ega.entities.run import Run
+from egasub.ega.entities.file import File
 
 files = [File(1,'file name 1','checksum1','unencryptedchecksum1','md5'),File(2,'file name 2','checksum2','unencryptedchecksum2','md5')]
 run = Run(3,2,5,files)

@@ -1,5 +1,4 @@
-import pytest
-from dataset_link import DatasetLink
+from egasub.ega.entities.dataset_link import DatasetLink
 
 link = DatasetLink('the label', 'http://www.example.com')
 
