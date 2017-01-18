@@ -19,7 +19,7 @@ def init_workspace(ctx):
     if os.access(current_dir, os.W_OK):
         os.mkdir(egasub_dir)
         
-        policy_dir = os.path.join(current_dir,'policy')
+        policy_dir = os.path.join(egasub_dir,'policy')
         
         with open(os.path.join(egasub_dir,'config.yaml'),'w') as outfile:
             yaml.safe_dump(yaml_info,outfile,default_flow_style=False)

@@ -33,7 +33,7 @@ def submit(ctx, source):
         echo('Error: You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx.obj, source)
+    perform_submission(ctx, source)
 
 
 @main.command()
