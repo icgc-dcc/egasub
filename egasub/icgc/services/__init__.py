@@ -49,3 +49,5 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
                                 }
                     )
 
+    # TODO: parse response
+
