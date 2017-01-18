@@ -8,7 +8,7 @@ class Dac(object):
     def to_dict(self):
         return {
             'title' : self.title,
-            'contacts' : self.contacts
+            'contacts' :  map(lambda contact: contact.to_dict(), self.contacts)
         }
         
     def to_xml(self):
