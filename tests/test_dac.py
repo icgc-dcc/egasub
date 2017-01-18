@@ -1,4 +1,3 @@
-import pytest
 
 from egasub.ega.entities.dac import Dac
 from egasub.ega.entities.contact import Contact

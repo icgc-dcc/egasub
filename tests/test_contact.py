@@ -1,4 +1,3 @@
-import pytest
 from egasub.ega.entities.contact import Contact
 
 contact = Contact('contact name','contact email','Name of organisation','000-0000')
