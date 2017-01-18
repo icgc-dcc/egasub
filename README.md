@@ -14,8 +14,11 @@ curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | pyt
 # clone the source code
 git clone git@github.com:icgc-dcc/egasub.git
 
-# install egasub
+# run tests
 cd egasub
+python setup.py test
+
+# install egasub
 pipsi install .
 
 # run egasub
