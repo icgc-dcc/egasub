@@ -5,11 +5,16 @@ import yaml
 import shutil
 
 def init_workspace(ctx):
+    echo('')
     echo('Initalizing EGA submission workspace...')
+    echo('Note: information collected below will be stored in')
+    echo('      \'.egasub/config.yaml\' which can be edited later.')
+    echo('')
     #Ask user input for config.yaml
     yaml_info = {
-        'ega_submitter_account':prompt("Enter your EGA submitter account"),
-        'ega_submitter_password':prompt("Enter your EGA submitter password",hide_input=True)
+        'ega_submitter_account': prompt("Enter your EGA submitter account", default=''),
+        'ega_submitter_password': prompt("Enter your EGA submitter password", default=''),
+        'icgc_id_service_token': prompt("Enter your ICGC ID service token", default='')
         }
     
     current_dir = ctx.obj['CURRENT_DIR']
