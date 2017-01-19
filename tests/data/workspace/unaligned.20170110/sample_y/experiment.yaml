@@ -1,0 +1,30 @@
+experiment:
+  title: 'The title of the experiment'
+  instrumentModelId: 2  # should change these IDs to values
+  librarySourceId: 4
+  librarySelectionId: 3
+  libraryStrategyId: 5
+  designDescription: 'Description of the design'
+  libraryName: 'Library name'
+  libraryConstructionProtocol: 'Library construction protocol'
+  libraryLayoutId: 3
+  pairedNominalLength: 420
+  pairedNominalSdev: 36
+sample:
+  alias: sample_y
+  caseOrControlId: control
+  genderId: female
+  organismPart: 
+  cellLine: 
+  region:
+  phenotype: Breast cancer
+  subjectId:
+  anonymizedName: 
+  biosampleId: 
+  sampleAge: 
+  sampleDetail: 
+run:
+  runFileTypeId: Two Fastq files (Paired)
+file:
+  - fileName: unaligned.20170119/sample_y/sequence_file.paired_end.sample_y.fq.gz.gpg
+    checksumMethod: md5
