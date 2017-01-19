@@ -26,5 +26,5 @@ sample:
 run:
   runFileTypeId: One Fastq file (Single)
 file:
-  - fileName: unaligned.20170119/sample_x/sequence_file.single_end.sample_x.fq.gz.gpg
+  - fileName: unaligned.20170110/sample_x/sequence_file.single_end.sample_x.fq.gz.gpg
     checksumMethod: md5
