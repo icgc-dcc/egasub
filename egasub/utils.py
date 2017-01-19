@@ -23,7 +23,7 @@ def initialize_app(ctx):
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
     echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])
     if not ctx.obj['CURRENT_DIR_TYPE']:
-        echo('Error: the current working directory does not associate with any supported EGA data types: FQ, BAM, VCF', err=True)
+        echo('Error: the current working directory does not associate with any supported EGA data types: unaligned|alignment|variation', err=True)
         ctx.abort()
 
 
