@@ -1,8 +1,8 @@
 
 class Dataset(object):
     
-    def __init__(self, dataset_type_ids, policy_id, runs_references, analysis_references, title,
-                 dataset_links, attributes,alias):
+    def __init__(self,alias,dataset_type_ids, policy_id, runs_references, analysis_references, title,
+                 dataset_links, attributes):
         self.dataset_type_ids = dataset_type_ids
         self.policy_id = policy_id
         self.runs_references = runs_references

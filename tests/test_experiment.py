@@ -1,6 +1,6 @@
 from egasub.ega.entities.experiment import Experiment
 
-experiment = Experiment('The title of the experiment',2,4,3,5,'Description of the design','Library name','Library construction protocol',3,4,5,1022,3000,'an alias')
+experiment = Experiment('an alias','The title of the experiment',2,4,3,5,'Description of the design','Library name','Library construction protocol',3,4,5,1022,3000)
 experiment_to_dict = {
         'title' : 'The title of the experiment',
         'instrumentModelId' : 2,

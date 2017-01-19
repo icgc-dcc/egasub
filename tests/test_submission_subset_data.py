@@ -1,6 +1,6 @@
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 
-subset_data = SubmissionSubsetData([2,3],[5,2],[4,3],[5,1],[88,7],[11,3],[44,11],[66,11],'an alias')
+subset_data = SubmissionSubsetData('an alias',[2,3],[5,2],[4,3],[5,1],[88,7],[11,3],[44,11],[66,11])
 
 def test_analysis_ids():
     assert [2,3] == subset_data.analysis_ids
@@ -27,7 +27,6 @@ def test_study_ids():
     assert [66,11] == subset_data.study_ids
 
 def test_alias():
-    print ":kkkkkk"
     assert 'an alias' == subset_data.alias
     
 def test_to_dict():

@@ -1,9 +1,9 @@
 
 
 class Sample(object):
-    def __init__(self, title,description,case_or_control_id,gender_id,organism_part,
+    def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
                  cell_line,region,phenotype, subject_id, anonymized_name, biosample_id,
-                 sample_age, sample_detail, attributes,alias):
+                 sample_age, sample_detail, attributes):
         self.title = title
         self.description  = description
         self.case_or_control_id = case_or_control_id

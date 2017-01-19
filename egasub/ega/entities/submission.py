@@ -1,6 +1,6 @@
 
 class Submission(object):
-    def __init__(self, title, description,submission_subset,alias):
+    def __init__(self,alias,title, description,submission_subset):
         self.title = title
         self.description = description
         self.submission_subset = submission_subset

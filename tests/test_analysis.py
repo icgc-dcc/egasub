@@ -10,8 +10,8 @@ attributes = [Attribute('The tag 1','The value 1','an unit'),Attribute('The tag 
 chromosome_references = [ChromosomeReference('the value1','the label2'),ChromosomeReference('the value2','the label2')]
 sample_references = [SampleReference('a value 1','a label 1'),SampleReference('a value 2','a label 2')]
 
-analysis = Analysis('a title','a description',3,sample_references,'analysis center','analysis date',3,files,attributes,
-                    4,chromosome_references,[3,5],'a platform','an alias')
+analysis = Analysis('an alias','a title','a description',3,sample_references,'analysis center','analysis date',3,files,attributes,
+                    4,chromosome_references,[3,5],'a platform')
 
 def test_title():
     assert 'a title' == analysis.title

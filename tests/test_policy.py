@@ -1,6 +1,6 @@
 from egasub.ega.entities.policy import Policy
 
-policy = Policy(123,'Title of DAC','Text about the policy','http://www.example.com','an alias')
+policy = Policy('an alias',123,'Title of DAC','Text about the policy','http://www.example.com')
 
 def test_dac_id():
     assert policy.dac_id == 123

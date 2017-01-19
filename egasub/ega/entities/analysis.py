@@ -1,7 +1,7 @@
 
 class Analysis(object):
-    def __init__(self, title, description, study_id, sample_references, analysis_center, analysis_date,
-                 analysis_type_id, files, attributes, genome_id, chromosome_references, experiment_type_id,platform,alias):
+    def __init__(self, alias, title, description, study_id, sample_references, analysis_center, analysis_date,
+                 analysis_type_id, files, attributes, genome_id, chromosome_references, experiment_type_id,platform):
         self.title = title
         self.description = description
         self.study_id = study_id

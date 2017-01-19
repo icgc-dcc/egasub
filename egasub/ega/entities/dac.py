@@ -1,7 +1,7 @@
 
 class Dac(object):
     
-    def __init__(self,title, contacts,alias):
+    def __init__(self,alias,title, contacts):
         self.title = title
         self.contacts = contacts
         self.alias = alias

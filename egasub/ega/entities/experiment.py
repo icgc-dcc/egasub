@@ -1,9 +1,9 @@
 
 class Experiment(object):
-    def __init__(self, title, instrument_model_id, library_source_id, library_selection_id,
+    def __init__(self,alias, title, instrument_model_id, library_source_id, library_selection_id,
                  library_strategy_id, design_description, library_name, library_construction_protocol,
                  library_layout_id, paired_nomial_length, paired_nominal_sdev,
-                 sample_id, study_id,alias):
+                 sample_id, study_id):
         self.title = title
         self.instrument_model_id = instrument_model_id
         self.library_source_id = library_source_id

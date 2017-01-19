@@ -2,7 +2,7 @@ from egasub.ega.entities.sample import Sample
 from egasub.ega.entities.attribute import Attribute
 
 attributes = [Attribute('tag1','value1'),Attribute('tag2','value2')]
-sample = Sample('the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,'an alias')
+sample = Sample('an alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes)
 
 def test_title():
     assert 'the title' == sample.title

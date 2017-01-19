@@ -2,7 +2,7 @@ from egasub.ega.entities.run import Run
 from egasub.ega.entities.file import File
 
 files = [File(1,'file name 1','checksum1','unencryptedchecksum1','md5'),File(2,'file name 2','checksum2','unencryptedchecksum2','md5')]
-run = Run(3,2,5,files,'an alias')
+run = Run('an alias',3,2,5,files)
 
 def test_sample_id():
     assert 3 == run.sample_id

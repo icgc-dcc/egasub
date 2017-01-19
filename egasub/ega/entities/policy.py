@@ -1,7 +1,7 @@
 
 
 class Policy(object):
-    def __init__(self, dac_id, title, policy_text, url,alias):
+    def __init__(self,alias,dac_id, title, policy_text, url):
         self.dac_id = dac_id
         self.title = title
         self.policy_text = policy_text

@@ -1,6 +1,6 @@
 
 class Study(object):
-    def __init__(self,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags,alias):
+    def __init__(self,alias,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags):
         self.study_type_id = study_type_id
         self.short_name = short_name
         self.title = title
