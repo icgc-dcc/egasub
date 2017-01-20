@@ -2,7 +2,7 @@ from egasub.ega.entities.sample import Sample
 from egasub.ega.entities.attribute import Attribute
 
 attributes = [Attribute('tag1','value1'),Attribute('tag2','value2')]
-sample = Sample('the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes)
+sample = Sample('an alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes)
 
 def test_title():
     assert 'the title' == sample.title
@@ -62,7 +62,11 @@ def test_to_dict():
             'biosampleId' : 22,
             'sampleAge' : 10,
             'sampleDetail' : 'some details',
-            'attributes' : map(lambda attribute: attribute.to_dict(), attributes)
+            'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
+            'alias': 'an alias'
         }, sample.to_dict()) == 0
+        
+def test_alias():
+    assert 'an alias' == sample.alias
         
         

@@ -2,7 +2,7 @@ from egasub.ega.entities.run import Run
 from egasub.ega.entities.file import File
 
 files = [File(1,'file name 1','checksum1','unencryptedchecksum1','md5'),File(2,'file name 2','checksum2','unencryptedchecksum2','md5')]
-run = Run(3,2,5,files)
+run = Run('an alias',3,2,5,files)
 
 def test_sample_id():
     assert 3 == run.sample_id
@@ -22,6 +22,9 @@ def test_to_dict():
             'sampleId' : 3,
             'runFileTypeId':2,
             'experimentId':5,
-            'files' : map(lambda file: file.to_dict(), files)
+            'files' : map(lambda file: file.to_dict(), files),
+            'alias' : 'an alias'
         }, run.to_dict()) == 0
     
+def test_alias():
+    assert 'an alias' == run.alias

@@ -1,7 +1,7 @@
 
 class Dataset(object):
     
-    def __init__(self, dataset_type_ids, policy_id, runs_references, analysis_references, title,
+    def __init__(self,alias,dataset_type_ids, policy_id, runs_references, analysis_references, title,
                  dataset_links, attributes):
         self.dataset_type_ids = dataset_type_ids
         self.policy_id = policy_id
@@ -10,6 +10,7 @@ class Dataset(object):
         self.title = title
         self.dataset_links = dataset_links
         self.attributes = attributes
+        self.alias = alias
         
     def to_dict(self):
         return {
@@ -19,7 +20,8 @@ class Dataset(object):
             'analysisReferences' : self.analysis_references,
             'title' : self.title,
             'datasetLinks' : map(lambda dataset_link: dataset_link.to_dict(), self.dataset_links),
-            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes)
+            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes),
+            'alias' : self.alias
         }
         
     def to_xml(self):
