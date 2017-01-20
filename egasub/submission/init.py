@@ -13,7 +13,7 @@ def init_workspace(ctx):
     #Ask user input for config.yaml
     yaml_info = {
         'ega_submitter_account': prompt("Enter your EGA submitter account", default=''),
-        'ega_submitter_password': prompt("Enter your EGA submitter password", default=''),
+        'ega_submitter_password': prompt("Enter your EGA submitter password", default='', hide_input=True),
         'icgc_id_service_token': prompt("Enter your ICGC ID service token", default='')
         }
     
