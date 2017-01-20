@@ -10,7 +10,7 @@ attributes = [Attribute('The tag 1','The value 1','an unit'),Attribute('The tag 
 chromosome_references = [ChromosomeReference('the value1','the label2'),ChromosomeReference('the value2','the label2')]
 sample_references = [SampleReference('a value 1','a label 1'),SampleReference('a value 2','a label 2')]
 
-analysis = Analysis('a title','a description',3,sample_references,'analysis center','analysis date',3,files,attributes,
+analysis = Analysis('an alias','a title','a description',3,sample_references,'analysis center','analysis date',3,files,attributes,
                     4,chromosome_references,[3,5],'a platform')
 
 def test_title():
@@ -52,6 +52,9 @@ def test_chromosome_references():
 def test_sample_references():
     assert sample_references == analysis.sample_references
     
+def test_alias():
+    assert 'an alias' == analysis.alias
+    
 def test_to_dict():
         assert cmp(
         {
@@ -67,6 +70,7 @@ def test_to_dict():
             'platform' : 'a platform',
             'files' : map(lambda file: file.to_dict(), files),
             'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
-            'chromosomeReferences' : map(lambda ref: ref.to_dict(), chromosome_references)
+            'chromosomeReferences' : map(lambda ref: ref.to_dict(), chromosome_references),
+            'alias' : 'an alias'
         }, analysis.to_dict()) == 0
     
