@@ -3,12 +3,15 @@ from ..ega.entities.analysis import Analysis
 from ..ega.entities.run import Run
 from ..ega.entities.experiment import Experiment
 from ..ega.entities.file import File
-from ..ega.services import login, logout, submit_sample
+from ..ega.entities.submission import Submission
+from ..ega.entities.submission_subset_data import SubmissionSubsetData
+from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run
 from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError
 from click import echo
 import yaml
 import os
+from multiprocessing.forking import prepare
 
 def metadata_parser(ctx, metadata):
     with open(metadata, 'r') as stream:
@@ -23,7 +26,7 @@ def metadata_parser(ctx, metadata):
     for _file in yaml_files:
         files.append(generate_file(ctx,None,_file.get('fileName'),'md5'))
     
-    experiment = Experiment(yaml_experiment.get('title'),
+    experiment = Experiment(None,yaml_experiment.get('title'),
                     yaml_experiment.get('instrumentModelId'),
                     yaml_experiment.get('librarySourceId'),
                     yaml_experiment.get('librarySelectionId'),
@@ -38,7 +41,7 @@ def metadata_parser(ctx, metadata):
                     yaml_experiment.get('studyId')
         )
     
-    sample = Sample(yaml_sample.get('title'),
+    sample = Sample(None,yaml_sample.get('title'),
                     yaml_sample.get('description'),
                     yaml_sample.get('caseOrControlId'),
                     yaml_sample.get('genderId'),
@@ -54,14 +57,12 @@ def metadata_parser(ctx, metadata):
                     []
         )
     
-    run = Run(yaml_run.get('sampleId'),
+    run = Run(None,yaml_run.get('sampleId'),
               yaml_run.get('runFileTypeId'),
               yaml_run.get('experimentId'),
               files)
     
-    submit_object(ctx, experiment)
-    submit_object(ctx, sample)
-    submit_object(ctx, run)
+    return experiment, sample, run
 
 
 def submit_object(ctx, object):
@@ -75,11 +76,28 @@ def submit_object(ctx, object):
 
 
 def perform_submission(ctx, submission_dirs):
-    # login first
     login(ctx)
+    submission = Submission(None,'title', 'a description',SubmissionSubsetData.create_empty())
+    prepare_submission(ctx, submission)
 
     for submission_dir in submission_dirs:
-        metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
+        experiment, sample, run = metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
+        
+        # Submission of the sample and recording of the id
+        sample_id = submit_sample(ctx, sample)
+        
+        # Submission of the experiment and recording of the id
+        experiment.sample_id = sample_id
+        experiment_id = submit_experiment(ctx,experiment)
+        
+        # Submission of the run and recording of the id
+        run.sample_id = sample_id
+        run.experiment_id = experiment_id
+        run_id = submit_run(ctx,run)
+        
+    logout(ctx)
+        
+    
         
 def generate_file(ctx, file_id,file_name,checksum_method):
     

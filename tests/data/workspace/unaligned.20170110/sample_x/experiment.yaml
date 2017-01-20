@@ -7,13 +7,13 @@ experiment:
   designDescription: 'Description of the design'
   libraryName: 'Library name'
   libraryConstructionProtocol: 'Library construction protocol'
-  libraryLayoutId: 3
+  libraryLayoutId: 0 # 0=paired, 1=single
   pairedNominalLength: 
   pairedNominalSdev: 
 sample:
   alias: sample_x
-  caseOrControlId: case
-  genderId: female
+  caseOrControlId: 0 # 0=case, 1=control, 2=both, 3=NA
+  genderId: 1 # 0=female, 1=male, 2=unknown
   organismPart: 
   cellLine: 
   region:
@@ -24,7 +24,7 @@ sample:
   sampleAge: 
   sampleDetail: 
 run:
-  runFileTypeId: One Fastq file (Single)
+  runFileTypeId: 0 # 0=BAM, 1=Complete Genomics, 2=CRAM, 3=Fasta, 4=One Fastq file (Single), 5=Two Fastq files (Paired),6=PacBio HDF5,7=SFF,8=SRF
 file:
   - fileName: unaligned.20170110/sample_x/sequence_file.single_end.sample_x.fq.gz.gpg
     checksumMethod: md5

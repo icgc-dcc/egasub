@@ -32,7 +32,7 @@ class Sample(object):
             'phenotype' : self.phenotype,
             'subjectId' : self.subject_id,
             'anonymizedName' : self.anonymized_name,
-            'biosampleId' : self.biosample_id,
+            'bioSampleId' : self.biosample_id,
             'sampleAge' : self.sample_age,
             'sampleDetail' : self.sample_detail,
             'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes),

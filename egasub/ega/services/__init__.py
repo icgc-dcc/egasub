@@ -3,6 +3,7 @@ import json
 from click import echo
 from ..entities import sample
 from ..entities import analysis
+import pprint
 
 
 XML_EGA_SUB_URL_TEST = "https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/"
@@ -27,23 +28,78 @@ def login(ctx):
     }
 
     r = requests.post(url, data=payload)
-
     r_data = json.loads(r.text)
-
-    # to be finished
-
+    
+    try:
+        ctx.obj['SUBMISSION'] = {}
+        ctx.obj['SUBMISSION']['sessionToken'] = r_data['response']['result'][0]['session']['sessionToken']
+    except TypeError:
+        echo("Your credentials are invalid. Verify your username and password in config.yaml file.")
 
 
 def logout(ctx):
-    pass
+    url = "%slogout" % EGA_SUB_URL_PROD
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token': ctx.obj['SUBMISSION']['sessionToken']
+        }
+    r = requests.delete(url,headers=headers)
+    if json.loads(r.text)['header']['userMessage'] == "OK":
+        ctx.obj['SUBMISSION'] = {}
+        
+        
+
+def prepare_submission(ctx, submission):
+    if 'id' in ctx.obj['SUBMISSION']:
+        return
+    
+    url = "%ssubmissions" % EGA_SUB_URL_PROD
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    r = requests.post(url,data=json.dumps(submission.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
+    
+    ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
+    
+    
 
 
 def submit_sample(ctx, sample):
-    """
-    To be implemented
-    """
-    pass
+    url = "%s/submissions/%s/samples" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    
+    r = requests.post(url,data=json.dumps(sample.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
+    
+    if r_data['header']['code'] != 200:
+        print r_data['header']['userMessage']
+        return r_data['response']['result'][0]['id']
+    else:
+        return r_data['header']['userMessage']
 
+
+def submit_experiment(ctx, experiment):
+    url = "%s/submissions/%s/experiments" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    
+    r = requests.post(url,data=json.dumps(experiment.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
+    
+    if r_data['header']['code'] != 200:
+        print r_data['header']['userMessage']
+        return r_data['response']['result'][0]['id']
+    else:
+        return r_data['header']['userMessage']
 
 def submit_analysis(ctx, analysis):
     """
@@ -53,10 +109,21 @@ def submit_analysis(ctx, analysis):
 
 
 def submit_run(ctx, run):
-    """
-    To be implemented
-    """
-    pass
+    url = "%s/submissions/%s/runs" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    
+    r = requests.post(url,data=json.dumps(run.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
+    
+    if r_data['header']['code'] != 200:
+        print r_data['header']['userMessage']
+        return r_data['response']['result'][0]['id']
+    else:
+        return r_data['header']['userMessage']
 
 
 def submit_study(ctx, run):

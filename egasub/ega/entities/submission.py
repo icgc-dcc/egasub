@@ -8,10 +8,9 @@ class Submission(object):
         
     def to_dict(self):
         return {
-            'title' : self.title,
-            'description' : self.description,
-            'submissionSubset' : self.submission_subset.to_dict(),
-            'alias' : self.alias
+            "title" : self.title,
+            "description" : self.description,
+            "submissionSubset" : self.submission_subset.to_dict()
             }
         
     def to_xml(self):

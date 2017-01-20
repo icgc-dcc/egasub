@@ -21,9 +21,12 @@ class SubmissionSubsetData(object):
             'policyIds' : self.policy_ids,
             'runIds' : self.run_ids,
             'sampleIds' : self.sample_ids,
-            'studyIds' : self.study_ids,
-            'alias' : self.alias
+            'studyIds' : self.study_ids
             }
         
     def to_xml(self):
         pass
+    
+    @staticmethod
+    def create_empty():
+        return SubmissionSubsetData(None,None,None,None,None,None,None,None,None)
