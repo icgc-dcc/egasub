@@ -3,6 +3,7 @@ from ..ega.entities.analysis import Analysis
 from ..ega.entities.run import Run
 from ..ega.entities.experiment import Experiment
 from ..ega.entities.file import File
+from ..ega.services import login, logout, submit_sample
 from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError
 from click import echo
@@ -74,6 +75,9 @@ def submit_object(ctx, object):
 
 
 def perform_submission(ctx, submission_dirs):
+    # login first
+    login(ctx)
+
     for submission_dir in submission_dirs:
         metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
         
