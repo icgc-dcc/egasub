@@ -1,6 +1,6 @@
 
 class SubmissionSubsetData(object):
-    def __init__(self,alias,analysis_ids, dac_ids, dataset_ids, experiment_ids, policy_ids, run_ids,
+    def __init__(self,analysis_ids, dac_ids, dataset_ids, experiment_ids, policy_ids, run_ids,
                  sample_ids, study_ids):
         self.analysis_ids = analysis_ids
         self.dac_ids = dac_ids
@@ -10,7 +10,6 @@ class SubmissionSubsetData(object):
         self.run_ids = run_ids
         self.sample_ids = sample_ids
         self.study_ids = study_ids
-        self.alias = alias
         
     def to_dict(self):
         return {
@@ -21,9 +20,12 @@ class SubmissionSubsetData(object):
             'policyIds' : self.policy_ids,
             'runIds' : self.run_ids,
             'sampleIds' : self.sample_ids,
-            'studyIds' : self.study_ids,
-            'alias' : self.alias
+            'studyIds' : self.study_ids
             }
         
     def to_xml(self):
         pass
+    
+    @staticmethod
+    def create_empty():
+        return SubmissionSubsetData(None,None,None,None,None,None,None,None)

@@ -2,8 +2,9 @@
 
 class Sample(object):
     def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
-                 cell_line,region,phenotype, subject_id, anonymized_name, biosample_id,
+                 cell_line,region,phenotype, subject_id, anonymized_name, bio_sample_id,
                  sample_age, sample_detail, attributes):
+        self.alias = alias
         self.title = title
         self.description  = description
         self.case_or_control_id = case_or_control_id
@@ -14,14 +15,15 @@ class Sample(object):
         self.phenotype = phenotype
         self.subject_id = subject_id
         self.anonymized_name = anonymized_name
-        self.biosample_id = biosample_id
+        self.bio_sample_id = bio_sample_id
         self.sample_age = sample_age
         self.sample_detail = sample_detail
         self.attributes = attributes
-        self.alias = alias
-        
+
+
     def to_dict(self):
         return {
+            'alias' : self.alias,
             'title' : self.title,
             'description' : self.description,
             'caseOrControlId' : self.case_or_control_id,
@@ -32,13 +34,13 @@ class Sample(object):
             'phenotype' : self.phenotype,
             'subjectId' : self.subject_id,
             'anonymizedName' : self.anonymized_name,
-            'biosampleId' : self.biosample_id,
+            'bioSampleId' : self.bio_sample_id,
             'sampleAge' : self.sample_age,
             'sampleDetail' : self.sample_detail,
-            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes),
-            'alias' : self.alias
+            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes)
             }
-        
+
+
     def to_xml(self):
         pass
         

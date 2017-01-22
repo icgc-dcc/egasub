@@ -1,18 +1,18 @@
 
 class Dac(object):
     
-    def __init__(self,alias,title, contacts):
+    def __init__(self, title, contacts):
         self.title = title
         self.contacts = contacts
-        self.alias = alias
+
         
     def to_dict(self):
         return {
             'title' : self.title,
-            'contacts' :  map(lambda contact: contact.to_dict(), self.contacts),
-            'alias' : self.alias
+            'contacts' :  map(lambda contact: contact.to_dict(), self.contacts)
         }
-        
+
+
     def to_xml(self):
         pass
         
