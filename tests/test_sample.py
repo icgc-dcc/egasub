@@ -34,8 +34,8 @@ def test_subject_id():
 def test_anonymized_name():
     assert 'anonymized name' == sample.anonymized_name
     
-def test_biosample_id():
-    assert 22 == sample.biosample_id
+def test_bio_sample_id():
+    assert 22 == sample.bio_sample_id
     
 def test_sample_age():
     assert 10 == sample.sample_age
@@ -46,9 +46,13 @@ def test_sample_detail():
 def test_attributes():
     assert attributes == sample.attributes
     
+def test_alias():
+    assert 'an alias' == sample.alias
+
 def test_to_dict():
-        assert cmp(
+    assert cmp(
         {
+            'alias': 'an alias',
             'title' : 'the title',
             'description':'the description',
             'caseOrControlId':123,
@@ -59,14 +63,10 @@ def test_to_dict():
             'phenotype' : 'a phenotype',
             'subjectId' : 33,
             'anonymizedName' : 'anonymized name',
-            'biosampleId' : 22,
+            'bioSampleId' : 22,
             'sampleAge' : 10,
             'sampleDetail' : 'some details',
-            'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
-            'alias': 'an alias'
+            'attributes' : map(lambda attribute: attribute.to_dict(), attributes)
         }, sample.to_dict()) == 0
-        
-def test_alias():
-    assert 'an alias' == sample.alias
-        
+
         

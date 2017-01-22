@@ -1,6 +1,6 @@
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 
-subset_data = SubmissionSubsetData('an alias',[2,3],[5,2],[4,3],[5,1],[88,7],[11,3],[44,11],[66,11])
+subset_data = SubmissionSubsetData([2,3],[5,2],[4,3],[5,1],[88,7],[11,3],[44,11],[66,11])
 
 def test_analysis_ids():
     assert [2,3] == subset_data.analysis_ids
@@ -25,9 +25,6 @@ def test_sample_ids():
     
 def test_study_ids():
     assert [66,11] == subset_data.study_ids
-
-def test_alias():
-    assert 'an alias' == subset_data.alias
     
 def test_to_dict():
         assert cmp(
@@ -39,7 +36,6 @@ def test_to_dict():
             'policyIds' : [88,7],
             'runIds' : [11,3],
             'sampleIds' : [44,11],
-            'studyIds' : [66,11],
-            'alias' : 'an alias'
+            'studyIds' : [66,11]
         }, subset_data.to_dict()) == 0
         

@@ -76,7 +76,7 @@ def submit_sample(ctx, sample):
     
     r = requests.post(url,data=json.dumps(sample.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-    
+    print r_data
     if r_data['header']['code'] != 200:
         print r_data['header']['userMessage']
         return r_data['response']['result'][0]['id']
@@ -117,6 +117,7 @@ def submit_run(ctx, run):
     }
     
     r = requests.post(url,data=json.dumps(run.to_dict()), headers=headers)
+    print r.text
     r_data = json.loads(r.text)
     
     if r_data['header']['code'] != 200:

@@ -51,7 +51,7 @@ def metadata_parser(ctx, metadata):
                     yaml_sample.get('phenotype'),
                     yaml_sample.get('subjectId'),
                     yaml_sample.get('anonymizedName'),
-                    yaml_sample.get('biosampleId'),
+                    yaml_sample.get('bioSampleId'),
                     yaml_sample.get('sampleAge'),
                     yaml_sample.get('sampleDetail'),
                     []
@@ -65,19 +65,9 @@ def metadata_parser(ctx, metadata):
     return experiment, sample, run
 
 
-def submit_object(ctx, object):
-    class_name = object.__class__.__name__
-    if class_name == "Experiment":
-        print "Submit Experiment"
-    elif class_name == "Sample":
-        print "Submit Sample"
-    elif class_name == "Run":
-        print "Submit Run"
-
-
 def perform_submission(ctx, submission_dirs):
     login(ctx)
-    submission = Submission(None,'title', 'a description',SubmissionSubsetData.create_empty())
+    submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
 
     for submission_dir in submission_dirs:
@@ -93,6 +83,7 @@ def perform_submission(ctx, submission_dirs):
         # Submission of the run and recording of the id
         run.sample_id = sample_id
         run.experiment_id = experiment_id
+        print run.to_dict()
         run_id = submit_run(ctx,run)
         
     logout(ctx)

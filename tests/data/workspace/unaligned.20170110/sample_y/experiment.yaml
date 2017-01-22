@@ -20,7 +20,7 @@ sample:
   phenotype: Breast cancer
   subjectId:
   anonymizedName: 
-  biosampleId: 
+  bioSampleId: 
   sampleAge: 
   sampleDetail: 
 run:
