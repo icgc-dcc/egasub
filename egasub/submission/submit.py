@@ -11,7 +11,6 @@ from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExis
 from click import echo
 import yaml
 import os
-from multiprocessing.forking import prepare
 
 def metadata_parser(ctx, metadata):
     with open(metadata, 'r') as stream:
@@ -38,10 +37,11 @@ def metadata_parser(ctx, metadata):
                     yaml_experiment.get('pairedNominalLength'),
                     yaml_experiment.get('pairedNominalSdev'),
                     yaml_experiment.get('sampleId'),
-                    yaml_experiment.get('studyId')
+                    yaml_experiment.get('studyId'),
+                    None
         )
     
-    sample = Sample(None,yaml_sample.get('title'),
+    sample = Sample(yaml_sample.get('alias'),yaml_sample.get('title'),
                     yaml_sample.get('description'),
                     yaml_sample.get('caseOrControlId'),
                     yaml_sample.get('genderId'),
@@ -54,13 +54,14 @@ def metadata_parser(ctx, metadata):
                     yaml_sample.get('bioSampleId'),
                     yaml_sample.get('sampleAge'),
                     yaml_sample.get('sampleDetail'),
-                    []
+                    [],
+                    None
         )
     
     run = Run(None,yaml_run.get('sampleId'),
               yaml_run.get('runFileTypeId'),
               yaml_run.get('experimentId'),
-              files)
+              files,None)
     
     return experiment, sample, run
 
@@ -74,17 +75,16 @@ def perform_submission(ctx, submission_dirs):
         experiment, sample, run = metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
         
         # Submission of the sample and recording of the id
-        sample_id = submit_sample(ctx, sample)
+        submit_sample(ctx, sample)
         
         # Submission of the experiment and recording of the id
-        experiment.sample_id = sample_id
-        experiment_id = submit_experiment(ctx,experiment)
+        experiment.sample_id = sample.id
+        submit_experiment(ctx,experiment)
         
         # Submission of the run and recording of the id
-        run.sample_id = sample_id
-        run.experiment_id = experiment_id
-        print run.to_dict()
-        run_id = submit_run(ctx,run)
+        run.sample_id = sample.id
+        run.experiment_id = experiment.id
+        submit_run(ctx,run)
         
     logout(ctx)
         

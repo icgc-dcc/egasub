@@ -76,13 +76,29 @@ def submit_sample(ctx, sample):
     
     r = requests.post(url,data=json.dumps(sample.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-    print r_data
+    
     if r_data['header']['code'] != 200:
-        print r_data['header']['userMessage']
-        return r_data['response']['result'][0]['id']
+        sample.id = r_data['response']['result'][0]['id']
     else:
-        return r_data['header']['userMessage']
-
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
+    
+    validate_sample(ctx, sample)
+    
+    
+    
+def validate_sample(ctx,sample):
+    if sample.id == None:
+        raise Exception('Sample id missing.')
+    
+    url = "%ssamples/%s?action=VALIDATE" % (EGA_SUB_URL_PROD,sample.id)
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    r = requests.put(url,headers=headers)
+    
 
 def submit_experiment(ctx, experiment):
     url = "%s/submissions/%s/experiments" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
@@ -96,10 +112,10 @@ def submit_experiment(ctx, experiment):
     r_data = json.loads(r.text)
     
     if r_data['header']['code'] != 200:
-        print r_data['header']['userMessage']
-        return r_data['response']['result'][0]['id']
+        experiment.id = r_data['response']['result'][0]['id']
     else:
-        return r_data['header']['userMessage']
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
 
 def submit_analysis(ctx, analysis):
     """
@@ -117,14 +133,14 @@ def submit_run(ctx, run):
     }
     
     r = requests.post(url,data=json.dumps(run.to_dict()), headers=headers)
-    print r.text
+    #print r.text
     r_data = json.loads(r.text)
     
     if r_data['header']['code'] != 200:
-        print r_data['header']['userMessage']
-        return r_data['response']['result'][0]['id']
+        run.id = r_data['response']['result'][0]['id']
     else:
-        return r_data['header']['userMessage']
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
 
 
 def submit_study(ctx, run):
