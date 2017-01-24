@@ -5,7 +5,7 @@ from ..ega.entities.experiment import Experiment
 from ..ega.entities.file import File
 from ..ega.entities.submission import Submission
 from ..ega.entities.submission_subset_data import SubmissionSubsetData
-from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run, submit_submission
+from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run, submit_submission, sample_log_directory,sample_status_file,set_sample_status,get_sample_status
 from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError
 from click import echo
@@ -85,8 +85,15 @@ def perform_submission(ctx, submission_dirs):
         experiment, sample, run = metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
         
         echo(" - Submission of the sample")
+        if not os.path.isdir(sample_log_directory(ctx,submission_dir)):
+            os.mkdir(sample_log_directory(ctx,submission_dir))
+        if not os.path.exists(sample_status_file(ctx,submission_dir)):
+            set_sample_status(ctx,submission_dir,"DRAFT")
+        if get_sample_status(ctx,submission_dir)=="VALIDATED":
+            continue
+
         # Submission of the sample and recording of the id
-        submit_sample(ctx, sample)
+        submit_sample(ctx, sample,submission_dir)
         
         echo(" - Submission of the experiment")
         # Submission of the experiment and recording of the id
