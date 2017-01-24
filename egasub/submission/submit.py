@@ -4,6 +4,7 @@ from ..ega.entities.run import Run
 from ..ega.entities.experiment import Experiment
 from ..ega.entities.file import File
 from ..ega.entities.submission import Submission
+from ..ega.entities.attribute import Attribute
 from ..ega.entities.submission_subset_data import SubmissionSubsetData
 from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run, submit_submission, sample_log_directory,sample_status_file,set_sample_status,get_sample_status
 from ..icgc.services import id_service
@@ -54,8 +55,7 @@ def metadata_parser(ctx, metadata):
                     yaml_sample.get('bioSampleId'),
                     yaml_sample.get('sampleAge'),
                     yaml_sample.get('sampleDetail'),
-                    [],
-                    None
+                    [],None
         )
     
     run = Run(None,yaml_run.get('sampleId'),
@@ -90,9 +90,12 @@ def perform_submission(ctx, submission_dirs):
         if not os.path.exists(sample_status_file(ctx,submission_dir)):
             set_sample_status(ctx,submission_dir,"DRAFT")
         if get_sample_status(ctx,submission_dir)=="VALIDATED":
-            continue
+            #continue
+            pass
 
         # Submission of the sample and recording of the id
+        #TODO Change test to false
+        sample.attributes.append(Attribute('icgc_id',id_service(ctx,'sample',ctx.obj['SETTINGS']['icgc_project_code'],sample.alias,True,True)))
         submit_sample(ctx, sample,submission_dir)
         
         echo(" - Submission of the experiment")
