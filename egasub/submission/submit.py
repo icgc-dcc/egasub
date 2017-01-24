@@ -5,7 +5,7 @@ from ..ega.entities.experiment import Experiment
 from ..ega.entities.file import File
 from ..ega.entities.submission import Submission
 from ..ega.entities.submission_subset_data import SubmissionSubsetData
-from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run
+from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run, submit_submission
 from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError
 from click import echo
@@ -67,26 +67,56 @@ def metadata_parser(ctx, metadata):
 
 
 def perform_submission(ctx, submission_dirs):
+    echo("Login attempt with credentials in .egasub/config.yaml")
     login(ctx)
+    echo("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
+    
+    experiment_ids = []
+    run_ids = []
+    sample_ids = []
 
     for submission_dir in submission_dirs:
+        echo("-------")
+        echo("Processing "+submission_dir)
+        
+        echo("Data parsing from experiment.yaml")
         experiment, sample, run = metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
         
+        echo(" - Submission of the sample")
         # Submission of the sample and recording of the id
         submit_sample(ctx, sample)
         
+        echo(" - Submission of the experiment")
         # Submission of the experiment and recording of the id
         experiment.sample_id = sample.id
         submit_experiment(ctx,experiment)
         
+        echo(" - Submission of the run")
         # Submission of the run and recording of the id
         run.sample_id = sample.id
         run.experiment_id = experiment.id
         submit_run(ctx,run)
         
+        experiment_ids.append(experiment.id)
+        run_ids.append(run.id)
+        sample_ids.append(sample.id)
+        echo(submission_dir+" completed")
+        echo("-------")
+        
+    echo("Finalizing the submission with all samples")
+    submission.submission_subset.experiment_ids = experiment_ids
+    submission.submission_subset.run_ids = run_ids
+    submission.submission_subset.sample_ids = sample_ids
+    
+    echo("Submission of the submission metadata to EGA")
+    submit_submission(ctx,submission)
+    echo("")
+          
+    echo("Logging out the session")
     logout(ctx)
+    echo("")
         
     
         

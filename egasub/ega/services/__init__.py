@@ -77,13 +77,15 @@ def submit_sample(ctx, sample):
     r = requests.post(url,data=json.dumps(sample.to_dict()), headers=headers)
     r_data = json.loads(r.text)
     
-    if r_data['header']['code'] != 200:
+    if r_data['header']['code'] == "200":
         sample.id = r_data['response']['result'][0]['id']
     else:
         #TODO
         raise Exception(r_data['header']['userMessage'])
     
+    echo(" - Sample validation...")
     validate_sample(ctx, sample)
+    echo(" - Validation completed")
     
     
     
@@ -111,7 +113,7 @@ def submit_experiment(ctx, experiment):
     r = requests.post(url,data=json.dumps(experiment.to_dict()), headers=headers)
     r_data = json.loads(r.text)
     
-    if r_data['header']['code'] != 200:
+    if r_data['header']['code'] == "200":
         experiment.id = r_data['response']['result'][0]['id']
     else:
         #TODO
@@ -136,11 +138,26 @@ def submit_run(ctx, run):
     #print r.text
     r_data = json.loads(r.text)
     
-    if r_data['header']['code'] != 200:
+    if r_data['header']['code'] == "200":
         run.id = r_data['response']['result'][0]['id']
     else:
         #TODO
         raise Exception(r_data['header']['userMessage'])
+    
+
+
+def submit_submission(ctx,submission):
+    url = "%ssubmissions/%s?action=SUBMIT" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+       
+    r = requests.put(url,data=json.dumps(submission.submission_subset.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
+        
+
 
 
 def submit_study(ctx, run):
