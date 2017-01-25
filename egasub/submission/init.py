@@ -3,18 +3,21 @@ from click import prompt
 import os
 import yaml
 import shutil
+import click
 
-def init_workspace(ctx):
+
+def init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token):
     echo('')
     echo('Initalizing EGA submission workspace...')
     echo('Note: information collected below will be stored in')
     echo('      \'.egasub/config.yaml\' which can be edited later.')
     echo('')
+    
     #Ask user input for config.yaml
     yaml_info = {
-        'ega_submitter_account': prompt("Enter your EGA submitter account", default=''),
-        'ega_submitter_password': prompt("Enter your EGA submitter password", default='', hide_input=True),
-        'icgc_id_service_token': prompt("Enter your ICGC ID service token", default='')
+        'ega_submitter_account': ega_submitter_account,
+        'ega_submitter_password': ega_submitter_password,
+        'icgc_id_service_token': icgc_id_service_token
         }
     
     current_dir = ctx.obj['CURRENT_DIR']

@@ -49,8 +49,11 @@ def report(ctx, source):
 
 
 @main.command()
+@click.option('--ega_submitter_account', prompt=True)
+@click.option('--ega_submitter_password', prompt=True,hide_input=True)
+@click.option('--icgc_id_service_token', prompt=True)
 @click.pass_context
-def init(ctx):
+def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token):
     """
     Run once to create a submission workspace.
     """
@@ -59,7 +62,7 @@ def init(ctx):
         click.echo('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
-    init_workspace(ctx)
+    init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token)
 
 
 if __name__ == '__main__':
