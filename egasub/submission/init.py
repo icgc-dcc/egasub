@@ -6,7 +6,7 @@ import shutil
 import click
 
 
-def init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token):
+def init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code):
     echo('')
     echo('Initalizing EGA submission workspace...')
     echo('Note: information collected below will be stored in')
@@ -17,7 +17,8 @@ def init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_serv
     yaml_info = {
         'ega_submitter_account': ega_submitter_account,
         'ega_submitter_password': ega_submitter_password,
-        'icgc_id_service_token': icgc_id_service_token
+        'icgc_id_service_token': icgc_id_service_token,
+        'icgc_project_code': icgc_project_code
         }
     
     current_dir = ctx.obj['CURRENT_DIR']

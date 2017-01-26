@@ -1,7 +1,8 @@
 __all__ = [
     'ImproperlyConfigured',
     'EgaSubmissionError',
-    'EgaObjectExistsError'
+    'EgaObjectExistsError',
+    'CredentialsError'
 ]
 
 
@@ -36,3 +37,7 @@ class EgaObjectExistsError(EgaSubmissionError):
         return 'EgaObjectExistsError(%s) caused by: %s(%s)' % (
             self.error, self.info.__class__.__name__, self.info)
 
+class CredentialsError(Exception):
+    """
+    Exception raised when the login credentials are not working
+    """

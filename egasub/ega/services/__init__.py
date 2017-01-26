@@ -3,6 +3,7 @@ import json
 from click import echo
 from ..entities import sample
 from ..entities import analysis
+from egasub.exceptions import CredentialsError
 import os
 
 
@@ -20,7 +21,21 @@ def login(ctx):
     """
     Documentation: https://ega-archive.org/submission/programmatic_submissions/how-to-use-the-api#Login
     """
-    url = "%slogin" % EGA_SUB_URL_PROD
+    if 'apiUrl' in ctx.obj['SETTINGS']:
+        api_url = ctx.obj['SETTINGS']['apiUrl']
+    else:
+        api_url = EGA_SUB_URL_PROD
+        
+    url = "%slogin" % api_url
+    
+    #Check for the ega_submitter account
+    if not ctx.obj['SETTINGS'].get('ega_submitter_account'):
+        raise CredentialsError(Exception('Your ega_submitter_account is missing in config.yaml file.'))
+    
+    #Check for the ega submitter password
+    if not ctx.obj['SETTINGS'].get('ega_submitter_password'):
+        raise CredentialsError(Exception('Your ega_submitter_password is missing in config.yaml file.'))
+    
     payload = {
         "username": ctx.obj['SETTINGS'].get('ega_submitter_account'),
         "password": ctx.obj['SETTINGS'].get('ega_submitter_password'),
@@ -30,30 +45,48 @@ def login(ctx):
     r = requests.post(url, data=payload)
     r_data = json.loads(r.text)
     
-    try:
-        ctx.obj['SUBMISSION'] = {}
-        ctx.obj['SUBMISSION']['sessionToken'] = r_data['response']['result'][0]['session']['sessionToken']
-    except TypeError:
-        echo("Your credentials are invalid. Verify your username and password in config.yaml file.")
+    #Check if the credentials are accepted
+    print r.text
+    if r_data["header"]['code'] != '200':
+        raise CredentialsError(Exception('Your credentials are invalid. Verify your username and password in config.yaml file.'))
+    
+    ctx.obj['SUBMISSION'] = {}
+    ctx.obj['SUBMISSION']['sessionToken'] = r_data['response']['result'][0]['session']['sessionToken']
+    
+    
 
 
 def logout(ctx):
-    url = "%slogout" % EGA_SUB_URL_PROD
+    """ Terminate the session token on EGA side and deleting the token on the client side. """
+    if 'apiUrl' in ctx.obj['SETTINGS']:
+        api_url = ctx.obj['SETTINGS']['apiUrl']
+    else:
+        api_url = EGA_SUB_URL_PROD
+        
+    url = "%slogout" % api_url
+    
     headers = {
         'Content-Type': 'application/json',
         'X-Token': ctx.obj['SUBMISSION']['sessionToken']
         }
     r = requests.delete(url,headers=headers)
-    if json.loads(r.text)['header']['userMessage'] == "OK":
-        ctx.obj['SUBMISSION'] = {}
+    ctx.obj['SUBMISSION'].clear()
         
         
 
 def prepare_submission(ctx, submission):
+    """ This function checks if the submission has an ega id and requests one if not """
+    
+    if 'apiUrl' in ctx.obj['SETTINGS']:
+        api_url = ctx.obj['SETTINGS']['apiUrl']
+    else:
+        api_url = EGA_SUB_URL_PROD
+    
     if 'id' in ctx.obj['SUBMISSION']:
         return
     
-    url = "%ssubmissions" % EGA_SUB_URL_PROD
+    url = "%ssubmissions" % api_url
+    
     headers = {
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']

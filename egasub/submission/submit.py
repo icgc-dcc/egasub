@@ -8,10 +8,10 @@ from ..ega.entities.attribute import Attribute
 from ..ega.entities.submission_subset_data import SubmissionSubsetData
 from ..ega.services import login, logout, submit_sample, prepare_submission, submit_experiment, submit_run, submit_submission, sample_log_directory,sample_status_file,set_sample_status,get_sample_status
 from ..icgc.services import id_service
-from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError
+from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
 from click import echo
 import yaml
-import os
+import os, sys
 
 def metadata_parser(ctx, metadata):
     with open(metadata, 'r') as stream:
@@ -68,7 +68,13 @@ def metadata_parser(ctx, metadata):
 
 def perform_submission(ctx, submission_dirs):
     echo("Login attempt with credentials in .egasub/config.yaml")
-    login(ctx)
+    
+    try:
+        login(ctx)
+    except CredentialsError as error:
+        print "An error occured: " +str(error)
+        sys.exit(0)
+        
     echo("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
