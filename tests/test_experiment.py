@@ -1,6 +1,6 @@
 from egasub.ega.entities.experiment import Experiment
 
-experiment = Experiment('an alias','The title of the experiment',2,4,3,5,'Description of the design','Library name','Library construction protocol',3,4,5,1022,3000)
+experiment = Experiment('an alias','The title of the experiment',2,4,3,5,'Description of the design','Library name','Library construction protocol',3,4,5,1022,3000,22)
 experiment_to_dict = {
         'title' : 'The title of the experiment',
         'instrumentModelId' : 2,
@@ -15,7 +15,8 @@ experiment_to_dict = {
         'pairedNominalSdev' : 5,
         'sampleId' : 1022,
         'studyId' : 3000,
-        'alias' : 'an alias'
+        'alias' : 'an alias',
+        'id' : 22
     }
 
 def test_title():
@@ -62,4 +63,7 @@ def test_to_dict():
     
 def test_alias():
     assert 'an alias' == experiment.alias
+    
+def test_id():
+    assert 22 == experiment.id
     

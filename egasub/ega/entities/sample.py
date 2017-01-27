@@ -3,7 +3,7 @@
 class Sample(object):
     def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
                  cell_line,region,phenotype, subject_id, anonymized_name, bio_sample_id,
-                 sample_age, sample_detail, attributes):
+                 sample_age, sample_detail, attributes,id):
         self.alias = alias
         self.title = title
         self.description  = description
@@ -19,6 +19,7 @@ class Sample(object):
         self.sample_age = sample_age
         self.sample_detail = sample_detail
         self.attributes = attributes
+        self.id = id
 
 
     def to_dict(self):
@@ -37,7 +38,8 @@ class Sample(object):
             'bioSampleId' : self.bio_sample_id,
             'sampleAge' : self.sample_age,
             'sampleDetail' : self.sample_detail,
-            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes)
+            'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes),
+            'id' : self.id
             }
 
 

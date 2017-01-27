@@ -3,7 +3,7 @@ class Experiment(object):
     def __init__(self, alias, title, instrument_model_id, library_source_id, library_selection_id,
                  library_strategy_id, design_description, library_name, library_construction_protocol,
                  library_layout_id, paired_nomial_length, paired_nominal_sdev,
-                 sample_id, study_id):
+                 sample_id, study_id,id):
         self.alias = alias
         self.title = title
         self.instrument_model_id = instrument_model_id
@@ -18,6 +18,7 @@ class Experiment(object):
         self.paired_nominal_sdev = paired_nominal_sdev
         self.sample_id = sample_id
         self.study_id = study_id
+        self.id = id
 
         
     def to_dict(self):
@@ -35,7 +36,8 @@ class Experiment(object):
             'pairedNominalLength' : self.paired_nominal_length,
             'pairedNominalSdev' : self.paired_nominal_sdev,
             'sampleId' : self.sample_id,
-            'studyId' : self.study_id
+            'studyId' : self.study_id,
+            'id' : self.id
             }
 
 

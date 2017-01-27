@@ -10,17 +10,19 @@ experiment:
   libraryLayoutId: 1 # 0=paired, 1=single
   pairedNominalLength: 420
   pairedNominalSdev: 36
+  sampleId: 
+  studyId: 
 sample:
   alias: sample_y
-  caseOrControlId: 3 # 0=case, 1=control, 2=both, 3=NA
-  genderId: 0 # 0=female, 1=male, 2=unknown
+  caseOrControlId: 2
+  genderId: 1 # 0=female, 1=male, 2=unknown
   organismPart: 
   cellLine: 
   region:
   phenotype: Breast cancer
-  subjectId:
+  subjectId: "abc"
   anonymizedName: 
-  bioSampleId: 
+  biosampleId: 
   sampleAge: 
   sampleDetail: 
 run:

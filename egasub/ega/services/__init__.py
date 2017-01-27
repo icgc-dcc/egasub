@@ -3,7 +3,7 @@ import json
 from click import echo
 from ..entities import sample
 from ..entities import analysis
-import pprint
+import os
 
 
 XML_EGA_SUB_URL_TEST = "https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/"
@@ -64,9 +64,21 @@ def prepare_submission(ctx, submission):
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
     
     
+def sample_log_directory(ctx,sample_dir):
+    return os.path.join(ctx.obj['CURRENT_DIR'],sample_dir,".log")
 
+def sample_status_file(ctx, sample_dir):
+    return os.path.join(sample_log_directory(ctx, sample_dir),"status")
 
-def submit_sample(ctx, sample):
+def set_sample_status(ctx,sample_dir,status):
+    status_file = open(sample_status_file(ctx, sample_dir),"w")
+    status_file.write(status)
+    status_file.close()
+    
+def get_sample_status(ctx,sample_dir):
+    return open(sample_status_file(ctx, sample_dir),"r").read()
+
+def submit_sample(ctx, sample,sample_dir):
     url = "%s/submissions/%s/samples" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
     
     headers = {
@@ -76,13 +88,39 @@ def submit_sample(ctx, sample):
     
     r = requests.post(url,data=json.dumps(sample.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-    print r_data
-    if r_data['header']['code'] != 200:
-        print r_data['header']['userMessage']
-        return r_data['response']['result'][0]['id']
+    
+    if r_data['header']['code'] == "200":
+        sample.id = r_data['response']['result'][0]['id']
     else:
-        return r_data['header']['userMessage']
-
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
+    
+    set_sample_status(ctx, sample_dir, "DRAFT")
+    
+    echo(" - Sample validation...")
+    validate_sample(ctx, sample,sample_dir)
+    echo(" - Validation completed")
+    
+    
+    
+def validate_sample(ctx,sample,sample_dir):
+    if sample.id == None:
+        raise Exception('Sample id missing.')
+    
+    url = "%ssamples/%s?action=VALIDATE" % (EGA_SUB_URL_PROD,sample.id)
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    r = requests.put(url,headers=headers)
+    r_data = json.loads(r.text)
+    
+    if r_data['header']['code'] == "200":
+        set_sample_status(ctx, sample_dir, "VALIDATED")
+    else:
+        raise Exception(r_data['header']['userMessage'])
+    
 
 def submit_experiment(ctx, experiment):
     url = "%s/submissions/%s/experiments" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
@@ -95,11 +133,11 @@ def submit_experiment(ctx, experiment):
     r = requests.post(url,data=json.dumps(experiment.to_dict()), headers=headers)
     r_data = json.loads(r.text)
     
-    if r_data['header']['code'] != 200:
-        print r_data['header']['userMessage']
-        return r_data['response']['result'][0]['id']
+    if r_data['header']['code'] == "200":
+        experiment.id = r_data['response']['result'][0]['id']
     else:
-        return r_data['header']['userMessage']
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
 
 def submit_analysis(ctx, analysis):
     """
@@ -117,14 +155,27 @@ def submit_run(ctx, run):
     }
     
     r = requests.post(url,data=json.dumps(run.to_dict()), headers=headers)
-    print r.text
+    #print r.text
     r_data = json.loads(r.text)
     
-    if r_data['header']['code'] != 200:
-        print r_data['header']['userMessage']
-        return r_data['response']['result'][0]['id']
+    if r_data['header']['code'] == "200":
+        run.id = r_data['response']['result'][0]['id']
     else:
-        return r_data['header']['userMessage']
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
+    
+
+
+def submit_submission(ctx,submission):
+    url = "%ssubmissions/%s?action=SUBMIT" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+
+    r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
 
 
 def submit_study(ctx, run):
