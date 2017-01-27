@@ -8,7 +8,7 @@ import yaml
 def test_init_function():    
     runner = CliRunner()
     with runner.isolated_filesystem():
-        result = runner.invoke(main,['init','test_account','test_password','test_token','test_code'])
+        result = runner.invoke(main,['init','--ega_submitter_account','test_account','--ega_submitter_password','test_password','--icgc_id_service_token','test_token','--icgc_project_code','test_code'])
         assert not result.exception
         assert os.path.isdir('.egasub')
         assert os.path.isdir('.egasub/policy')
