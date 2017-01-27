@@ -1,4 +1,5 @@
 import requests
+import json
 
 ICGC_ID_SERVICE_URL_TEST = "http://hetl2-dcc.res.oicr.on.ca:8000"
 ICGC_ID_SERVICE_URL_PROD = "http://hetl2-dcc.res.oicr.on.ca:8000"
@@ -48,6 +49,8 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
                                 'Authorization': 'Bearer %s' % ctx.obj['SETTINGS'].get('icgc_id_service_token')
                                 }
                     )
+    
+    return r.text
 
     # TODO: parse response
 

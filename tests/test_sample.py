@@ -51,7 +51,6 @@ def test_alias():
     
 def test_id():
     assert 33 == sample.id
-    
 
 def test_to_dict():
     assert cmp(
