@@ -114,7 +114,12 @@ def validate_sample(ctx,sample,sample_dir):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.put(url,headers=headers)
-    set_sample_status(ctx, sample_dir, "VALIDATED")
+    r_data = json.loads(r.text)
+    
+    if r_data['header']['code'] == "200":
+        set_sample_status(ctx, sample_dir, "VALIDATED")
+    else:
+        raise Exception(r_data['header']['userMessage'])
     
 
 def submit_experiment(ctx, experiment):
@@ -168,11 +173,9 @@ def submit_submission(ctx,submission):
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
-       
-    r = requests.put(url,data=json.dumps(submission.submission_subset.to_dict()), headers=headers)
-    r_data = json.loads(r.text)
-        
 
+    r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
 
 
 def submit_study(ctx, run):

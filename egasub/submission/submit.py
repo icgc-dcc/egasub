@@ -85,12 +85,15 @@ def perform_submission(ctx, submission_dirs):
         experiment, sample, run = metadata_parser(ctx,os.path.join(ctx.obj['CURRENT_DIR'],submission_dir,'experiment.yaml'))
         
         echo(" - Submission of the sample")
+        """
+        # we will need to do more to be able to really track submssion steps
         if not os.path.isdir(sample_log_directory(ctx,submission_dir)):
             os.mkdir(sample_log_directory(ctx,submission_dir))
         if not os.path.exists(sample_status_file(ctx,submission_dir)):
             set_sample_status(ctx,submission_dir,"DRAFT")
         if get_sample_status(ctx,submission_dir)=="VALIDATED":
             continue
+        """
 
         # Submission of the sample and recording of the id
         submit_sample(ctx, sample,submission_dir)
