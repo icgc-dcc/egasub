@@ -1,0 +1,29 @@
+analysis:
+  title: 'The title of the analysis'
+  description: description
+  analysis_center: analysis_center
+  analysis_date: analysis_date
+  analysis_type_id: 0  # Reference Alignment (BAM)
+  genome_id: 15
+  chromosome_references:
+    - 24
+    - 25
+    - 26
+  experiment_type_id: 0  # whole genome sequencing
+  platform: Illumina HiSeq 2000
+sample:
+  alias: sample_x
+  caseOrControlId: 0
+  genderId: 1
+  organismPart: 
+  cellLine: 
+  region:
+  phenotype: Breast cancer
+  subjectId:
+  anonymizedName: 
+  bioSampleId: 
+  sampleAge: 
+  sampleDetail: 
+file:
+  - fileName: alignment.1/sample_x/sequence_file.single_end.sample_x.bam.gpg
+    checksumMethod: md5
