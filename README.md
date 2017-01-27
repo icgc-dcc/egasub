@@ -20,7 +20,11 @@ python setup.py test
 
 # install egasub
 pipsi install .
+```
 
-# run egasub
+## Run
+
+Once installed, you can invoke the tool as follow. This will display information about how to use sub-commands and their options.
+```
 egasub
 ```
