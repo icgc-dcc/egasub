@@ -49,21 +49,24 @@ def report(ctx, source):
 
 
 @main.command()
-@click.option('--ega_submitter_account', prompt=True)
-@click.option('--ega_submitter_password', prompt=True,hide_input=True)
-@click.option('--icgc_id_service_token', prompt=True)
-@click.option('--icgc_project_code', prompt=True)
+@click.argument('credentials',nargs=-1)
 @click.pass_context
-def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code):
+def init(ctx,credentials):
     """
-    Run once to create a submission workspace.
+    Run once to create a submission workspace.]
+    egasub init ega_submitter_account ega_submitter_password icgc_id_service_token icgc_project_code
     """
 
     if ctx.obj.get('WORKSPACE_PATH'):
         click.echo('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
+        
+    ega_submitter_account = credentials[0] if len(credentials)>0  else None
+    ega_submitter_password = credentials[1] if len(credentials)>1  else None
+    icgc_id_service_token = credentials[2] if len(credentials)>2  else None
+    icgc_project_code = credentials[3] if len(credentials)>3  else None
 
-    init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token, icgc_project_code)
+    init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code )
 
 
 if __name__ == '__main__':
