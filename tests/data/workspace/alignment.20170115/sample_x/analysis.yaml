@@ -9,7 +9,8 @@ analysis:
     - 24
     - 25
     - 26
-  experiment_type_id: 0  # whole genome sequencing
+  experiment_type_id:
+    - 0  # whole genome sequencing
   platform: Illumina HiSeq 2000
 sample:
   alias: sample_x
@@ -24,6 +25,6 @@ sample:
   bioSampleId: 
   sampleAge: 
   sampleDetail: 
-file:
-  - fileName: alignment.1/sample_x/sequence_file.single_end.sample_x.bam.gpg
+files:
+  - fileName: alignment.20170115/sample_x/sequence_file.single_end.sample_x.bam.gpg
     checksumMethod: md5

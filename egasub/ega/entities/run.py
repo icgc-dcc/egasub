@@ -1,4 +1,5 @@
-
+import yaml
+from file import File
 
 class Run(object):
     def __init__(self,alias,sample_id,run_file_type_id,experiment_id,files,id):
@@ -23,3 +24,15 @@ class Run(object):
 
     def to_xml(self):
         pass
+    
+    @staticmethod
+    def load_from_yaml(ctx,yaml_path):
+        with open(yaml_path, 'r') as stream:
+            yaml_stream = yaml.load(stream)
+            
+        yaml_run = yaml_stream.get('run')
+        
+        return Run(None,yaml_run.get('sampleId'),
+              yaml_run.get('runFileTypeId'),
+              yaml_run.get('experimentId'),
+              File.load_list_from_yaml(ctx,yaml_path),None)

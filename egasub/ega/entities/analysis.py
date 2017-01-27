@@ -1,3 +1,7 @@
+import yaml
+from file import File
+from sample_reference import SampleReference
+from attribute import Attribute
 
 class Analysis(object):
     def __init__(self, alias, title, description, study_id, sample_references, analysis_center, analysis_date,
@@ -29,7 +33,7 @@ class Analysis(object):
             'files' : map(lambda file: file.to_dict(), self.files),
             'attributes' : map(lambda att: att.to_dict(), self.attributes),
             'genomeId' : self.genome_id,
-            'chromosomeReferences' : map(lambda ref: ref.to_dict(), self.chromosome_references),
+            'chromosomeReferences' : self.chromosome_references,
             'experimentTypeId' : self.experiment_type_id,
             'platform' : self.platform,
             'alias' : self.alias
@@ -37,6 +41,29 @@ class Analysis(object):
 
     def to_xml(self):
         pass
+    
+    @staticmethod
+    def load_from_yaml(ctx,yaml_path):
+        with open(yaml_path, 'r') as stream:
+            yaml_stream = yaml.load(stream)
+            
+        yaml_analysis = yaml_stream.get('analysis')        
+            
+        return Analysis(None,
+            yaml_analysis.get('title'),
+            yaml_analysis.get('description'),
+            yaml_analysis.get('study_id'),
+            SampleReference.load_list_from_yaml(ctx,yaml_path),
+            yaml_analysis.get('analysis_center'),
+            yaml_analysis.get('analysis_date'),
+            yaml_analysis.get('analysis_type_id'),
+            File.load_list_from_yaml(ctx,yaml_path),
+            Attribute.load_list_from_yaml(ctx,yaml_path),
+            yaml_analysis.get('genome_id'),
+            yaml_analysis.get('chromosome_references'),
+            yaml_analysis.get('experiment_type_id'),
+            yaml_analysis.get('platform')
+            )
 
 
 

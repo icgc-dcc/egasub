@@ -1,3 +1,4 @@
+import yaml
 
 class Experiment(object):
     def __init__(self, alias, title, instrument_model_id, library_source_id, library_selection_id,
@@ -43,3 +44,28 @@ class Experiment(object):
 
     def to_xml(self):
         pass
+    
+    @staticmethod
+    def load_from_yaml(ctx,yaml_path):
+        with open(yaml_path, 'r') as stream:
+            yaml_stream = yaml.load(stream)
+        
+        yaml_experiment = yaml_stream.get('experiment')
+        
+        return Experiment(None,yaml_experiment.get('title'),
+                    yaml_experiment.get('instrumentModelId'),
+                    yaml_experiment.get('librarySourceId'),
+                    yaml_experiment.get('librarySelectionId'),
+                    yaml_experiment.get('libraryStrategyId'),
+                    yaml_experiment.get('designDescription'),
+                    yaml_experiment.get('libraryName'),
+                    yaml_experiment.get('libraryConstructionProtocol'),
+                    yaml_experiment.get('libraryLayoutId'),
+                    yaml_experiment.get('pairedNominalLength'),
+                    yaml_experiment.get('pairedNominalSdev'),
+                    yaml_experiment.get('sampleId'),
+                    yaml_experiment.get('studyId'),
+                    None
+        )
+        
+        

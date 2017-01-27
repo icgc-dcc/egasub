@@ -1,4 +1,4 @@
-
+import yaml
 
 class Sample(object):
     def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
@@ -46,3 +46,26 @@ class Sample(object):
     def to_xml(self):
         pass
         
+    @staticmethod
+    def load_from_yaml(ctx,yaml_path):
+        with open(yaml_path, 'r') as stream:
+            yaml_stream = yaml.load(stream)
+            
+        yaml_sample = yaml_stream.get('sample')
+            
+        return Sample(yaml_sample.get('alias'),yaml_sample.get('title'),
+                    yaml_sample.get('description'),
+                    yaml_sample.get('caseOrControlId'),
+                    yaml_sample.get('genderId'),
+                    yaml_sample.get('organismPart'),
+                    yaml_sample.get('cellLine'),
+                    yaml_sample.get('region'),
+                    yaml_sample.get('phenotype'),
+                    yaml_sample.get('subjectId'),
+                    yaml_sample.get('anonymizedName'),
+                    yaml_sample.get('bioSampleId'),
+                    yaml_sample.get('sampleAge'),
+                    yaml_sample.get('sampleDetail'),
+                    [],
+                    None
+        )

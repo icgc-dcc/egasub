@@ -4,6 +4,8 @@ import yaml
 import glob
 import ftplib
 from click import echo
+from egasub.ega.entities.file import File
+
 
 
 def initialize_app(ctx):
