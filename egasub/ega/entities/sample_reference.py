@@ -1,5 +1,5 @@
 import yaml
-from StdSuites.AppleScript_Suite import reference
+
 
 class SampleReference(object):
     def __init__(self,value,label):
