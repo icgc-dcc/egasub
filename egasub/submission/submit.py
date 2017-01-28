@@ -4,17 +4,24 @@ from ..ega.entities.run import Run
 from ..ega.entities.experiment import Experiment
 from ..ega.entities.file import File
 from ..ega.entities.submission import Submission
+from ..ega.entities.attribute import Attribute
 from ..ega.entities.submission_subset_data import SubmissionSubsetData
 from ..ega.services import login, logout, submit_sample, submit_analysis,prepare_submission, submit_experiment, submit_run, submit_submission, sample_log_directory,sample_status_file,set_sample_status,get_sample_status
 from ..icgc.services import id_service
-from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError
+from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
 from click import echo
 import os
-    
+
 
 def perform_submission(ctx, submission_dirs):
     echo("Login attempt with credentials in .egasub/config.yaml")
-    login(ctx)
+    
+    try:
+        login(ctx)
+    except CredentialsError as error:
+        print "An error occured: " +str(error)
+        sys.exit(0)
+        
     echo("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
@@ -54,7 +61,8 @@ def perform_submission(ctx, submission_dirs):
             sample = Sample.load_from_yaml(ctx,metadata)
             submit_analysis(ctx,analysis)
             continue
-        
+
+
         #echo(" - Submission of the sample")
         # we will need to do more to be able to really track submssion steps
         #if not os.path.isdir(sample_log_directory(ctx,submission_dir)):
