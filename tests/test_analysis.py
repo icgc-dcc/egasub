@@ -56,21 +56,21 @@ def test_alias():
     assert 'an alias' == analysis.alias
     
 def test_to_dict():
-        assert cmp(
-        {
-            'title' : 'a title',
-            'description':'a description',
-            'studyId':3,
-            'sampleReferences' : map(lambda ref: ref.to_dict(), sample_references),
-            'analysisDate' : 'analysis date',
-            'analysisCenter' : 'analysis center',
-            'analysisTypeId' : 3,
-            'genomeId' : 4,
-            'experimentTypeId' : [3,5],
-            'platform' : 'a platform',
-            'files' : map(lambda file: file.to_dict(), files),
-            'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
-            'chromosomeReferences' : map(lambda ref: ref.to_dict(), chromosome_references),
-            'alias' : 'an alias'
-        }, analysis.to_dict()) == 0
-    
+    assert cmp(
+    {
+        'title' : 'a title',
+        'description':'a description',
+        'studyId':3,
+        'sampleReferences' : map(lambda ref: ref.to_dict(), sample_references),
+        'analysisDate' : 'analysis date',
+        'analysisCenter' : 'analysis center',
+        'analysisTypeId' : 3,
+        'genomeId' : 4,
+        'experimentTypeId' : [3,5],
+        'platform' : 'a platform',
+        'files' : map(lambda file: file.to_dict(), files),
+        'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
+        'chromosomeReferences' : map(lambda ref: ref.to_dict(), chromosome_references),
+        'alias' : 'an alias'
+    }, analysis.to_dict()) == 0
+

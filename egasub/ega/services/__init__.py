@@ -173,10 +173,22 @@ def submit_experiment(ctx, experiment):
         raise Exception(r_data['header']['userMessage'])
 
 def submit_analysis(ctx, analysis):
-    """
-    To be implemented
-    """
-    pass
+    url = "%s/submissions/%s/analyses" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    
+    r = requests.post(url,data=json.dumps(analysis.to_dict()), headers=headers)
+    r_data = json.loads(r.text)
+    print r_data
+    
+    if r_data['header']['code'] == "200":
+        run.id = r_data['response']['result'][0]['id']
+    else:
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
 
 
 def submit_run(ctx, run):
