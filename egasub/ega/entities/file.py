@@ -31,20 +31,3 @@ class File(object):
                 file_dict.get('checksumMethod')
             )
 
-
-    @staticmethod
-    def load_list_from_yaml(ctx, yaml_path):
-        with open(yaml_path, 'r') as stream:
-            yaml_stream = yaml.load(stream)
-            
-        yaml_files = yaml_stream.get('files')
-        
-        files = []
-        checksum_method = 'md5'
-        for _file in yaml_files:
-            full_path_file = os.path.join(ctx.obj['WORKSPACE_PATH'],_file.get('fileName'))
-            md5_file = full_path_file+"."+checksum_method
-            md5_checksum_encrypt = open(md5_file, 'r').readline().rstrip()
-            md5_checksum_unencrypt = open(os.path.splitext(full_path_file)[0]+"."+checksum_method,'r').readline().rstrip()
-            files.append(File(None,_file.get('fileName'),md5_checksum_encrypt,md5_checksum_unencrypt,checksum_method))
-        return files
