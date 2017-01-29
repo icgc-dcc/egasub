@@ -35,6 +35,21 @@ def submit(ctx, source):
 
     perform_submission(ctx, source)
 
+@main.command()
+@click.argument('source', type=click.Path(exists=True), nargs=-1)
+@click.pass_context
+def dry_run(ctx, source):
+    utils.initialize_app(ctx)
+    if not ctx.obj.get('WORKSPACE_PATH'):
+        echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
+        ctx.abort()
+
+    if not source:
+        echo('Error: You must specify at least one submission directory.')
+        ctx.abort()
+
+    perform_submission(ctx, source, True)
+
 
 @main.command()
 @click.argument('source', type=click.Path(exists=True), nargs=-1)

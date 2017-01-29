@@ -42,30 +42,3 @@ class Analysis(object):
     def to_xml(self):
         pass
     
-    @staticmethod
-    def load_from_yaml(ctx,yaml_path):
-        with open(yaml_path, 'r') as stream:
-            yaml_stream = yaml.load(stream)
-            
-        yaml_analysis = yaml_stream.get('analysis')        
-            
-        return Analysis(None,
-            yaml_analysis.get('title'),
-            yaml_analysis.get('description'),
-            yaml_analysis.get('study_id'),
-            SampleReference.load_list_from_yaml(ctx,yaml_path),
-            yaml_analysis.get('analysis_center'),
-            yaml_analysis.get('analysis_date'),
-            yaml_analysis.get('analysis_type_id'),
-            File.load_list_from_yaml(ctx,yaml_path),
-            Attribute.load_list_from_yaml(ctx,yaml_path),
-            yaml_analysis.get('genome_id'),
-            yaml_analysis.get('chromosome_references'),
-            yaml_analysis.get('experiment_type_id'),
-            yaml_analysis.get('platform')
-            )
-
-
-
-
-

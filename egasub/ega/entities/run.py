@@ -24,15 +24,16 @@ class Run(object):
 
     def to_xml(self):
         pass
-    
+
+
     @staticmethod
-    def load_from_yaml(ctx,yaml_path):
-        with open(yaml_path, 'r') as stream:
-            yaml_stream = yaml.load(stream)
-            
-        yaml_run = yaml_stream.get('run')
-        
-        return Run(None,yaml_run.get('sampleId'),
-              yaml_run.get('runFileTypeId'),
-              yaml_run.get('experimentId'),
-              File.load_list_from_yaml(ctx,yaml_path),None)
+    def from_dict(run_dict):
+        return Run(
+                None,
+                run_dict.get('sampleId'),
+                run_dict.get('runFileTypeId'),
+                run_dict.get('experimentId'),
+                [] if not run_dict.get('files') else map(lambda file_dict: File.from_dict(file_dict), run_dict.get('files')),
+                None
+            )
+
