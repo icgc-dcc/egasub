@@ -184,71 +184,6 @@ def obj_type_to_endpoint(obj_type):
 
     return endpoint
 
-# to be deleted
-def submit_sample(ctx, sample):
-    echo(" - Sample submission...")
-
-    url = "%s/submissions/%s/samples" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
-    
-    headers = {
-        'Content-Type': 'application/json',
-        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
-    }
-    
-    r = requests.post(url,data=json.dumps(sample.to_dict()), headers=headers)
-    r_data = json.loads(r.text)
-    
-    if r_data['header']['code'] == "200":
-        sample.id = r_data['response']['result'][0]['id']
-    else:
-        #TODO
-        raise Exception(r_data['header']['userMessage'])
-    
-    validate_sample(ctx, sample)
-
-# to be deleted
-def validate_sample(ctx, sample):
-    echo(" - Sample validation...")
-
-    if sample.id == None:
-        raise Exception('Sample id missing.')
-    
-    url = "%ssamples/%s?action=VALIDATE" % (EGA_SUB_URL_PROD,sample.id)
-    
-    headers = {
-        'Content-Type': 'application/json',
-        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
-    }
-    r = requests.put(url,headers=headers)
-    #echo(r.text)  # for debug
-    r_data = json.loads(r.text)
-
-    # enable this when EGA fixes the validation bug
-    #if r_data.get('header', {}).get('code') != "200":
-    #    raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
-
-    result = r_data.get('response').get('result',[]) if r_data.get('response') else None
-
-    if result and result[0].get('validationErrorMessages'):
-        err = "\n".join(result[0].get('validationErrorMessages'))
-        echo('Validation error: %s' % err)
-        if err == 'Alias sample_x already exists in another sample':
-            samples_with_err = query_by_id(ctx, 'samples', sample.alias, 'ALIAS')
-            for s in samples_with_err:
-                if s.get('status') == 'VALIDATED_WITH_ERRORS':
-                    delete(ctx, 'samples', s.get('id'))
-        else:
-            raise Exception
-
-    for s in query_by_id(ctx, 'samples', sample.alias, 'ALIAS'):
-        echo('Sample with alias: %s, id: %s' % (s.get('alias'), s.get('id')))
-        #echo(json.dumps(s))  # for debug
-        if s.get('status') in ('VALIDATED', 'SUBMITTED'):  # use the good sample id
-            sample.id = s.get('id')
-            break
-
-    echo(" - Validation completed.")
-
 
 def query_by_id(ctx, obj_type, obj_id, id_type):
     url = "%s%s/%s?idType=%s" % (EGA_SUB_URL_PROD, obj_type, obj_id, id_type)
@@ -278,63 +213,6 @@ def delete(ctx, obj_type, obj_id):
     # echo('Deleted: %s %s' % (obj_type, obj_id))  # for debug
     #echo(r.text)  # for debug
 
-# to be deleted
-def submit_experiment(ctx, experiment):
-    url = "%s/submissions/%s/experiments" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
-    
-    headers = {
-        'Content-Type': 'application/json',
-        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
-    }
-    
-    r = requests.post(url,data=json.dumps(experiment.to_dict()), headers=headers)
-    r_data = json.loads(r.text)
-    
-    if r_data['header']['code'] == "200":
-        experiment.id = r_data['response']['result'][0]['id']
-    else:
-        #TODO
-        raise Exception(r_data['header']['userMessage'])
-
-# to be deleted
-def submit_analysis(ctx, analysis):
-    url = "%s/submissions/%s/analyses" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
-    
-    headers = {
-        'Content-Type': 'application/json',
-        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
-    }
-    
-    r = requests.post(url,data=json.dumps(analysis.to_dict()), headers=headers)
-    r_data = json.loads(r.text)
-    print r_data
-    
-    if r_data['header']['code'] == "200":
-        run.id = r_data['response']['result'][0]['id']
-    else:
-        #TODO
-        raise Exception(r_data['header']['userMessage'])
-
-# to be deleted
-def submit_run(ctx, run):
-    url = "%s/submissions/%s/runs" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
-    
-    headers = {
-        'Content-Type': 'application/json',
-        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
-    }
-    
-    r = requests.post(url,data=json.dumps(run.to_dict()), headers=headers)
-    #print r.text
-    r_data = json.loads(r.text)
-    
-    if r_data['header']['code'] == "200":
-        run.id = r_data['response']['result'][0]['id']
-    else:
-        #TODO
-        raise Exception(r_data['header']['userMessage'])
-    
-
 
 def submit_submission(ctx,submission):
     url = "%ssubmissions/%s?action=SUBMIT" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
@@ -346,20 +224,4 @@ def submit_submission(ctx,submission):
 
     r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-
-# to be deleted
-def submit_study(ctx, run):
-    """
-    To be implemented
-    """
-    pass
-
-# to be deleted
-def submit_metadata(ctx, metadata):
-    """
-    To be implemented
-    metadata is a universal Metadata object which can be Analysis or Experiment
-    """
-    pass
-
 
