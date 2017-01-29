@@ -184,7 +184,7 @@ def obj_type_to_endpoint(obj_type):
 
     return endpoint
 
-
+# to be deleted
 def submit_sample(ctx, sample):
     echo(" - Sample submission...")
 
@@ -206,7 +206,7 @@ def submit_sample(ctx, sample):
     
     validate_sample(ctx, sample)
 
-
+# to be deleted
 def validate_sample(ctx, sample):
     echo(" - Sample validation...")
 
@@ -278,7 +278,7 @@ def delete(ctx, obj_type, obj_id):
     # echo('Deleted: %s %s' % (obj_type, obj_id))  # for debug
     #echo(r.text)  # for debug
 
-
+# to be deleted
 def submit_experiment(ctx, experiment):
     url = "%s/submissions/%s/experiments" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
     
@@ -296,6 +296,7 @@ def submit_experiment(ctx, experiment):
         #TODO
         raise Exception(r_data['header']['userMessage'])
 
+# to be deleted
 def submit_analysis(ctx, analysis):
     url = "%s/submissions/%s/analyses" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
     
@@ -314,7 +315,7 @@ def submit_analysis(ctx, analysis):
         #TODO
         raise Exception(r_data['header']['userMessage'])
 
-
+# to be deleted
 def submit_run(ctx, run):
     url = "%s/submissions/%s/runs" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
     
@@ -346,14 +347,14 @@ def submit_submission(ctx,submission):
     r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
     r_data = json.loads(r.text)
 
-
+# to be deleted
 def submit_study(ctx, run):
     """
     To be implemented
     """
     pass
 
-
+# to be deleted
 def submit_metadata(ctx, metadata):
     """
     To be implemented

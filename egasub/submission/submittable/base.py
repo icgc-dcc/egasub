@@ -28,6 +28,10 @@ class Submittable(object):
     def metadata(self):
         return self._metadata
 
+    @property
+    def status(self):
+        return self._status
+
     def _parse_meta(self):
         yaml_file = os.path.join(self.path, '.'.join([self.type, 'yaml']))
         with open(yaml_file, 'r') as yaml_stream:
@@ -48,6 +52,13 @@ class Submittable(object):
 
             unencrypt_md5sum_file = os.path.join(self.path, re.sub(r'\.gpg$', '', data_file_name) + '.md5')
             f['unencryptedChecksum'] = _get_md5sum(unencrypt_md5sum_file)
+
+    def _check_status(self):
+        """
+        This will check local log info to get the status
+        """
+        # hardcode to 'NEW' for now
+        return 'NEW'
 
 
 class Experiment(Submittable):

@@ -2,7 +2,7 @@ import os
 import click
 import utils
 from click import echo
-from submission import init_workspace, perform_submission, perform_submission_old
+from submission import init_workspace, perform_submission
 
 
 @click.group()
@@ -33,8 +33,7 @@ def submit(ctx, source):
         echo('Error: You must specify at least one submission directory.')
         ctx.abort()
 
-    # to be replaced by perform_submission
-    perform_submission_old(ctx, source)
+    perform_submission(ctx, source)
 
 @main.command()
 @click.argument('source', type=click.Path(exists=True), nargs=-1)

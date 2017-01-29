@@ -9,6 +9,7 @@ class Unaligned(Experiment):
     def __init__(self, path):
         self._path = path
         self._parse_meta()
+        self._status = self._check_status()
 
         self._sample = Sample.from_dict(self.metadata.get('sample'))
         self._experiment = EExperiment.from_dict(self.metadata.get('experiment'))
@@ -30,3 +31,4 @@ class Unaligned(Experiment):
     @property
     def run(self):
         return self._run
+
