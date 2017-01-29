@@ -1,3 +1,5 @@
+from click import echo
+
 from ..icgc.services import id_service
 from ..ega.services import login, logout, submit_obj
 from ..ega.entities import Attribute
@@ -9,6 +11,8 @@ class Submitter(object):
 
     def submit(self, submittable, dry_run=None):
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
+            echo(' Processing %s' % submittable.sample.alias)
+
             submittable.sample.attributes.append(
                     Attribute(
                         'icgc_sample_id',
@@ -29,6 +33,8 @@ class Submitter(object):
             submittable.run.sample_id = submittable.sample.id
             submittable.run.experiment_id = submittable.experiment.id
             submit_obj(self.ctx, submittable.run, 'run')
+
+            echo(' Finished processing %s' % submittable.sample.alias)
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'alignment':
             """

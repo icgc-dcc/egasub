@@ -110,17 +110,18 @@ def submit_obj(ctx, obj, obj_type):
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
-    
+
+    #echo('Registering object: %s' % json.dumps(obj.to_dict())) # for debug
     r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
     #echo(r.text)  # for debug
     r_data = json.loads(r.text)
-    
+
     if r_data['header']['code'] == "200":
         obj.id = r_data['response']['result'][0]['id']
     else:
         #TODO
         raise Exception(r_data['header']['userMessage'])
-    
+
     validate_obj(ctx, obj, obj_type)
 
 

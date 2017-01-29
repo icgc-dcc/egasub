@@ -10,6 +10,7 @@ class Alignment(Analysis):
     def __init__(self, path):
         self._path = path
         self._parse_meta()
+        self._status = self._check_status()
 
         self._sample = Sample.from_dict(self.metadata.get('sample'))
         self._analysis = ERun.from_dict(self.metadata.get('analysis'))
