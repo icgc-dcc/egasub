@@ -2,7 +2,8 @@ __all__ = [
     'ImproperlyConfigured',
     'EgaSubmissionError',
     'EgaObjectExistsError',
-    'CredentialsError'
+    'CredentialsError',
+    'Md5sumFileError'
 ]
 
 
@@ -41,3 +42,8 @@ class CredentialsError(Exception):
     """
     Exception raised when the login credentials are not working
     """
+
+class Md5sumFileError(Exception):
+    def __str__(self):
+        return 'Md5sumFileError(%s)' % (self.args[0])
+

@@ -35,3 +35,8 @@ class Attribute(object):
         for attribute in yaml_attributes:
             references.append(Attribute(attribute.get('tag'),attribute.get('value'),attribute.get('unit')))
         return attributes
+
+
+    @staticmethod
+    def from_dict(attr_dict):
+        return Attribute(attr_dict.get('tag'),attr_dict.get('value'),attr_dict.get('unit'))

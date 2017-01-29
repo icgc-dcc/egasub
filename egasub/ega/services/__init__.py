@@ -46,14 +46,11 @@ def login(ctx):
     r_data = json.loads(r.text)
     
     #Check if the credentials are accepted
-    print r.text
     if r_data["header"]['code'] != '200':
         raise CredentialsError(Exception('Your credentials are invalid. Verify your username and password in config.yaml file.'))
     
     ctx.obj['SUBMISSION'] = {}
     ctx.obj['SUBMISSION']['sessionToken'] = r_data['response']['result'][0]['session']['sessionToken']
-    
-    
 
 
 def logout(ctx):
@@ -71,8 +68,7 @@ def logout(ctx):
         }
     r = requests.delete(url,headers=headers)
     ctx.obj['SUBMISSION'].clear()
-        
-        
+
 
 def prepare_submission(ctx, submission):
     """ This function checks if the submission has an ega id and requests one if not """
@@ -95,23 +91,103 @@ def prepare_submission(ctx, submission):
     r_data = json.loads(r.text)
     
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
-    
-    
-def sample_log_directory(ctx,sample_dir):
-    return os.path.join(ctx.obj['CURRENT_DIR'],sample_dir,".log")
 
-def sample_status_file(ctx, sample_dir):
-    return os.path.join(sample_log_directory(ctx, sample_dir),"status")
 
-def set_sample_status(ctx,sample_dir,status):
-    status_file = open(sample_status_file(ctx, sample_dir),"w")
-    status_file.write(status)
-    status_file.close()
+def submit_obj(ctx, obj, obj_type):
+    echo(" - Registering %s ..." % obj_type)
+    endpoint = obj_type_to_endpoint(obj_type)
+
+    # TODO: before registering new object, we should check existence
+    #       of same type of object with the same alias
+
+    url = "%s/submissions/%s/%s" % (
+                                        EGA_SUB_URL_PROD,
+                                        ctx.obj['SUBMISSION']['id'],
+                                        endpoint
+                                    )
     
-def get_sample_status(ctx,sample_dir):
-    return open(sample_status_file(ctx, sample_dir),"r").read()
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    
+    r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
+    #echo(r.text)  # for debug
+    r_data = json.loads(r.text)
+    
+    if r_data['header']['code'] == "200":
+        obj.id = r_data['response']['result'][0]['id']
+    else:
+        #TODO
+        raise Exception(r_data['header']['userMessage'])
+    
+    validate_obj(ctx, obj, obj_type)
 
-def submit_sample(ctx, sample,sample_dir):
+
+def validate_obj(ctx, obj, obj_type):
+    echo(" - Validating %s ..." % obj_type)
+    endpoint = obj_type_to_endpoint(obj_type)
+
+    if obj.id == None:
+        raise Exception('EGA Object id missing.')
+
+    url = "%s%s/%s?action=VALIDATE" % (
+                                        EGA_SUB_URL_PROD,
+                                        endpoint,
+                                        obj.id
+                                    )
+
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    r = requests.put(url,headers=headers)
+    #echo(r.text)  # for debug
+    r_data = json.loads(r.text)
+
+    # enable this when EGA fixes the validation bug
+    #if r_data.get('header', {}).get('code') != "200":
+    #    raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
+
+    result = r_data.get('response').get('result',[]) if r_data.get('response') else None
+
+    if result and result[0].get('validationErrorMessages'):
+        err = "\n".join(result[0].get('validationErrorMessages'))
+        # echo('Validation error: %s' % err)  # for debug
+        if err == 'Alias %s already exists in another %s' % (obj.alias, obj_type):
+            objects_with_err = query_by_id(ctx, endpoint, obj.alias, 'ALIAS')
+            for s in objects_with_err:
+                if s.get('status') == 'VALIDATED_WITH_ERRORS':
+                    delete(ctx, endpoint, s.get('id'))
+        else:
+            raise Exception
+
+    for s in query_by_id(ctx, endpoint, obj.alias, 'ALIAS'):
+        #echo('%s with alias: %s, id: %s' % (obj_type, s.get('alias'), s.get('id')))  # for debug
+        #echo(json.dumps(s))  # for debug
+        if s.get('status') in ('VALIDATED', 'SUBMITTED'):  # use the good object id
+            obj.id = s.get('id')
+            break
+
+    echo(" - Validation completed.")
+
+
+def obj_type_to_endpoint(obj_type):
+    if obj_type in ('sample', 'experiment', 'run'):
+        endpoint = '%ss' % obj_type
+    elif obj_type == 'analysis':
+        endpoint = 'analyses'
+    elif obj_type == 'study':
+        endpoint = 'studies'
+    else:
+        raise Exception('Not supported EGA object type %s' % obj_type)
+
+    return endpoint
+
+
+def submit_sample(ctx, sample):
+    echo(" - Sample submission...")
+
     url = "%s/submissions/%s/samples" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
     
     headers = {
@@ -128,15 +204,12 @@ def submit_sample(ctx, sample,sample_dir):
         #TODO
         raise Exception(r_data['header']['userMessage'])
     
-    set_sample_status(ctx, sample_dir, "DRAFT")
-    
+    validate_sample(ctx, sample)
+
+
+def validate_sample(ctx, sample):
     echo(" - Sample validation...")
-    validate_sample(ctx, sample,sample_dir)
-    echo(" - Validation completed")
-    
-    
-    
-def validate_sample(ctx,sample,sample_dir):
+
     if sample.id == None:
         raise Exception('Sample id missing.')
     
@@ -147,13 +220,64 @@ def validate_sample(ctx,sample,sample_dir):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.put(url,headers=headers)
+    #echo(r.text)  # for debug
     r_data = json.loads(r.text)
-    
-    if r_data['header']['code'] == "200":
-        set_sample_status(ctx, sample_dir, "VALIDATED")
+
+    # enable this when EGA fixes the validation bug
+    #if r_data.get('header', {}).get('code') != "200":
+    #    raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
+
+    result = r_data.get('response').get('result',[]) if r_data.get('response') else None
+
+    if result and result[0].get('validationErrorMessages'):
+        err = "\n".join(result[0].get('validationErrorMessages'))
+        echo('Validation error: %s' % err)
+        if err == 'Alias sample_x already exists in another sample':
+            samples_with_err = query_by_id(ctx, 'samples', sample.alias, 'ALIAS')
+            for s in samples_with_err:
+                if s.get('status') == 'VALIDATED_WITH_ERRORS':
+                    delete(ctx, 'samples', s.get('id'))
+        else:
+            raise Exception
+
+    for s in query_by_id(ctx, 'samples', sample.alias, 'ALIAS'):
+        echo('Sample with alias: %s, id: %s' % (s.get('alias'), s.get('id')))
+        #echo(json.dumps(s))  # for debug
+        if s.get('status') in ('VALIDATED', 'SUBMITTED'):  # use the good sample id
+            sample.id = s.get('id')
+            break
+
+    echo(" - Validation completed.")
+
+
+def query_by_id(ctx, obj_type, obj_id, id_type):
+    url = "%s%s/%s?idType=%s" % (EGA_SUB_URL_PROD, obj_type, obj_id, id_type)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+
+    r = requests.get(url, headers=headers)
+    #echo(r.text)  # for debug
+    r_data = json.loads(r.text)
+    if r_data.get('response'):
+        return r_data.get('response').get('result',[])
     else:
-        raise Exception(r_data['header']['userMessage'])
-    
+        return []
+
+
+def delete(ctx, obj_type, obj_id):
+    url = "%s%s/%s" % (EGA_SUB_URL_PROD, obj_type, obj_id)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+    r = requests.delete(url, headers=headers)
+    # echo('Deleted: %s %s' % (obj_type, obj_id))  # for debug
+    #echo(r.text)  # for debug
+
 
 def submit_experiment(ctx, experiment):
     url = "%s/submissions/%s/experiments" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])

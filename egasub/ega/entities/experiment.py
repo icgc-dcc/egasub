@@ -67,5 +67,24 @@ class Experiment(object):
                     yaml_experiment.get('studyId'),
                     None
         )
-        
-        
+
+
+    @staticmethod
+    def from_dict(exp_dict):
+        return Experiment(
+                    None,
+                    exp_dict.get('title'),
+                    exp_dict.get('instrumentModelId'),
+                    exp_dict.get('librarySourceId'),
+                    exp_dict.get('librarySelectionId'),
+                    exp_dict.get('libraryStrategyId'),
+                    exp_dict.get('designDescription'),
+                    exp_dict.get('libraryName'),
+                    exp_dict.get('libraryConstructionProtocol'),
+                    exp_dict.get('libraryLayoutId'),
+                    exp_dict.get('pairedNominalLength'),
+                    exp_dict.get('pairedNominalSdev'),
+                    exp_dict.get('sampleId'),
+                    exp_dict.get('studyId'),
+                    None
+        )

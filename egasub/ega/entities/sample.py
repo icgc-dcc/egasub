@@ -1,4 +1,6 @@
 import yaml
+from .attribute import Attribute
+
 
 class Sample(object):
     def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
@@ -67,5 +69,27 @@ class Sample(object):
                     yaml_sample.get('sampleAge'),
                     yaml_sample.get('sampleDetail'),
                     [],
+                    None
+        )
+
+
+    @staticmethod
+    def from_dict(sample_dict):
+        return Sample(
+                    sample_dict.get('alias'),
+                    sample_dict.get('title'),
+                    sample_dict.get('description'),
+                    sample_dict.get('caseOrControlId'),
+                    sample_dict.get('genderId'),
+                    sample_dict.get('organismPart'),
+                    sample_dict.get('cellLine'),
+                    sample_dict.get('region'),
+                    sample_dict.get('phenotype'),
+                    sample_dict.get('subjectId'),
+                    sample_dict.get('anonymizedName'),
+                    sample_dict.get('bioSampleId'),
+                    sample_dict.get('sampleAge'),
+                    sample_dict.get('sampleDetail'),
+                    [] if not sample_dict.get('attributes') else map(lambda attr_dict: Attribute.from_dict(attr_dict), sample_dict.get('attributes')),
                     None
         )

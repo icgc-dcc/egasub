@@ -1,6 +1,6 @@
 
 class Study(object):
-    def __init__(self,alias,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags):
+    def __init__(self,alias,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags, id):
         self.alias = alias
         self.study_type_id = study_type_id
         self.short_name = short_name
@@ -9,6 +9,7 @@ class Study(object):
         self.own_term = own_term
         self.pub_med_ids = pub_med_ids
         self.custom_tags = custom_tags
+        self.id = id
 
         
     def to_dict(self):
@@ -20,7 +21,8 @@ class Study(object):
             'studyAbstract' : self.study_abstract,
             'ownTerm' : self.own_term,
             'pubMedIds' : self.pub_med_ids,
-            'customTags' : map(lambda tag: tag.to_dict(), self.custom_tags)
+            'customTags' : map(lambda tag: tag.to_dict(), self.custom_tags),
+            'id' : self.id
             }
 
 

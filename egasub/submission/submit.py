@@ -1,26 +1,28 @@
-from ..ega.entities.sample import Sample
-from ..ega.entities.analysis import Analysis
-from ..ega.entities.run import Run
-from ..ega.entities.experiment import Experiment
-from ..ega.entities.file import File
-from ..ega.entities.submission import Submission
-from ..ega.entities.attribute import Attribute
-from ..ega.entities.submission_subset_data import SubmissionSubsetData
-from ..ega.services import login, logout, submit_sample, submit_analysis,prepare_submission, submit_experiment, submit_run, submit_submission, sample_log_directory,sample_status_file,set_sample_status,get_sample_status
+import os
+from click import echo
+
+from ..ega.entities import Study, Sample, Analysis, Run, Experiment, \
+                            File, Submission, Attribute, SubmissionSubsetData
+
+from ..ega.services import login, logout, submit_obj, prepare_submission, \
+                            submit_sample, submit_analysis,\
+                            submit_experiment, submit_run, \
+                            submit_submission
+
 from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
-from click import echo
-import os
+
+from .submittable import Unaligned, Alignment, Variation
 
 
-def perform_submission(ctx, submission_dirs):
-    echo("Login attempt with credentials in .egasub/config.yaml")
+def perform_submission_old(ctx, submission_dirs):
+    echo("Login...")
     
     try:
         login(ctx)
     except CredentialsError as error:
         print "An error occured: " +str(error)
-        sys.exit(0)
+        sys.exit(1) # exit with non-zero code
         
     echo("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
@@ -75,6 +77,78 @@ def perform_submission(ctx, submission_dirs):
     echo("Logging out the session")
     logout(ctx)
     echo("")
+
+
+def perform_submission(ctx, submission_dirs, dry_run):
+    echo("Login ...")
+    try:
+        login(ctx)
+    except CredentialsError as error:
+        print "An error occured: " +str(error)
+        sys.exit(1) # exit with non-zero code
         
+    echo("Login success")
+    submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
+    prepare_submission(ctx, submission)
+
+    # get class by string
+    submission_type = ctx.obj['CURRENT_DIR_TYPE']
+    submittable_class = eval(submission_type.capitalize())
+
+    study = Study(
+            ctx.obj['SETTINGS']['icgc_project_code'], # alias
+            1, # studyTypeId
+            'Short study name', # should take it from config
+            'Study title', # should take it from config
+            'Study abstract', # should take it from config
+            None,  # ownTerm
+            [],  # pubMedIds
+            [],   # customTags
+            None
+        )
+
+    submit_obj(ctx, study, 'study')
+
+    for submission_dir in submission_dirs:
+        submittable = submittable_class(submission_dir)
+        if submission_type == 'unaligned':
+            submittable.sample.attributes.append(
+                    Attribute(
+                        'icgc_sample_id',
+                        id_service(ctx, 'sample',
+                            ctx.obj['SETTINGS']['icgc_project_code'],
+                            submittable.sample.alias,
+                            True,True
+                        )
+                    )
+                )
+
+            submit_obj(ctx, submittable.sample, 'sample')
+
+            submittable.experiment.sample_id = submittable.sample.id
+            submittable.experiment.study_id = study.id
+            submit_obj(ctx, submittable.experiment, 'experiment')
+
+            submittable.run.sample_id = submittable.sample.id
+            submittable.run.experiment_id = submittable.experiment.id
+            submit_obj(ctx, submittable.run, 'run')
+
+        if submission_type == 'alignment':
+            """
+            TODO: to be implemented
+            """
+            print submittable.sample.to_dict()
+            print submittable.analysis.to_dict()
+
+        if submission_type == 'variation':
+            """
+            TODO: to be implemented
+            """
+            pass
+
+
+    echo("Logging out the session")
+    logout(ctx)
+    echo("")
 
 

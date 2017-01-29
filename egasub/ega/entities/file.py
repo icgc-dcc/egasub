@@ -20,7 +20,18 @@ class File(object):
     
     def to_xml(self):
         pass
-    
+
+    @staticmethod
+    def from_dict(file_dict):
+        return File(
+                None,
+                file_dict.get('fileName'),
+                file_dict.get('checksum'),
+                file_dict.get('unencryptedChecksum'),
+                file_dict.get('checksumMethod')
+            )
+
+
     @staticmethod
     def load_list_from_yaml(ctx, yaml_path):
         with open(yaml_path, 'r') as stream:

@@ -13,7 +13,7 @@ experiment:
   sampleId: 
   studyId: 
 sample:
-  alias: sample_y
+  alias: sample_bad
   caseOrControlId: 2
   genderId: 1 # 0=female, 1=male, 2=unknown
   organismPart: 
