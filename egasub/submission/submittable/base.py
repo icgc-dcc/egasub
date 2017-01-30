@@ -32,6 +32,15 @@ class Submittable(object):
     def status(self):
         return self._status
 
+    @property
+    def local_validation_errors(self):
+        return self._local_validation_errors
+
+    @local_validation_errors.setter
+    def add_local_validation_errors(self, type, alias,field, message):
+        self._local_validation_errors.append({"sample" : sample})
+
+
     def _parse_meta(self):
         yaml_file = os.path.join(self.path, '.'.join([self.type, 'yaml']))
         with open(yaml_file, 'r') as yaml_stream:
@@ -59,7 +68,6 @@ class Submittable(object):
         """
         # hardcode to 'NEW' for now
         return 'NEW'
-
 
 class Experiment(Submittable):
     @abstractproperty

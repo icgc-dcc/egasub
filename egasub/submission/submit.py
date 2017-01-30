@@ -16,6 +16,7 @@ from .submitter import Submitter
 
 def perform_submission(ctx, submission_dirs, dry_run=None):
     echo("Login ...")
+    
     try:
         login(ctx)
     except CredentialsError as error:
@@ -52,6 +53,10 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     submittables = []
     for submission_dir in submission_dirs:
         submittable = Submittable_class(submission_dir)
+        
+        submittable.validate(ctx.obj['EGA_ENUMS'])
+        exit()
+
 
         # only process submittables at certain states
         if submittable.status in ('NEW'):

@@ -3,6 +3,7 @@ import click
 import utils
 from click import echo
 from submission import init_workspace, perform_submission
+from egasub.ega.entities import EgaEnums
 
 
 @click.group()
@@ -28,6 +29,8 @@ def submit(ctx, source):
     Perform submission on submission folder(s).
     """
     utils.initialize_app(ctx)
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
+
     if not ctx.obj.get('WORKSPACE_PATH'):
         echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
@@ -46,6 +49,7 @@ def dry_run(ctx, source):
     Test submission on submission folder(s).
     """
     utils.initialize_app(ctx)
+    
     if not ctx.obj.get('WORKSPACE_PATH'):
         echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
