@@ -24,6 +24,9 @@ def main(ctx, debug):
 @click.argument('source', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
 def submit(ctx, source):
+    """
+    Perform submission on submission folder(s).
+    """
     utils.initialize_app(ctx)
     if not ctx.obj.get('WORKSPACE_PATH'):
         echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
@@ -39,6 +42,9 @@ def submit(ctx, source):
 @click.argument('source', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
 def dry_run(ctx, source):
+    """
+    Test submission on submission folder(s).
+    """
     utils.initialize_app(ctx)
     if not ctx.obj.get('WORKSPACE_PATH'):
         echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
@@ -54,7 +60,10 @@ def dry_run(ctx, source):
 @main.command()
 @click.argument('source', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
-def report(ctx, source):
+def status(ctx, source):
+    """
+    Report status of submission folder(s).
+    """
     utils.initialize_app(ctx)
     if not ctx.obj.get('WORKSPACE_PATH'):
         click.echo('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
@@ -71,7 +80,7 @@ def report(ctx, source):
 @click.pass_context
 def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code):
     """
-    Run once to create a submission workspace.]
+    Run once to create a submission workspace.
     """
 
     if ctx.obj.get('WORKSPACE_PATH'):
