@@ -2,7 +2,7 @@ import os
 import click
 import utils
 from click import echo
-from submission import init_workspace, perform_submission
+from submission import init_workspace, perform_submission, generate_template
 from egasub.ega.entities import EgaEnums
 
 
@@ -93,7 +93,21 @@ def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,
         ctx.abort()
 
     init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code )
+    
 
+@main.command()
+@click.argument('source', type=click.Path(exists=True), nargs=-1)
+@click.argument('sample_dir')
+@click.pass_context
+def template(ctx,source, sample_dir):
+    
+    utils.initialize_app(ctx)
+    
+    if not os.path.isdir(os.path.join(ctx.obj['CURRENT_DIR'], sample_dir,"..","..",".egasub")):
+        click.echo("The input directory %s is not in a valid workspace." % (sample_dir))
+        ctx.abort()
+    
+    generate_template(ctx,os.path.join(ctx.obj['CURRENT_DIR'], sample_dir))
 
 if __name__ == '__main__':
   main()
