@@ -1,16 +1,15 @@
 analysis:
   title: 'The title of the analysis'
   description: description
-  analysis_center: analysis_center
-  analysis_date: analysis_date
-  analysis_type_id: 0  # Reference Alignment (BAM)
-  genome_id: 15
-  chromosome_references:
+  analysisCenter: analysis_center
+  analysisDate: analysis_date
+  analysisTypeId: 0  # Reference Alignment (BAM)
+  genomeId: 15
+  chromosomeReferences:
     - 24
     - 25
     - 26
-  experiment_type_id:
-    - 0  # whole genome sequencing
+  experimentTypeId: 0  # whole genome sequencing
   platform: Illumina HiSeq 2000
 sample:
   alias: sample_x

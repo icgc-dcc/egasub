@@ -49,6 +49,7 @@ def dry_run(ctx, source):
     Test submission on submission folder(s).
     """
     utils.initialize_app(ctx)
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
     
     if not ctx.obj.get('WORKSPACE_PATH'):
         echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
