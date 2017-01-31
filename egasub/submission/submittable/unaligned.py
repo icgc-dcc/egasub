@@ -7,6 +7,7 @@ from egasub.ega.entities import Sample, \
 
 class Unaligned(Experiment):
     def __init__(self, path):
+        self._local_validation_errors = []
         self._path = path
         self._parse_meta()
         self._status = self._check_status()
@@ -19,16 +20,4 @@ class Unaligned(Experiment):
     @property
     def type(self):
         return self.__class__.__bases__[0].__name__.lower()
-
-    @property
-    def sample(self):
-        return self._sample
-
-    @property
-    def experiment(self):
-        return self._experiment
-
-    @property
-    def run(self):
-        return self._run
 

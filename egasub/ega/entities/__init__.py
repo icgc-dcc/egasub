@@ -7,4 +7,5 @@ from study import Study
 from submission import Submission
 from attribute import Attribute
 from submission_subset_data import SubmissionSubsetData
+from ega_enums import EgaEnums
 

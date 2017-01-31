@@ -42,3 +42,21 @@ class Analysis(object):
     def to_xml(self):
         pass
     
+    @staticmethod
+    def from_dict(analysis_dict):
+        return Analysis(
+                analysis_dict.get('alias'),
+                analysis_dict.get('title'),
+                analysis_dict.get('description'),
+                analysis_dict.get('studyId'),
+                [], # sampleReferences
+                analysis_dict.get('analysisCenter'),
+                analysis_dict.get('analysisDate'),
+                analysis_dict.get('analysisTypeId'),
+                [],
+                [],
+                analysis_dict.get('genomeId'),
+                [],
+                analysis_dict.get('experimentTypeId'),
+                analysis_dict.get('platform')
+            )

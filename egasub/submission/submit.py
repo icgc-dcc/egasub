@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 from click import echo
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData
@@ -16,6 +17,7 @@ from .submitter import Submitter
 
 def perform_submission(ctx, submission_dirs, dry_run=None):
     echo("Login ...")
+    
     try:
         login(ctx)
     except CredentialsError as error:
@@ -52,14 +54,25 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     submittables = []
     for submission_dir in submission_dirs:
         submittable = Submittable_class(submission_dir)
+        
+        submittable.local_validate(ctx.obj['EGA_ENUMS'])
+        echo(" Local validation error(s) for %s: \n  %s" % (submittable.sample.alias,
+                "\n  ".join([json.dumps(err) for err in submittable.local_validation_errors]) \
+                       if submittable.local_validation_errors else "none")
+            )
 
-        # only process submittables at certain states
-        if submittable.status in ('NEW'):
+        # only process submittables at certain states and no local
+        # validation error
+        if submittable.status in ('NEW') \
+                and not submittable.local_validation_errors:
             submittables.append(submittable)
 
+    if not submittables:
+        echo('Nothing to submit.')
+
     submitter = Submitter(ctx)
-    for sub in submittables:
-        submitter.submit(sub, dry_run)
+    for submittable in submittables:
+            submitter.submit(submittable, dry_run)
 
     # TODO: submit submission
 
