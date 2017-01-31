@@ -28,9 +28,9 @@ class Alignment(Analysis):
         super(Alignment, self).local_validate(ega_enums)
         # Gender validation
         if not any(gender['tag'] == str(self.sample.gender_id) for gender in ega_enums.lookup("genders")):
-            self._add_local_validation_errors("sample",self.sample.alias,"gender","Invalid gender value")
+            self._add_local_validation_errors("sample",self.sample.alias,"gender","Invalid value '%s'" % self.sample.gender_id)
 
         # Case or control validation
         if not any(cc['tag'] == str(self.sample.case_or_control_id) for cc in ega_enums.lookup("case_control")):
-            self._add_local_validation_errors("sample",self.sample.alias,"case_or_control","Invalid case or control value")
+            self._add_local_validation_errors("sample",self.sample.alias,"caseOrControl","Invalid value '%s'" % self.sample.case_or_control_id)
 

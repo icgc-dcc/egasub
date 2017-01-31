@@ -96,27 +96,27 @@ class Experiment(Submittable):
 
         # Case or control validation
         if not any(cc['tag'] == str(self.sample.case_or_control_id) for cc in ega_enums.lookup("case_control")):
-            self._add_local_validation_errors("sample",self.sample.alias,"case_or_control","Invalid value '%s'" % self.sample.case_or_control_id)
+            self._add_local_validation_errors("sample",self.sample.alias,"caseOrControl","Invalid value '%s'" % self.sample.case_or_control_id)
 
         # Instrument model validation
         if not any(model['tag'] == str(self.experiment.instrument_model_id) for model in ega_enums.lookup("instrument_models")):
-            self._add_local_validation_errors("experiment",self.experiment.alias,"instrument_model","Invalid instrument model value")
+            self._add_local_validation_errors("experiment",self.experiment.alias,"instrumentModel","Invalid value '%s'" % self.experiment.instrument_model_id)
 
         # Library source validation
         if not any(source['tag'] == str(self.experiment.library_source_id) for source in ega_enums.lookup("library_sources")):
-            self._add_local_validation_errors("experiment",self.experiment.alias,"library_sources","Invalid library source value")
+            self._add_local_validation_errors("experiment",self.experiment.alias,"librarySources","Invalid value '%s'" % self.experiment.library_source_id)
 
         # Library selection validation
         if not any(selection['tag'] == str(self.experiment.library_selection_id) for selection in ega_enums.lookup("library_selections")):
-            self._add_local_validation_errors("experiment",self.experiment.alias,"library_selection","Invalid library selection value")
+            self._add_local_validation_errors("experiment",self.experiment.alias,"librarySelection","Invalid value '%s'" % self.experiment.library_selection_id)
 
         # Library strategy validation
         if not any(strategy['tag'] == str(self.experiment.library_strategy_id) for strategy in ega_enums.lookup("library_strategies")):
-            self._add_local_validation_errors("experiment",self.experiment.alias,"library_strategies","Invalid library strategy value")
+            self._add_local_validation_errors("experiment",self.experiment.alias,"libraryStrategies","Invalid value '%s'" % self.experiment.library_strategy_id)
 
         # Run file type validation
         if not any(file_type['tag'] == str(self.run.run_file_type_id) for file_type in ega_enums.lookup("file_types")):
-            self._add_local_validation_errors("run",self.experiment.alias,"file_types","Invalid file types value")
+            self._add_local_validation_errors("run",self.experiment.alias,"fileTypes","Invalid value '%s'" % self.experiment.run_file_type_id)
 
 
 class Analysis(Submittable):
@@ -127,15 +127,15 @@ class Analysis(Submittable):
     def local_validate(self,ega_enums):
         # Analysis type validation
         if not any(cc['tag'] == str(self.analysis.analysis_type_id) for cc in ega_enums.lookup("analysis_types")):
-            self._add_local_validation_errors("analysis",self.analysis.alias,"analysis_types","Invalid value '%s'" % self.analysis.analysis_type_id)
+            self._add_local_validation_errors("analysis",self.analysis.alias,"analysisTypes","Invalid value '%s'" % self.analysis.analysis_type_id)
 
         # Reference genomes type validation
         if not any(cc['tag'] == str(self.analysis.genome_id) for cc in ega_enums.lookup("reference_genomes")):
-            self._add_local_validation_errors("analysis",self.analysis.alias,"reference_genomes","Invalid reference genome type value")
+            self._add_local_validation_errors("analysis",self.analysis.alias,"referenceGenomes","Invalid value '%s'" % self.analysis.genome_id)
 
         # Reference genomes type validation
         if not any(cc['tag'] == str(self.analysis.experiment_type_id) for cc in ega_enums.lookup("experiment_types")):
-            self._add_local_validation_errors("analysis",self.analysis.alias,"experiment_types","Invalid value '%s'" % self.analysis.experiment_type_id)
+            self._add_local_validation_errors("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s'" % self.analysis.experiment_type_id)
 
         #TODO
         # Chromosome references validation
