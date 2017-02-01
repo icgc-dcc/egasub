@@ -5,7 +5,7 @@ from click import echo
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData
 
-from ..ega.services import login, logout, submit_obj, \
+from ..ega.services import login, logout, submit_obj, query_by_id, obj_type_to_endpoint, \
                             prepare_submission, submit_submission
 
 from ..icgc.services import id_service
@@ -29,8 +29,11 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     prepare_submission(ctx, submission)
 
     # this seems not fit here, should be done elsewhere as a one time operation
-    study = Study(
-            ctx.obj['SETTINGS']['icgc_project_code'], # alias
+    study_alias = ctx.obj['SETTINGS']['icgc_project_code']
+    study = query_by_id(ctx, obj_type_to_endpoint('study'), study_alias, 'ALIAS')
+    if not study:  # study does not exist on EGA side
+        study = Study(
+            study_alias, # alias
             1, # studyTypeId
             'Short study name', # should take it from config
             'Study title', # should take it from config
@@ -40,9 +43,12 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
             [],   # customTags
             None
         )
-    submit_obj(ctx, study, 'study')
-    ctx.obj['SETTINGS']['STUDY_ID'] = study.id
+        submit_obj(ctx, study, 'study')
+        ctx.obj['SETTINGS']['STUDY_ID'] = study.id
+    else:
+        ctx.obj['SETTINGS']['STUDY_ID'] = study[0].get('id')
 
+    echo("Study alias: %s, study ID: %s" % (study_alias, ctx.obj['SETTINGS']['STUDY_ID']))
     # get class by string
     submission_type = ctx.obj['CURRENT_DIR_TYPE']
     Submittable_class = eval(submission_type.capitalize())
@@ -53,10 +59,14 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     #   on each of the submittables
     submittables = []
     for submission_dir in submission_dirs:
-        submittable = Submittable_class(submission_dir)
-        
+        try:
+            submittable = Submittable_class(submission_dir)
+        except:
+            echo("Skip %s as it appears to be not a well formed submission directory." % submission_dir)
+            continue
+
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
-        echo(" Local validation error(s) for %s: \n  %s" % (submittable.sample.alias,
+        echo(" Local validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
                 "\n  ".join([json.dumps(err) for err in submittable.local_validation_errors]) \
                        if submittable.local_validation_errors else "none")
             )
