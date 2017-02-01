@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<POLICY_SET>
+    <POLICY alias="ICGC Data Access Agreements" center_name="YOUR_CENTER_NAME_HERE" broker_name="EGA" accession="EGAP00001000011">
+        <TITLE>ICGC Data Access</TITLE>
+        <DAC_REF refname="ICGC Cancer Genome Projects" refcenter="ICGC"/>
+        <DAC_REF accession="EGAC00001000010"/>
+        <POLICY_TEXT>Please use the ICGC website for applying access to the data</POLICY_TEXT>
+        <POLICY_LINKS>
+            <POLICY_LINK>
+                <URL_LINK>
+                    <LABEL>ICGC Data Access Agreements</LABEL>
+                    <URL>https://icgc.org/icgc/goals-structure-policies-guidelines/e-consortium-policies-and-guidelines</URL>
+                </URL_LINK>
+            </POLICY_LINK>
+        </POLICY_LINKS>
+    </POLICY>
+</POLICY_SET>
