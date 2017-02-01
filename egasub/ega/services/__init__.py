@@ -33,11 +33,11 @@ def login(ctx):
     
     #Check for the ega_submitter account
     if not ctx.obj['SETTINGS'].get('ega_submitter_account'):
-        raise CredentialsError(Exception('Your ega_submitter_account is missing in config.yaml file.'))
+        raise CredentialsError(Exception('Your ega_submitter_account is missing in .egasub/config.yaml file.'))
     
     #Check for the ega submitter password
     if not ctx.obj['SETTINGS'].get('ega_submitter_password'):
-        raise CredentialsError(Exception('Your ega_submitter_password is missing in config.yaml file.'))
+        raise CredentialsError(Exception('Your ega_submitter_password is missing in .egasub/config.yaml file.'))
     
     payload = {
         "username": ctx.obj['SETTINGS'].get('ega_submitter_account'),
