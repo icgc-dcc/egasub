@@ -16,17 +16,20 @@ EGA_SUB_URL_PROD = "https://ega.crg.eu/submitterportal/v1/"
 EGA_ACCESS_URL = "https://ega.ebi.ac.uk/ega/rest/access/v2/"
 EGA_DOWNLOAD_URL = "http://ega.ebi.ac.uk/ega/rest/download/v2/"
 
+def api_url(ctx):
+    if 'apiUrl' in ctx.obj['SETTINGS']:
+        api_url = ctx.obj['SETTINGS']['apiUrl']
+    else:
+        api_url = EGA_SUB_URL_PROD
+    return api_url
+
 
 def login(ctx):
     """
     Documentation: https://ega-archive.org/submission/programmatic_submissions/how-to-use-the-api#Login
     """
-    if 'apiUrl' in ctx.obj['SETTINGS']:
-        api_url = ctx.obj['SETTINGS']['apiUrl']
-    else:
-        api_url = EGA_SUB_URL_PROD
         
-    url = "%slogin" % api_url
+    url = "%slogin" % api_url(ctx)
     
     #Check for the ega_submitter account
     if not ctx.obj['SETTINGS'].get('ega_submitter_account'):
@@ -55,12 +58,8 @@ def login(ctx):
 
 def logout(ctx):
     """ Terminate the session token on EGA side and deleting the token on the client side. """
-    if 'apiUrl' in ctx.obj['SETTINGS']:
-        api_url = ctx.obj['SETTINGS']['apiUrl']
-    else:
-        api_url = EGA_SUB_URL_PROD
         
-    url = "%slogout" % api_url
+    url = "%slogout" % api_url(ctx)
     
     headers = {
         'Content-Type': 'application/json',
@@ -73,15 +72,11 @@ def logout(ctx):
 def prepare_submission(ctx, submission):
     """ This function checks if the submission has an ega id and requests one if not """
     
-    if 'apiUrl' in ctx.obj['SETTINGS']:
-        api_url = ctx.obj['SETTINGS']['apiUrl']
-    else:
-        api_url = EGA_SUB_URL_PROD
-    
     if 'id' in ctx.obj['SUBMISSION']:
         return
     
-    url = "%ssubmissions" % api_url
+    url = "%ssubmissions" % api_url(ctx)
+
     
     headers = {
         'Content-Type': 'application/json',
@@ -94,14 +89,15 @@ def prepare_submission(ctx, submission):
 
 
 def submit_obj(ctx, obj, obj_type):
+        
     echo(" - Registering %s ..." % obj_type)
     endpoint = obj_type_to_endpoint(obj_type)
 
     # TODO: before registering new object, we should check existence
     #       of same type of object with the same alias
-
-    url = "%s/submissions/%s/%s" % (
-                                        EGA_SUB_URL_PROD,
+    
+    url = "%ssubmissions/%s/%s" % (
+                                        api_url(ctx),
                                         ctx.obj['SUBMISSION']['id'],
                                         endpoint
                                     )
@@ -110,6 +106,7 @@ def submit_obj(ctx, obj, obj_type):
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
+    
 
     #echo('Registering object: %s' % json.dumps(obj.to_dict())) # for debug
     r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
@@ -133,7 +130,7 @@ def validate_obj(ctx, obj, obj_type):
         raise Exception('EGA Object id missing.')
 
     url = "%s%s/%s?action=VALIDATE" % (
-                                        EGA_SUB_URL_PROD,
+                                        api_url(ctx),
                                         endpoint,
                                         obj.id
                                     )
@@ -187,7 +184,7 @@ def obj_type_to_endpoint(obj_type):
 
 
 def query_by_id(ctx, obj_type, obj_id, id_type):
-    url = "%s%s/%s?idType=%s" % (EGA_SUB_URL_PROD, obj_type, obj_id, id_type)
+    url = "%s%s/%s?idType=%s" % (api_url(ctx), obj_type, obj_id, id_type)
 
     headers = {
         'Content-Type': 'application/json',
