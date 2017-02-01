@@ -28,7 +28,11 @@ class Submitter(object):
 
             submittable.experiment.sample_id = submittable.sample.id
             submittable.experiment.study_id = self.ctx.obj['SETTINGS']['STUDY_ID']
-            submit_obj(self.ctx, submittable.experiment, 'experiment')
+            
+            try:
+                submit_obj(self.ctx, submittable.experiment, 'experiment')
+            except Exception as error:
+                print('Error caught: '+repr(error))
 
             submittable.run.sample_id = submittable.sample.id
             submittable.run.experiment_id = submittable.experiment.id

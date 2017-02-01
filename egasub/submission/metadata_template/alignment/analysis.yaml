@@ -4,10 +4,10 @@ analysis:
   description:              # A brief description of the analysis
   analysisCenter:           # Analysis center  
   analysisDate:             # Date of the analysis
-  analysisTypeId: 0         # Visit https://ega.crg.eu/submitterportal/v1/enums/analysis_types
+  analysisTypeId:           # Visit https://ega.crg.eu/submitterportal/v1/enums/analysis_types
   genomeId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/reference_genomes, '15' for GRCh37
   chromosomeReferences: []  # list of chromosome references, https://ega.crg.eu/submitterportal/v1/enums/reference_chromosomes
-  experimentTypeId: 0       # Visit https://ega.crg.eu/submitterportal/v1/enums/experiment_types
+  experimentTypeId:         # Visit https://ega.crg.eu/submitterportal/v1/enums/experiment_types
   platform:                 # Name of the platform
 
 # Enter the informations concerning the sample
