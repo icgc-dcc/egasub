@@ -1,0 +1,30 @@
+# Enter the informations related to the analysis
+analysis:
+  title:                    # The title of the related analysis
+  description:              # A brief description of the analysis
+  analysisCenter:           # Analysis center  
+  analysisDate:             # Date of the analysis
+  analysisTypeId: 0         # Visit https://ega.crg.eu/submitterportal/v1/enums/analysis_types
+  genomeId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/reference_genomes, '15' for GRCh37
+  chromosomeReferences: []  # list of chromosome references, https://ega.crg.eu/submitterportal/v1/enums/reference_chromosomes
+  experimentTypeId: 0       # Visit https://ega.crg.eu/submitterportal/v1/enums/experiment_types
+  platform:                 # Name of the platform
+
+# Enter the informations concerning the sample
+sample:
+  alias:                    # submitter's ID for the sample
+  caseOrControlId:          # Visit https://ega.crg.eu/submitterportal/v1/enums/case_control
+  genderId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
+  organismPart:             # 
+  cellLine:                 #
+  region:                   #
+  phenotype:                #
+  subjectId:                # The subject id in the experiment
+  anonymizedName:           #
+  bioSampleId:              #
+  sampleAge:                # Age of the sample
+  sampleDetail:             # Details about the sample
+
+# Enter the informations concerning the files produced by the alignment
+files:
+  - fileName:               # Name of the file: Ex. alignment.*/{submission_folder}/{file_name}.bam.gpg

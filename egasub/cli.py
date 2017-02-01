@@ -2,7 +2,7 @@ import os
 import click
 import utils
 from click import echo
-from submission import init_workspace, perform_submission
+from submission import init_workspace, perform_submission, init_submission_dir, generate_report
 from egasub.ega.entities import EgaEnums
 
 
@@ -22,12 +22,16 @@ def main(ctx, debug):
 
 
 @main.command()
-@click.argument('source', type=click.Path(exists=True), nargs=-1)
+@click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
-def submit(ctx, source):
+def submit(ctx, submission_dir):
     """
     Perform submission on submission folder(s).
     """
+    if '.' in submission_dir or '..' in submission_dir:
+        click.echo("Submission dir can not be '.' or '..'")
+        ctx.abort()
+
     utils.initialize_app(ctx)
     ctx.obj['EGA_ENUMS'] = EgaEnums()
 
@@ -35,46 +39,47 @@ def submit(ctx, source):
         echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
-    if not source:
+    if not submission_dir:
         echo('Error: You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx, source)
+    perform_submission(ctx, submission_dir)
 
 @main.command()
-@click.argument('source', type=click.Path(exists=True), nargs=-1)
+@click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
-def dry_run(ctx, source):
+def dry_run(ctx, submission_dir):
     """
     Test submission on submission folder(s).
     """
-    utils.initialize_app(ctx)
-    ctx.obj['EGA_ENUMS'] = EgaEnums()
-    
-    if not ctx.obj.get('WORKSPACE_PATH'):
-        echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
+    if '.' in submission_dir or '..' in submission_dir:
+        click.echo("Submission dir can not be '.' or '..'")
         ctx.abort()
 
-    if not source:
+    utils.initialize_app(ctx)
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
+
+    if not submission_dir:
         echo('Error: You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx, source, True)
+    perform_submission(ctx, submission_dir, True)
 
 
 @main.command()
-@click.argument('source', type=click.Path(exists=True), nargs=-1)
+@click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
-def status(ctx, source):
+def status(ctx, submission_dir):
     """
     Report status of submission folder(s).
     """
-    utils.initialize_app(ctx)
-    if not ctx.obj.get('WORKSPACE_PATH'):
-        click.echo('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
+    if '.' in submission_dir or '..' in submission_dir:
+        click.echo("Submission dir can not be '.' or '..'")
         ctx.abort()
 
-    echo(source)
+    utils.initialize_app(ctx)
+
+    generate_report(ctx, submission_dir)
 
 
 @main.command()
@@ -93,7 +98,23 @@ def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,
         ctx.abort()
 
     init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code )
+    
 
+@main.command()
+@click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
+@click.pass_context
+def new(ctx,submission_dir):
+    """
+    Initialize new submission folders.
+    """
+
+    if '.' in submission_dir or '..' in submission_dir:
+        click.echo("Submission dir can not be '.' or '..'")
+        ctx.abort()
+
+    utils.initialize_app(ctx)
+    
+    init_submission_dir(ctx, submission_dir)
 
 if __name__ == '__main__':
   main()

@@ -12,8 +12,8 @@ def initialize_app(ctx):
     if not ctx.obj['WORKSPACE_PATH']:
         echo('Error: not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.', err=True)
         ctx.abort()
-    else:
-        echo('Info: workspace is \'%s\'' % ctx.obj['WORKSPACE_PATH'])
+
+    #echo('Info: workspace is \'%s\'' % ctx.obj['WORKSPACE_PATH'])
 
     # read the settings
     ctx.obj['SETTINGS'] = get_settings(ctx.obj['WORKSPACE_PATH'])
@@ -23,7 +23,7 @@ def initialize_app(ctx):
 
     # figure out the current dir type, e.g., study, sample or analysis
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
-    echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])
+    #echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])  # for debug
     if not ctx.obj['CURRENT_DIR_TYPE']:
         echo('Error: the current working directory does not associate with any supported EGA data types: unaligned|alignment|variation', err=True)
         ctx.abort()
