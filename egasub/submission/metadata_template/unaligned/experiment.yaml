@@ -18,7 +18,7 @@ experiment:
 sample:
   alias:                        # submitter's ID for the sample, ensure this is the same as what's submitted to ICGC DCC
   caseOrControlId:              # Visit https://ega.crg.eu/submitterportal/v1/enums/case_control
-  genderId: 1                   # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
+  genderId:                     # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
   organismPart:                 #
   cellLine:                     #
   region:                       #
