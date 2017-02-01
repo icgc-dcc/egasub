@@ -9,7 +9,7 @@ def init_submission_dir(ctx, submission_dirs):
     elif submission_type in ("unaligned"):
         file_name = "experiment.yaml"
     else:
-        ctx.abort('You must be one of the supported supported submission data type directory: unaligned, alignment or variation')
+        ctx.abort('You must be in one of the supported submission data type directory: unaligned, alignment or variation')
 
     src_file = os.path.join(os.path.dirname(
                     os.path.realpath(__file__)),
