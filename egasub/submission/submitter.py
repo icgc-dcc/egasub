@@ -13,43 +13,43 @@ class Submitter(object):
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             echo(' Processing %s' % submittable.sample.alias)
 
-            submittable.sample.attributes.append(
-                    Attribute(
-                        'icgc_sample_id',
-                        id_service(self.ctx, 'sample',
-                            self.ctx.obj['SETTINGS']['icgc_project_code'],
-                            submittable.sample.alias,
-                            True,True
+            try:
+                submittable.sample.attributes.append(
+                        Attribute(
+                            'icgc_sample_id',
+                            id_service(self.ctx, 'sample',
+                                self.ctx.obj['SETTINGS']['icgc_project_code'],
+                                submittable.sample.alias,
+                                True,True
+                            )
                         )
                     )
-                )
 
-            submit_obj(self.ctx, submittable.sample, 'sample')
+                submit_obj(self.ctx, submittable.sample, 'sample')
 
-            submittable.experiment.sample_id = submittable.sample.id
-            submittable.experiment.study_id = self.ctx.obj['SETTINGS']['STUDY_ID']
-            
-            try:
+                submittable.experiment.sample_id = submittable.sample.id
+                submittable.experiment.study_id = self.ctx.obj['SETTINGS']['STUDY_ID']
+
                 submit_obj(self.ctx, submittable.experiment, 'experiment')
+                submittable.run.sample_id = submittable.sample.id
+                submittable.run.experiment_id = submittable.experiment.id
+                submit_obj(self.ctx, submittable.run, 'run')
+
+                echo(' Finished processing %s' % submittable.sample.alias)
             except Exception as error:
-                print('Error caught: '+repr(error))
-
-            submittable.run.sample_id = submittable.sample.id
-            submittable.run.experiment_id = submittable.experiment.id
-            submit_obj(self.ctx, submittable.run, 'run')
-
-            echo(' Finished processing %s' % submittable.sample.alias)
+                echo('Error caught: '+repr(error))
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'alignment':
             """
             TODO: to be implemented
             """
-            print submittable.sample.to_dict()
-            print submittable.analysis.to_dict()
+            #print submittable.sample.to_dict()
+            #print submittable.analysis.to_dict()
+            echo("Not implemented yet.")
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'variation':
             """
             TODO: to be implemented
             """
-            pass
+            echo("Not implemented yet.")
 
