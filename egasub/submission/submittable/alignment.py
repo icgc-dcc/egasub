@@ -3,6 +3,7 @@ from .base import Analysis
 from egasub.ega.entities import Sample, \
                                 File as EFile, \
                                 Analysis as EAnalysis
+from egasub.ega.services.ftp import file_exists
 
 
 class Alignment(Analysis):
@@ -34,3 +35,6 @@ class Alignment(Analysis):
         if not any(cc['tag'] == str(self.sample.case_or_control_id) for cc in ega_enums.lookup("case_control")):
             self._add_local_validation_error("sample",self.sample.alias,"caseOrControl","Invalid value '%s'" % self.sample.case_or_control_id)
 
+    def remote_validate(self,host,username, password):
+        for file in self.files:
+            print file_exists(host,username,password,file.file_name)

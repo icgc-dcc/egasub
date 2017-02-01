@@ -52,6 +52,14 @@ class Submittable(object):
                 "field": field,
                 "error": message
             })
+        
+    def _add_remote_validation_error(self,type_,alias,field,message):
+        self._local_validation_errors.append({
+                "object_type" : type_,
+                "object_alias": alias,
+                "field": field,
+                "error": message
+            })
 
     def _parse_meta(self):
         yaml_file = os.path.join(self.path, '.'.join([self.type, 'yaml']))

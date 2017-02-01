@@ -13,6 +13,7 @@ from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExis
 
 from .submittable import Unaligned, Alignment, Variation
 from .submitter import Submitter
+from ..ega.services.ftp import file_exists
 
 
 def perform_submission(ctx, submission_dirs, dry_run=None):
@@ -23,6 +24,10 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     except CredentialsError as error:
         print "An error occured: " + str(error)
         sys.exit(1) # exit with non-zero code
+     
+    print file_exists('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'],"f87f8019-db9f-46d0-9e39-d16a37646815/1faf4818aef94ccd0cea1553aa19f55.bam.gpg")
+    exit()
+    
 
     echo("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
