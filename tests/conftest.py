@@ -16,8 +16,8 @@ test_ctx = test_ctx()
 def ctx():
     return test_ctx
 
-@pytest.fixture
-def pretty(ctx):
+@pytest.fixture(scope="session")
+def mock_server(ctx):
     httpretty.enable()
     
     httpretty.register_uri(httpretty.POST,"%slogin" % (ctx.obj['SETTINGS']['apiUrl']),

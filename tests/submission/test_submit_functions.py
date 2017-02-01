@@ -1,5 +1,4 @@
-import os, yaml, shutil
-from click.testing import CliRunner
+import os, yaml
 from egasub.ega.services import login,logout,prepare_submission, submit_obj
 import pytest
 import requests
@@ -8,25 +7,13 @@ from egasub.ega.entities.submission import Submission
 from egasub.ega.entities.study import Study
 
 
-def test_login_function(ctx,pretty):
-    runner = CliRunner()
-
-    initial_directory = os.getcwd()
-    workspace_directory = 'tests/data/workspace'
-    experiment_directory = os.path.join(workspace_directory,'unaligned.20170110')
-    sample_directory = os.path.join(experiment_directory,'sample_x')
-    
-    if os.path.isdir(os.path.join(workspace_directory,".egasub")):
-        shutil.rmtree(os.path.join(workspace_directory,".egasub"))
-        
-    
+def test_login_function(ctx, mock_server):
     # Login test
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'account'
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'password'
     login(ctx)
     assert ctx.obj['SUBMISSION']['sessionToken'] == "abcdefg"
-    
-    
+
 def test_prepare_submission(ctx):    
     response = requests.post("%ssubmissions" % (ctx.obj['SETTINGS']['apiUrl']))
     
