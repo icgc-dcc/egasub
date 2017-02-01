@@ -78,12 +78,14 @@ You may now edit this YAML file to fill out needed metadata information regardin
 Data file, such as, unaligned FASTQ files are usually compressed with gz and placed in a submission directory created in the previous step. Information about the data file(s), such as file name, file md5sum etc, will need to be added in the metadata YAML file. Data files will also need to be encrypted before submitting to EGA. Please refer to EGA documentation for details (added link here).
 
 Naming pattern for data files:
-||Data type||File type||Encrypted file||md5sum file for encrypted data file||md5sum file for uncrypted data file||
-|Unaligned sequencing reads|FASTQ|{name_of_your_choice}.fq.gz.gpg|{name_of_your_choice}.fq.gz.gpg.md5|{name_of_your_choice}.fq.gz.md5|
-|Alinged sequencing reads|BAM|{name_of_your_choice}.bam.gpg|{name_of_your_choice}.bam.gpg.md5|{name_of_your_choice}.bam.md5|
-|Aligned sequencing reads|BAI|{name_of_your_choice}.bam.bai.gpg|{name_of_your_choice}.bam.bai.gpg.md5|{name_of_your_choice}.bam.bai.md5|
-|Variation calls|VCF|{name_of_your_choice}.vcf.gz.gpg|{name_of_your_choice}.vcf.gz.gpg.md5|{name_of_your_choice}.vcf.gz.md5|
-|Variation calls|VCF index|{name_of_your_choice}.vcf.gz.idx.gpg|{name_of_your_choice}.vcf.gz.idx.gpg.md5|{name_of_your_choice}.vcf.gz.idx.md5|
+
+| Data type | File type | Encrypted file | md5sum file for encrypted data file | md5sum file for uncrypted data file |
+| --------- | --------- | -------------- | ----------------------------------- | ----------------------------------- |
+| Unaligned sequencing reads | FASTQ | {name_of_your_choice}.fq.gz.gpg | {name_of_your_choice}.fq.gz.gpg.md5 |{name_of_your_choice}.fq.gz.md5 |
+| Alinged sequencing reads | BAM | {name_of_your_choice}.bam.gpg | {name_of_your_choice}.bam.gpg.md5 | {name_of_your_choice}.bam.md5 |
+| Aligned sequencing reads | BAI | {name_of_your_choice}.bam.bai.gpg | {name_of_your_choice}.bam.bai.gpg.md5 |{name_of_your_choice}.bam.bai.md5 |
+| Variation calls | VCF | {name_of_your_choice}.vcf.gz.gpg | {name_of_your_choice}.vcf.gz.gpg.md5 | {name_of_your_choice}.vcf.gz.md5 |
+| Variation calls | VCF index | {name_of_your_choice}.vcf.gz.idx.gpg | {name_of_your_choice}.vcf.gz.idx.gpg.md5 |{name_of_your_choice}.vcf.gz.idx.md5 |
 
 File with `{file_name}.md5` suffix contain the md5sum string for the data file named `{file_name}`
 
