@@ -35,6 +35,7 @@ setup(
     tests_require = [str(ir.req) for ir in tests_require],
     cmdclass = {'test': PyTest},
     package_data={'egasub': [
+                                'ega/data/policy/*.xml',
                                 'ega/data/enums/*.json',
                                 'submission/metadata_template/*/*.yaml'
                             ]},
