@@ -34,6 +34,7 @@ setup(
     install_requires = [str(ir.req) for ir in install_reqs],
     tests_require = [str(ir.req) for ir in tests_require],
     cmdclass = {'test': PyTest},
+    package_data={'myapp': ['data/*.txt']},
     include_package_data = True,
     entry_points={
         'console_scripts': [
