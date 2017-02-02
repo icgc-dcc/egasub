@@ -30,4 +30,4 @@ class Unaligned(Experiment):
     def ftp_files_remote_validate(self,host,username, password):
         for _file in self._run.files:
             if not file_exists(host,username,password,_file.file_name):
-                self._add_ftp_file_validation_error("run",self.run.alias,"fileName","File missing on FTP ega server: %s" % _file.file_name)
+                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s" % _file.file_name)

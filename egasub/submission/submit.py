@@ -13,7 +13,6 @@ from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExis
 
 from .submittable import Unaligned, Alignment, Variation
 from .submitter import Submitter
-from ..ega.services.ftp import file_exists
 
 
 def perform_submission(ctx, submission_dirs, dry_run=None):

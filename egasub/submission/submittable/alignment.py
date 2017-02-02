@@ -43,4 +43,4 @@ class Alignment(Analysis):
     def ftp_files_remote_validate(self,host,username, password):
         for _file in self._analysis.files:
             if not file_exists(host,username,password,_file.file_name):
-                self._add_ftp_file_validation_error("analysis",self.analysis.alias,"fileName","File missing on FTP ega server: %s" % _file.file_name)
+                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s" % _file.file_name)
