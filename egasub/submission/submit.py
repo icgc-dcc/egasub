@@ -23,6 +23,7 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     except CredentialsError as error:
         print "An error occured: " + str(error)
         sys.exit(1) # exit with non-zero code
+         
 
     echo("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
@@ -66,9 +67,15 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
             continue
 
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
+        submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
+        
         echo(" Local validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
                 "\n  ".join([json.dumps(err) for err in submittable.local_validation_errors]) \
                        if submittable.local_validation_errors else "none")
+            )
+        echo(" FTP files remote validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
+                "\n  ".join([json.dumps(err) for err in submittable.ftp_file_validation_errors]) \
+                       if submittable.ftp_file_validation_errors else "none")
             )
 
         # only process submittables at certain states and no local

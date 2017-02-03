@@ -44,11 +44,21 @@ class Submittable(object):
     @property
     def local_validation_errors(self):
         return self._local_validation_errors
+    
+    @property
+    def ftp_file_validation_errors(self):
+        return self._ftp_file_validation_errors
 
     def _add_local_validation_error(self, type_, alias, field, message):
         self._local_validation_errors.append({
                 "object_type" : type_,
                 "object_alias": alias,
+                "field": field,
+                "error": message
+            })
+        
+    def _add_ftp_file_validation_error(self,field,message):
+        self._ftp_file_validation_errors.append({
                 "field": field,
                 "error": message
             })
@@ -84,6 +94,10 @@ class Submittable(object):
 
     @abstractmethod
     def local_validate(self):
+        pass
+    
+    @abstractmethod
+    def ftp_files_remote_validate(self):
         pass
 
     def _check_status(self):
