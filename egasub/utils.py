@@ -37,7 +37,7 @@ def initialize_log(ctx, debug):
     if debug:
         logger.setLevel(logging.DEBUG)    
     
-    log_directory = os.path.join(ctx.obj['WORKSPACE_PATH'],".log")
+    log_directory = os.path.join(ctx.obj['CURRENT_DIR'],".log")
     log_file = os.path.join(log_directory,"%d.log" % int((time.time())))
     
     if not os.path.isdir(log_directory):
