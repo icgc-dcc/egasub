@@ -9,7 +9,8 @@ def init_submission_dir(ctx, submission_dirs):
     elif submission_type in ("unaligned"):
         file_name = "experiment.yaml"
     else:
-        ctx.abort('You must be in one of the supported submission data type directory: unaligned, alignment or variation')
+        ctx.obj['LOGGER'].critical('You must be in one of the supported submission data type directory: unaligned, alignment or variation')
+        ctx.abort()
 
     src_file = os.path.join(os.path.dirname(
                     os.path.realpath(__file__)),
@@ -20,8 +21,8 @@ def init_submission_dir(ctx, submission_dirs):
         dest_file = os.path.join(d, file_name)
 
         if os.path.isfile(dest_file):
-            echo("Skipping directory '%s', as it already contains the file : %s" % (d, file_name))
+            ctx.obj['LOGGER'].info("Skipping directory '%s', as it already contains the file : %s" % (d, file_name))
             continue
 
         copyfile(src_file, dest_file)
-        echo("Initialized folder '%s' with a metadata template '%s', please fill it out properly before performing submission." % (d, file_name))
+        ctx.obj['LOGGER'].info("Initialized folder '%s' with a metadata template '%s', please fill it out properly before performing submission." % (d, file_name))

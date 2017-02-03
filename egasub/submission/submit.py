@@ -4,28 +4,25 @@ import json
 from click import echo
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData
-
 from ..ega.services import login, logout, submit_obj, query_by_id, obj_type_to_endpoint, \
                             prepare_submission, submit_submission
-
 from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
-
 from .submittable import Unaligned, Alignment, Variation
 from .submitter import Submitter
 
 
 def perform_submission(ctx, submission_dirs, dry_run=None):
-    echo("Login ...")
+    ctx.obj['LOGGER'].info("Login ...")
     
     try:
         login(ctx)
     except CredentialsError as error:
-        print "An error occured: " + str(error)
-        sys.exit(1) # exit with non-zero code
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
          
 
-    echo("Login success")
+    ctx.obj['LOGGER'].info("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
 
@@ -49,7 +46,7 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
     else:
         ctx.obj['SETTINGS']['STUDY_ID'] = study[0].get('id')
 
-    echo("Study alias: %s, study ID: %s" % (study_alias, ctx.obj['SETTINGS']['STUDY_ID']))
+    ctx.obj['LOGGER'].info("Study alias: %s, study ID: %s" % (study_alias, ctx.obj['SETTINGS']['STUDY_ID']))
     # get class by string
     submission_type = ctx.obj['CURRENT_DIR_TYPE']
     Submittable_class = eval(submission_type.capitalize())
@@ -63,17 +60,22 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
         try:
             submittable = Submittable_class(submission_dir)
         except:
-            echo("Skip %s as it appears to be not a well formed submission directory." % submission_dir)
+            ctx.obj['LOGGER'].error("Skip %s as it appears to be not a well formed submission directory." % submission_dir)
             continue
 
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
-        submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
         
-        echo(" Local validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
+        try:
+            submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
+        except Exception, e:
+            ctx.obj['LOGGER'].error("FTP server error: %s",str(e))
+            continue
+        
+        ctx.obj['LOGGER'].error(" Local validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
                 "\n  ".join([json.dumps(err) for err in submittable.local_validation_errors]) \
                        if submittable.local_validation_errors else "none")
             )
-        echo(" FTP files remote validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
+        ctx.obj['LOGGER'].error(" FTP files remote validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
                 "\n  ".join([json.dumps(err) for err in submittable.ftp_file_validation_errors]) \
                        if submittable.ftp_file_validation_errors else "none")
             )
@@ -85,7 +87,7 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
             submittables.append(submittable)
 
     if not submittables:
-        echo('Nothing to submit.')
+        ctx.obj['LOGGER'].info('Nothing to submit.')
 
     submitter = Submitter(ctx)
     for submittable in submittables:
@@ -93,8 +95,7 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
 
     # TODO: submit submission
 
-    echo("Logging out the session")
+    ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
-    echo("")
 
 

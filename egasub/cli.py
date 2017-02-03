@@ -12,13 +12,12 @@ from egasub.ega.entities import EgaEnums
 def main(ctx, debug):
     # initializing ctx.obj
     ctx.obj = {}
-    ctx.obj['DEBUG'] = debug
     ctx.obj['IS_TEST'] = False
-    if ctx.obj['DEBUG']: click.echo('Debug is on.', err=True)
-
+    
     ctx.obj['CURRENT_DIR'] = os.getcwd()
     ctx.obj['IS_TEST_PROJ'] = None
     ctx.obj['WORKSPACE_PATH'] = utils.find_workspace_root(cwd=ctx.obj['CURRENT_DIR'])
+    utils.initialize_log(ctx, debug)
 
 
 @main.command()
@@ -29,18 +28,18 @@ def submit(ctx, submission_dir):
     Perform submission on submission folder(s).
     """
     if '.' in submission_dir or '..' in submission_dir:
-        click.echo("Submission dir can not be '.' or '..'")
+        ctx.obj['LOGGER'].critical("Submission dir can not be '.' or '..'")
         ctx.abort()
 
     utils.initialize_app(ctx)
     ctx.obj['EGA_ENUMS'] = EgaEnums()
 
     if not ctx.obj.get('WORKSPACE_PATH'):
-        echo('Error: Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
+        ctx.obj['LOGGER'].critical('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
     if not submission_dir:
-        echo('Error: You must specify at least one submission directory.')
+        ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
 
     perform_submission(ctx, submission_dir)
@@ -53,14 +52,14 @@ def dry_run(ctx, submission_dir):
     Test submission on submission folder(s).
     """
     if '.' in submission_dir or '..' in submission_dir:
-        click.echo("Submission dir can not be '.' or '..'")
+        ctx.obj['LOGGER'].critical("Submission dir can not be '.' or '..'")
         ctx.abort()
 
     utils.initialize_app(ctx)
     ctx.obj['EGA_ENUMS'] = EgaEnums()
 
     if not submission_dir:
-        echo('Error: You must specify at least one submission directory.')
+        ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
 
     perform_submission(ctx, submission_dir, True)
@@ -74,7 +73,7 @@ def status(ctx, submission_dir):
     Report status of submission folder(s).
     """
     if '.' in submission_dir or '..' in submission_dir:
-        click.echo("Submission dir can not be '.' or '..'")
+        ctx.obj['LOGGER'].critical("Submission dir can not be '.' or '..'")
         ctx.abort()
 
     utils.initialize_app(ctx)
@@ -94,7 +93,7 @@ def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,
     """
 
     if ctx.obj.get('WORKSPACE_PATH'):
-        click.echo('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
+        ctx.obj['LOGGER'].critical('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
     init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code )
@@ -109,7 +108,7 @@ def new(ctx,submission_dir):
     """
 
     if '.' in submission_dir or '..' in submission_dir:
-        click.echo("Submission dir can not be '.' or '..'")
+        ctx.obj['LOGGER'].critical("Submission dir can not be '.' or '..'")
         ctx.abort()
 
     utils.initialize_app(ctx)
