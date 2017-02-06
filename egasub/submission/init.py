@@ -13,6 +13,12 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     echo('      \'.egasub/config.yaml\' which can be edited later.')
     echo('')
     
+    projects = ["ALL-US","AML-US","BLCA-CN","BLCA-US","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BRCA-US","BTCA-JP","BTCA-SG","CCSK-US","CESC-US","CLLE-ES","CMDI-UK",
+            "COAD-US","COCA-CN","DLBC-US","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","GBM-US","HNSC-US","KICH-US","KIRC-US","KIRP-US","LAML-CN","LAML-KR","LAML-US","LGG-US",
+            "LIAD-FR","LICA-CN","LICA-FR","LIHC-US","LIHM-FR","LINC-JP","LIRI-JP","LUAD-US","LUSC-CN","LUSC-KR","LUSC-US","MALY-DE","MELA-AU","NBL-US","ORCA-IN","OV-AU","OV-US","PAAD-US",
+            "PACA-AU","PACA-CA","PAEN-AU","PAEN-IT","PBCA-DE","PRAD-CA","PRAD-UK","PRAD-US","READ-US","RECA-CN","RECA-EU","SARC-US","SKCA-BR","SKCM-US","STAD-US","THCA-SA","THCA-US","UCEC-US",
+            "WT-US"]
+    
     #Ask user input for config.yaml
     if not ega_submitter_account:
         ega_submitter_account = prompt("Enter your EGA submitter account", default='')
@@ -21,14 +27,23 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     if not icgc_id_service_token:
         icgc_id_service_token = prompt("Enter your ICGC ID service token", default='')
     if not icgc_project_code:
-        icgc_project_code = prompt("Enter your ICGC project code", default='')
+        while True:
+            icgc_project_code = prompt("Enter your ICGC project code", default='')
+            if icgc_project_code in projects:
+                break
+            else:
+                echo("Please enter a project from the following list:")
+                echo('\t'.join(projects))
         
     yaml_info = {
         'ega_submitter_account': ega_submitter_account,
         'ega_submitter_password': ega_submitter_password,
         'icgc_id_service_token': icgc_id_service_token,
-        'icgc_project_code': icgc_project_code
+        'icgc_project_code': icgc_project_code.upper()
         }
+    
+
+    exit()
     
     current_dir = ctx.obj['CURRENT_DIR']
     egasub_dir = os.path.join(current_dir,'.egasub')
