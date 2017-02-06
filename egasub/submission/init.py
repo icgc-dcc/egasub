@@ -4,7 +4,6 @@ import os
 import yaml
 import shutil
 import click
-import logging
 
 
 def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,icgc_id_service_token=None,icgc_project_code=None):
