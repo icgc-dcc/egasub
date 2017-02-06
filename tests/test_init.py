@@ -5,7 +5,7 @@ from egasub.cli import init
 from egasub.cli import main
 import yaml
 
-def test_init_function():    
+def test_init_function(ctx):    
     runner = CliRunner()
     with runner.isolated_filesystem():
         result = runner.invoke(main,['init','--ega_submitter_account','test_account','--ega_submitter_password','test_password','--icgc_id_service_token','test_token','--icgc_project_code','test_code'])

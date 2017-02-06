@@ -4,6 +4,7 @@ import utils
 from click import echo
 from submission import init_workspace, perform_submission, init_submission_dir, generate_report
 from egasub.ega.entities import EgaEnums
+import logging
 
 
 @click.group()

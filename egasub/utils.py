@@ -6,7 +6,7 @@ import ftplib
 from click import echo
 from egasub.ega.entities.file import File
 import logging
-import time
+import datetime
 
 
 
@@ -37,8 +37,15 @@ def initialize_log(ctx, debug):
     if debug:
         logger.setLevel(logging.DEBUG)    
     
-    log_directory = os.path.join(ctx.obj['CURRENT_DIR'],".log")
-    log_file = os.path.join(log_directory,"%d.log" % int((time.time())))
+    if ctx.obj['WORKSPACE_PATH'] == None:
+        logger = logging.getLogger('ega_submission')
+        ch = logging.StreamHandler()
+        logger.addHandler(ch)
+        ctx.obj['LOGGER'] = logger
+        return
+    
+    log_directory = os.path.join(ctx.obj['WORKSPACE_PATH'],".log")
+    log_file = os.path.join(log_directory,"%s.log" % re.sub(r'[-:.]', '_', datetime.datetime.utcnow().isoformat()))
     
     if not os.path.isdir(log_directory):
         os.mkdir(log_directory)
@@ -73,7 +80,6 @@ def find_workspace_root(cwd=os.getcwd()):
 
         # stop if it's already reached os root dir
         if current_root == last_root: break
-
     return None
 
 

@@ -11,6 +11,7 @@ class test_ctx(object):
         
         logger = logging.getLogger('ega_submission')
         self.obj['LOGGER'] = logger
+        self.obj['WORKSPACE_PATH'] = "test_workspace"
         
 test_ctx = test_ctx()
 
