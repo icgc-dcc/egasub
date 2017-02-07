@@ -26,6 +26,7 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
     """
     ICGC ID Service
     """
+
     if not type_ in ('donor', 'specimen', 'sample'):
         raise Exception('Unsupported entity type: %s' % type_)
 

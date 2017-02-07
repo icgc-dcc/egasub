@@ -71,11 +71,11 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
             ctx.obj['LOGGER'].error("FTP server error: %s",str(e))
             continue
         
-        ctx.obj['LOGGER'].error(" Local validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
+        ctx.obj['LOGGER'].info(" Local validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
                 "\n  ".join([json.dumps(err) for err in submittable.local_validation_errors]) \
                        if submittable.local_validation_errors else "none")
             )
-        ctx.obj['LOGGER'].error(" FTP files remote validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
+        ctx.obj['LOGGER'].info(" FTP files remote validation error(s) for submission dir '%s': \n  %s" % (submittable.submission_dir,
                 "\n  ".join([json.dumps(err) for err in submittable.ftp_file_validation_errors]) \
                        if submittable.ftp_file_validation_errors else "none")
             )

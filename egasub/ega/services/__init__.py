@@ -129,7 +129,8 @@ def validate_obj(ctx, obj, obj_type):
     if obj.id == None:
         raise Exception('EGA Object id missing.')
 
-    url = "%s%s/%s?action=VALIDATE" % (
+    # we directly go to submit
+    url = "%s%s/%s?action=SUBMIT" % (
                                         api_url(ctx),
                                         endpoint,
                                         obj.id
@@ -144,8 +145,8 @@ def validate_obj(ctx, obj, obj_type):
     r_data = json.loads(r.text)
 
     # enable this when EGA fixes the validation bug
-    #if r_data.get('header', {}).get('code') != "200":
-    #    raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
+    if r_data.get('header', {}).get('code') != "200":
+        raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
 
     result = r_data.get('response').get('result',[]) if r_data.get('response') else None
 
@@ -160,11 +161,13 @@ def validate_obj(ctx, obj, obj_type):
         else:
             raise Exception
 
-    for s in query_by_id(ctx, endpoint, obj.alias, 'ALIAS'):
-        ctx.obj['LOGGER'].info('%s with alias: %s, id: %s' % (obj_type, s.get('alias'), s.get('id')))  # for debug
-        ctx.obj['LOGGER'].info(json.dumps(s))  # for debug
-        if s.get('status') in ('VALIDATED', 'SUBMITTED'):  # use the good object id
-            obj.id = s.get('id')
+    # we only need to do this for sample which we have alias assigned by us
+    if obj_type == 'sample':
+        for s in query_by_id(ctx, endpoint, obj.alias, 'ALIAS'):
+            ctx.obj['LOGGER'].info('%s with alias: %s, id: %s' % (obj_type, s.get('alias'), s.get('id')))  # for debug
+            ctx.obj['LOGGER'].info(json.dumps(s))  # for debug
+            if s.get('status') in ('SUBMITTED'):  # use the good object id
+                obj.id = s.get('id')
             break
 
     ctx.obj['LOGGER'].info(" - Validation completed.")
