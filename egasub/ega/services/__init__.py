@@ -5,6 +5,7 @@ from ..entities import sample
 from ..entities import analysis
 from egasub.exceptions import CredentialsError
 import os
+from egasub.icgc.services import id_service
 
 
 XML_EGA_SUB_URL_TEST = "https://www-test.ebi.ac.uk/ena/submit/drop-box/submit/"
@@ -116,8 +117,7 @@ def submit_obj(ctx, obj, obj_type):
     else:
         #TODO
         raise Exception(r_data['header']['userMessage'])
-    
-
+    #id_service(ctx,obj_type,ctx.obj['SETTINGS']['icgc_project_code'],ctx.obj['SETTINGS']['STUDY_ID'])
     validate_obj(ctx, obj, obj_type)
 
 

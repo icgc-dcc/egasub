@@ -32,6 +32,7 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
 
     url = ICGC_ID_SERVICE_URL_TEST if is_test else ICGC_ID_SERVICE_URL_PROD
     path = ICGC_ID_SERVICE_ENDPOINTS['id'][type_]['path']
+
     project_param = '='.join([
                                 ICGC_ID_SERVICE_ENDPOINTS['id'][type_]['params'][0],
                                 project_code
@@ -50,7 +51,12 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
                                 'Authorization': 'Bearer %s' % ctx.obj['SETTINGS'].get('icgc_id_service_token')
                                 }
                     )
-    return r.text
-
-    # TODO: parse response
+    
+    try:
+        r_data = json.loads(r.text)
+        if "error" in r_data:
+            raise Exception("Invalid ICGC credentials. Check your ICGC service Token - Server error: %s" % (r_data["error"]))
+        return r_data
+    except Exception:
+        return r.text
 

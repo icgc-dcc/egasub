@@ -1,12 +1,10 @@
 import os
 import sys
-import json
 from click import echo
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData
 from ..ega.services import login, logout, submit_obj, query_by_id, obj_type_to_endpoint, \
                             prepare_submission, submit_submission
-from ..icgc.services import id_service
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
 from .submittable import Unaligned, Alignment, Variation
 from .submitter import Submitter
@@ -79,17 +77,16 @@ def perform_submission(ctx, submission_dirs, dry_run=None):
 
         # only process submittables at certain states and no local
         # validation error
-        exit()
         if submittable.status in ('NEW') \
                 and not submittable.local_validation_errors:
             submittables.append(submittable)
-
+            
     if not submittables:
-        ctx.obj['LOGGER'].info('Nothing to submit.')
-
+        ctx.obj['LOGGER'].warning('Nothing to submit.')
+        
     submitter = Submitter(ctx)
     for submittable in submittables:
-            submitter.submit(submittable, dry_run)
+        submitter.submit(submittable, dry_run)
 
     # TODO: submit submission
 

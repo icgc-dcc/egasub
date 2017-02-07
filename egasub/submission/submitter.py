@@ -11,7 +11,7 @@ class Submitter(object):
 
     def submit(self, submittable, dry_run=None):
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
-            echo(' Processing %s' % submittable.sample.alias)
+            self.ctx.obj['LOGGER'].info('Processing %s' % submittable.sample.alias)
 
             try:
                 submittable.sample.attributes.append(
@@ -38,7 +38,7 @@ class Submitter(object):
 
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.sample.alias)
             except Exception as error:
-                echo('Error caught: '+repr(error))
+                self.ctx.obj['LOGGER'].error(error)
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'alignment':
             """
