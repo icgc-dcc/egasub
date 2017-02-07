@@ -5,12 +5,14 @@ import glob
 import ftplib
 from click import echo
 from egasub.ega.entities.file import File
+import logging
+import datetime
 
 
 
 def initialize_app(ctx):
     if not ctx.obj['WORKSPACE_PATH']:
-        echo('Error: not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.', err=True)
+        ctx.obj['LOGGER'].critical('Not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.')
         ctx.abort()
 
     #echo('Info: workspace is \'%s\'' % ctx.obj['WORKSPACE_PATH'])
@@ -18,16 +20,46 @@ def initialize_app(ctx):
     # read the settings
     ctx.obj['SETTINGS'] = get_settings(ctx.obj['WORKSPACE_PATH'])
     if not ctx.obj['SETTINGS']:
-        echo('Error: unable to read config file, or config file invalid!', err=True)
+        ctx.obj['LOGGER'].critical('Unable to read config file, or config file invalid!')
         ctx.abort()
 
     # figure out the current dir type, e.g., study, sample or analysis
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
     #echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])  # for debug
     if not ctx.obj['CURRENT_DIR_TYPE']:
-        echo('Error: the current working directory does not associate with any supported EGA data types: unaligned|alignment|variation', err=True)
+        ctx.obj['LOGGER'].critical('The current working directory does not associate with any supported EGA data types: unaligned|alignment|variation')
         ctx.abort()
-
+        
+def initialize_log(ctx, debug):
+    logger = logging.getLogger('ega_submission')
+    logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+    
+    if debug:
+        logger.setLevel(logging.DEBUG)    
+    
+    if ctx.obj['WORKSPACE_PATH'] == None:
+        logger = logging.getLogger('ega_submission')
+        ch = logging.StreamHandler()
+        logger.addHandler(ch)
+        ctx.obj['LOGGER'] = logger
+        return
+    
+    log_directory = os.path.join(ctx.obj['WORKSPACE_PATH'],".log")
+    log_file = os.path.join(log_directory,"%s.log" % re.sub(r'[-:.]', '_', datetime.datetime.utcnow().isoformat()))
+    
+    if not os.path.isdir(log_directory):
+        os.mkdir(log_directory)
+        
+    fh = logging.FileHandler(log_file)
+    fh.setFormatter(logFormatter)
+    
+    ch = logging.StreamHandler()
+    ch.setFormatter(logFormatter)
+    
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+    
+    ctx.obj['LOGGER'] = logger
 
 def find_workspace_root(cwd=os.getcwd()):
     searching_for = set(['.egasub'])
@@ -48,7 +80,6 @@ def find_workspace_root(cwd=os.getcwd()):
 
         # stop if it's already reached os root dir
         if current_root == last_root: break
-
     return None
 
 

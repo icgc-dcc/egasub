@@ -7,11 +7,9 @@ import click
 
 
 def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,icgc_id_service_token=None,icgc_project_code=None):
-    echo('')
-    echo('Initalizing EGA submission workspace...')
-    echo('Note: information collected below will be stored in')
-    echo('      \'.egasub/config.yaml\' which can be edited later.')
-    echo('')
+    ctx.obj['LOGGER'].info('Initalizing EGA submission workspace...')
+    ctx.obj['LOGGER'].info('Note: information collected below will be stored in')
+    ctx.obj['LOGGER'].info('      \'.egasub/config.yaml\' which can be edited later.')
     
     projects = ["ALL-US","AML-US","BLCA-CN","BLCA-US","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BRCA-US","BTCA-JP","BTCA-SG","CCSK-US","CESC-US","CLLE-ES","CMDI-UK",
             "COAD-US","COCA-CN","DLBC-US","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","GBM-US","HNSC-US","KICH-US","KIRC-US","KIRP-US","LAML-CN","LAML-KR","LAML-US","LGG-US",
@@ -42,8 +40,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
         'icgc_project_code': icgc_project_code.upper()
         }
     
-
-    exit()
+    ctx.obj['LOGGER'].info("EGA and ICGC credentials collected")
     
     current_dir = ctx.obj['CURRENT_DIR']
     egasub_dir = os.path.join(current_dir,'.egasub')
@@ -51,14 +48,17 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     
     if os.access(current_dir, os.W_OK):
         os.mkdir(egasub_dir)
+        ctx.obj['LOGGER'].info("Creation of .egasub directory")
         
         policy_dir = os.path.join(egasub_dir,'policy')
         
         with open(os.path.join(egasub_dir,'config.yaml'),'w') as outfile:
             yaml.safe_dump(yaml_info,outfile,default_flow_style=False)
             
+        ctx.obj['LOGGER'].info("Credentials added to .egasub/config.yaml file")
+            
         shutil.copytree(os.path.join(script_dir,"ega","data","policy"),policy_dir)
-        echo('EGA submission workspace initialized')
+        ctx.obj['LOGGER'].info('EGA submission workspace initialized')
         
     else:
-        echo('Permission denied on directory '+current_dir)
+        ctx.obj['LOGGER'].critical('Permission denied on directory '+current_dir)

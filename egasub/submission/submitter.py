@@ -43,8 +43,6 @@ class Submitter(object):
             """
             TODO: to be implemented
             """
-            #print submittable.sample.to_dict()
-            #print submittable.analysis.to_dict()
             echo("Not implemented yet.")
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'variation':
