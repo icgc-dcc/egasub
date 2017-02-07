@@ -11,11 +11,11 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     ctx.obj['LOGGER'].info('Note: information collected below will be stored in')
     ctx.obj['LOGGER'].info('      \'.egasub/config.yaml\' which can be edited later.')
     
-    projects = ["ALL-US","AML-US","BLCA-CN","BLCA-US","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BRCA-US","BTCA-JP","BTCA-SG","CCSK-US","CESC-US","CLLE-ES","CMDI-UK",
-            "COAD-US","COCA-CN","DLBC-US","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","GBM-US","HNSC-US","KICH-US","KIRC-US","KIRP-US","LAML-CN","LAML-KR","LAML-US","LGG-US",
-            "LIAD-FR","LICA-CN","LICA-FR","LIHC-US","LIHM-FR","LINC-JP","LIRI-JP","LUAD-US","LUSC-CN","LUSC-KR","LUSC-US","MALY-DE","MELA-AU","NBL-US","ORCA-IN","OV-AU","OV-US","PAAD-US",
-            "PACA-AU","PACA-CA","PAEN-AU","PAEN-IT","PBCA-DE","PRAD-CA","PRAD-UK","PRAD-US","READ-US","RECA-CN","RECA-EU","SARC-US","SKCA-BR","SKCM-US","STAD-US","THCA-SA","THCA-US","UCEC-US",
-            "WT-US"]
+    projects = ["BLCA-CN","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BTCA-JP","BTCA-SG","CLLE-ES","CMDI-UK",
+            "COCA-CN","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","LAML-CN","LAML-KR",
+            "LIAD-FR","LICA-CN","LICA-FR","LIHM-FR","LINC-JP","LIRI-JP","LUSC-CN","LUSC-KR","MALY-DE","MELA-AU","ORCA-IN","OV-AU",
+            "PACA-AU","PACA-CA","PAEN-AU","PAEN-IT","PBCA-DE","PRAD-CA","PRAD-UK","RECA-CN","RECA-EU","SKCA-BR","THCA-SA",
+        ]
     
     #Ask user input for config.yaml
     if not ega_submitter_account:
@@ -27,7 +27,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     if not icgc_project_code:
         while True:
             icgc_project_code = prompt("Enter your ICGC project code", default='')
-            if icgc_project_code in projects:
+            if icgc_project_code.upper() in projects:
                 break
             else:
                 echo("Please enter a project from the following list:")
