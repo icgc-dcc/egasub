@@ -8,7 +8,7 @@ import yaml
 def test_init_function(ctx):    
     runner = CliRunner()
     with runner.isolated_filesystem():
-        result = runner.invoke(main,['init','--ega_submitter_account','test_account','--ega_submitter_password','test_password','--icgc_id_service_token','test_token','--icgc_project_code','test_code'])
+        result = runner.invoke(main,['init','--ega_submitter_account','test_account','--ega_submitter_password','test_password','--icgc_id_service_token','test_token','--icgc_project_code','PACA-CA'])
         assert not result.exception
         assert os.path.isdir('.egasub')
         assert os.path.isdir('.egasub/policy')
@@ -21,4 +21,4 @@ def test_init_function(ctx):
         assert yaml_config['ega_submitter_account'] == "test_account"
         assert yaml_config['ega_submitter_password'] == "test_password"
         assert yaml_config['icgc_id_service_token'] == "test_token"
-        assert yaml_config['icgc_project_code'] == "test_code"
+        assert yaml_config['icgc_project_code'] == "PACA-CA"

@@ -11,6 +11,12 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     ctx.obj['LOGGER'].info('Note: information collected below will be stored in')
     ctx.obj['LOGGER'].info('      \'.egasub/config.yaml\' which can be edited later.')
     
+    projects = ["BLCA-CN","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BTCA-JP","BTCA-SG","CLLE-ES","CMDI-UK",
+            "COCA-CN","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","LAML-CN","LAML-KR",
+            "LIAD-FR","LICA-CN","LICA-FR","LIHM-FR","LINC-JP","LIRI-JP","LUSC-CN","LUSC-KR","MALY-DE","MELA-AU","ORCA-IN","OV-AU",
+            "PACA-AU","PACA-CA","PAEN-AU","PAEN-IT","PBCA-DE","PRAD-CA","PRAD-UK","RECA-CN","RECA-EU","SKCA-BR","THCA-SA",
+        ]
+    
     #Ask user input for config.yaml
     if not ega_submitter_account:
         ega_submitter_account = prompt("Enter your EGA submitter account", default='')
@@ -19,13 +25,19 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     if not icgc_id_service_token:
         icgc_id_service_token = prompt("Enter your ICGC ID service token", default='')
     if not icgc_project_code:
-        icgc_project_code = prompt("Enter your ICGC project code", default='')
+        while True:
+            icgc_project_code = prompt("Enter your ICGC project code", default='')
+            if icgc_project_code.upper() in projects:
+                break
+            else:
+                echo("Please enter a project from the following list:")
+                echo('\t'.join(projects))
         
     yaml_info = {
         'ega_submitter_account': ega_submitter_account,
         'ega_submitter_password': ega_submitter_password,
         'icgc_id_service_token': icgc_id_service_token,
-        'icgc_project_code': icgc_project_code
+        'icgc_project_code': icgc_project_code.upper()
         }
     
     ctx.obj['LOGGER'].info("EGA and ICGC credentials collected")
