@@ -7,17 +7,17 @@ from egasub.ega.entities import EgaEnums
 
 
 @click.group()
-@click.option('--debug/--no-debug', '-d', default=False, envvar='EGASUB_DEBUG')
+@click.option('--debug/--no-debug', '-d', default=False)
+@click.option('--info/--no-info','-i',default=False)
 @click.pass_context
-def main(ctx, debug):
+def main(ctx, debug, info):
     # initializing ctx.obj
     ctx.obj = {}
     ctx.obj['IS_TEST'] = False
-    
     ctx.obj['CURRENT_DIR'] = os.getcwd()
     ctx.obj['IS_TEST_PROJ'] = None
     ctx.obj['WORKSPACE_PATH'] = utils.find_workspace_root(cwd=ctx.obj['CURRENT_DIR'])
-    utils.initialize_log(ctx, debug)
+    utils.initialize_log(ctx, debug, info)
 
 
 @main.command()

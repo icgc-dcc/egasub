@@ -30,12 +30,14 @@ def initialize_app(ctx):
         ctx.obj['LOGGER'].critical('The current working directory does not associate with any supported EGA data types: unaligned|alignment|variation')
         ctx.abort()
         
-def initialize_log(ctx, debug):
+def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
     logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
     
     if debug:
-        logger.setLevel(logging.DEBUG)    
+        logger.setLevel(logging.DEBUG)
+    elif info:
+        logger.setLevel(logging.INFO) 
     
     if ctx.obj['WORKSPACE_PATH'] == None:
         logger = logging.getLogger('ega_submission')

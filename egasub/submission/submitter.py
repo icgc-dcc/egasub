@@ -35,7 +35,7 @@ class Submitter(object):
                 submittable.run.experiment_id = submittable.experiment.id
                 submit_obj(self.ctx, submittable.run, 'run')
 
-                echo(' Finished processing %s' % submittable.sample.alias)
+                self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.sample.alias)
             except Exception as error:
                 echo('Error caught: '+repr(error))
 
