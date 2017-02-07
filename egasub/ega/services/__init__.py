@@ -90,7 +90,7 @@ def prepare_submission(ctx, submission):
 
 def submit_obj(ctx, obj, obj_type):
         
-    echo(" - Registering %s ..." % obj_type)
+    ctx.obj['LOGGER'].info(" - Registering %s ..." % obj_type)
     endpoint = obj_type_to_endpoint(obj_type)
 
     # TODO: before registering new object, we should check existence
@@ -108,9 +108,9 @@ def submit_obj(ctx, obj, obj_type):
     }
     
 
-    #echo('Registering object: %s' % json.dumps(obj.to_dict())) # for debug
+    ctx.obj['LOGGER'].info('Registering object: %s' % json.dumps(obj.to_dict())) # for debug
     r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
-    #echo(r.text)  # for debug
+    ctx.obj['LOGGER'].info(r.text)  # for debug
     r_data = json.loads(r.text)
 
     if r_data['header']['code'] == "200":
@@ -140,7 +140,7 @@ def validate_obj(ctx, obj, obj_type):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.put(url,headers=headers)
-    #echo(r.text)  # for debug
+    ctx.obj['LOGGER'].info(r.text)  # for debug
     r_data = json.loads(r.text)
 
     # enable this when EGA fixes the validation bug
@@ -151,7 +151,7 @@ def validate_obj(ctx, obj, obj_type):
 
     if result and result[0].get('validationErrorMessages'):
         err = "\n".join(result[0].get('validationErrorMessages'))
-        # echo('Validation error: %s' % err)  # for debug
+        ctx.obj['LOGGER'].info('Validation error: %s' % err)  # for debug
         if err == 'Alias %s already exists in another %s' % (obj.alias, obj_type):
             objects_with_err = query_by_id(ctx, endpoint, obj.alias, 'ALIAS')
             for s in objects_with_err:
@@ -161,13 +161,13 @@ def validate_obj(ctx, obj, obj_type):
             raise Exception
 
     for s in query_by_id(ctx, endpoint, obj.alias, 'ALIAS'):
-        #echo('%s with alias: %s, id: %s' % (obj_type, s.get('alias'), s.get('id')))  # for debug
-        #echo(json.dumps(s))  # for debug
+        ctx.obj['LOGGER'].info('%s with alias: %s, id: %s' % (obj_type, s.get('alias'), s.get('id')))  # for debug
+        ctx.obj['LOGGER'].info(json.dumps(s))  # for debug
         if s.get('status') in ('VALIDATED', 'SUBMITTED'):  # use the good object id
             obj.id = s.get('id')
             break
 
-    echo(" - Validation completed.")
+    ctx.obj['LOGGER'].info(" - Validation completed.")
 
 
 def obj_type_to_endpoint(obj_type):
@@ -192,7 +192,7 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
     }
 
     r = requests.get(url, headers=headers)
-    #echo(r.text)  # for debug
+    ctx.obj['LOGGER'].info(r.text)  # for debug
     r_data = json.loads(r.text)
     if r_data.get('response'):
         return r_data.get('response').get('result',[])
@@ -208,8 +208,8 @@ def delete(ctx, obj_type, obj_id):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.delete(url, headers=headers)
-    # echo('Deleted: %s %s' % (obj_type, obj_id))  # for debug
-    #echo(r.text)  # for debug
+    ctx.obj['LOGGER'].info('Deleted: %s %s' % (obj_type, obj_id))  # for debug
+    ctx.obj['LOGGER'].info(r.text)  # for debug
 
 
 def submit_submission(ctx,submission):

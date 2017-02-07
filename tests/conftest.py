@@ -1,5 +1,6 @@
 import pytest
 import httpretty
+import logging
 
 class test_ctx(object):
     def __init__(self):
@@ -8,9 +9,10 @@ class test_ctx(object):
         self.obj['SETTINGS']['apiUrl'] = 'http://example.com/'
         self.obj['SUBMISSION'] = {}
         
+        logger = logging.getLogger('ega_submission')
+        self.obj['LOGGER'] = logger
+
 test_ctx = test_ctx()
-
-
 
 @pytest.fixture(scope="session")
 def ctx():
