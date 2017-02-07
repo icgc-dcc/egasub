@@ -122,7 +122,7 @@ def submit_obj(ctx, obj, obj_type):
 
 
 def validate_obj(ctx, obj, obj_type):
-    echo("Validating %s ..." % obj_type)
+    ctx.obj['LOGGER'].info("Validating %s ..." % obj_type)
     endpoint = obj_type_to_endpoint(obj_type)
 
     if obj.id == None:
@@ -211,7 +211,7 @@ def delete(ctx, obj_type, obj_id):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.delete(url, headers=headers)
-    ctx.obj['LOGGER'].info('Deleted: %s %s' % (obj_type, obj_id))  # for debug
+    ctx.obj['LOGGER'].debug('Deleted: %s %s' % (obj_type, obj_id))  # for debug
     ctx.obj['LOGGER'].debug(r.text)  # for debug
 
 
