@@ -1,5 +1,5 @@
 import os, yaml
-from egasub.ega.services import login,logout,prepare_submission, submit_obj
+from egasub.ega.services import login,logout,prepare_submission, object_submission
 import pytest
 import requests
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
@@ -35,7 +35,7 @@ def test_submit_obj(ctx):
             [],   # customTags
             None
         )
-    submit_obj(ctx,study,"study")
+    object_submission(ctx,study,"study")
         
 def test_logout_function(ctx):
     logout(ctx)
