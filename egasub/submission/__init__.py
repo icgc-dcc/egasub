@@ -1,4 +1,4 @@
 from init import init_workspace
-from submit import perform_submission
+from submit import perform_submission, submit_dataset, dry_run_dataset
 from status import generate_report
 from init_submission_dir import init_submission_dir

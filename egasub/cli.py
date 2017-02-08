@@ -2,7 +2,7 @@ import os
 import click
 import utils
 from click import echo
-from submission import init_workspace, perform_submission, init_submission_dir, generate_report, submit_dataset
+from submission import init_workspace, perform_submission, init_submission_dir, generate_report, submit_dataset, dry_run_dataset
 from egasub.ega.entities import EgaEnums
 
 
@@ -124,13 +124,12 @@ def dataset(ctx,submit,dry_run):
     Submit a dataset with the samples
     """
     utils.initialize_app(ctx)
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
     
     if submit:
-        ctx.obj['EGA_ENUMS'] = EgaEnums()
         submit_dataset(ctx)
     elif dry_run:
-        echo("Not implemented yet")
-        ctx.abort()
+        dry_run_dataset(ctx)
     else:
         echo("--submit or --dry_run")
 

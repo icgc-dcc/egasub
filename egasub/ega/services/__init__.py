@@ -206,6 +206,7 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
     if r_data.get('response'):
         return r_data.get('response').get('result',[])
     else:
+        print r_data
         return []
 
 
