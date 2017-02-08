@@ -122,6 +122,7 @@ def register_obj(ctx, obj, obj_type):
     r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
     ctx.obj['LOGGER'].debug("Response after registering: \n%s" % r.text)  # for debug
     r_data = json.loads(r.text)
+    
 
     if r_data['header']['code'] == "200":
         obj.id = r_data['response']['result'][0]['id']
@@ -185,6 +186,8 @@ def _obj_type_to_endpoint(obj_type):
         return 'analyses'
     elif obj_type == 'study':
         return 'studies'
+    elif obj_type == 'dataset':
+        return 'datasets'
     else:
         raise Exception('Not supported EGA object type %s' % obj_type)
 
@@ -228,4 +231,3 @@ def submit_submission(ctx,submission):
 
     r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-

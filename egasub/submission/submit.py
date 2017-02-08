@@ -1,13 +1,15 @@
 import os
 import sys
-from click import echo
+from click import echo, prompt
 
-from ..ega.entities import Study, Submission, SubmissionSubsetData
+from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
 from ..ega.services import login, logout, object_submission, query_by_id, \
                             prepare_submission, submit_submission
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
 from .submittable import Unaligned, Alignment, Variation
 from .submitter import Submitter
+from objc._properties import attrgetter
+#import yaml
 
 
 def perform_submission(ctx, submission_dirs, dry_run=True):
@@ -83,5 +85,63 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
+    
+    
+def submit_dataset(ctx):
+    ctx.obj['LOGGER'].info("Login ...")
+    
+    try:
+        login(ctx)
+    except CredentialsError as error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
+        
+    dataset_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['dataset_types']['response']['result']
+    ids = [dataset['tag'] for dataset in dataset_types]
+    values = [dataset['value'] for dataset in dataset_types]
+    
+    policy_id = ctx.obj['SETTINGS']['ega_policy_id']
+    
+    #if ctx.obj['CURRENT_DIR_TYPE'] == "unaligned":
+    #    yaml_file = "experiment.yaml"
+    #else:
+    #    yaml_file = "analysis.yaml"
+        
+    #yaml_files = []
+    #for sub_folder in os.listdir(ctx.obj['CURRENT_DIR']):
+    #    sub_folder_path = os.path.join(ctx.obj['CURRENT_DIR'],sub_folder)
+    #    yaml_file_path = os.path.join(sub_folder_path,yaml_file)
+    #    if os.path.isfile(yaml_file_path):
+    #        yaml_files.append(yaml_file_path)
+    
+    for i in xrange(0,len(values)):
+        print ids[i]+"\t- "+values[i]
+    
+    echo("-----------")
+    while True:
+        dataset_type_id = prompt("Select the dataset type: ")
+        if dataset_type_id in ids:
+            break
+        
+    dataset = Dataset('alias',[dataset_type_id],1,[],[],'a title',[],[])
+    submission = Submission('Empty title', None,SubmissionSubsetData.create_empty())
+    prepare_submission(ctx, submission)
+    
+    try:
+        object_submission(ctx, dataset, 'dataset', False)
+    except Exception, error:
+        ctx.obj['LOGGER'].critical(error)
+        ctx.abort()
+    
+    
+    ctx.obj['LOGGER'].info("Logging out the session")    
+    logout(ctx)
+    
+#def load_sample(yaml_file):
+#    with open(yaml_file,'r') as stream:
+#        try:
+#            return yaml.load(stream)['sample']
+#        except yaml.YAMLError as exc:
+#            print(exc)
 
 
