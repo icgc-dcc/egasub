@@ -1,6 +1,5 @@
 import requests
 import json
-from click import echo
 from ..entities import sample
 from ..entities import analysis
 from egasub.exceptions import CredentialsError
@@ -89,17 +88,29 @@ def prepare_submission(ctx, submission):
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
 
 
-def submit_obj(ctx, obj, obj_type):
-    ctx.obj['LOGGER'].info("Registering %s ..." % obj_type)
-    endpoint = obj_type_to_endpoint(obj_type)
+def object_submission(ctx, obj, obj_type, dry_run=True):
+    existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
+    for o in existing_objects:
+        if o.get('status') == 'SUBMITTED' or (dry_run and o.get('status') == 'VALIDATED'):
+            obj.id = o.get('id')
+            ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
+                                     % (obj_type, obj.alias, o.get('status')))
+            return
 
-    # TODO: before registering new object, we should check existence
-    #       of same type of object with the same alias
-    
+    register_obj(ctx, obj, obj_type)
+    if dry_run:
+        validate_obj(ctx, obj, obj_type)
+    else:
+        submit_obj(ctx, obj, obj_type)
+
+
+def register_obj(ctx, obj, obj_type):
+    ctx.obj['LOGGER'].info("Registering '%s' ..." % obj_type)
+
     url = "%ssubmissions/%s/%s" % (
                                         api_url(ctx),
                                         ctx.obj['SUBMISSION']['id'],
-                                        endpoint
+                                        _obj_type_to_endpoint(obj_type)
                                     )
     
     headers = {
@@ -107,32 +118,40 @@ def submit_obj(ctx, obj, obj_type):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
 
-    ctx.obj['LOGGER'].debug('Registering object: %s' % json.dumps(obj.to_dict())) # for debug
+    ctx.obj['LOGGER'].debug("Registering '%s': \n%s" % (obj_type, json.dumps(obj.to_dict()))) # for debug
     r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
-    ctx.obj['LOGGER'].debug(r.text)  # for debug
+    ctx.obj['LOGGER'].debug("Response after registering: \n%s" % r.text)  # for debug
     r_data = json.loads(r.text)
 
     if r_data['header']['code'] == "200":
         obj.id = r_data['response']['result'][0]['id']
     else:
-        #TODO
         raise Exception(r_data['header']['userMessage'])
-    #id_service(ctx,obj_type,ctx.obj['SETTINGS']['icgc_project_code'],ctx.obj['SETTINGS']['STUDY_ID'])
-    validate_obj(ctx, obj, obj_type)
 
 
 def validate_obj(ctx, obj, obj_type):
-    ctx.obj['LOGGER'].info("Validating %s ..." % obj_type)
-    endpoint = obj_type_to_endpoint(obj_type)
+    _validate_submit_obj(ctx, obj, obj_type, 'validate')
+
+
+def submit_obj(ctx, obj, obj_type):
+    _validate_submit_obj(ctx, obj, obj_type, 'submit')
+
+
+def _validate_submit_obj(ctx, obj, obj_type, op_type):
+    if not op_type in ('validate', 'submit'):
+        raise Exception('Not supported operation %s' % op_type)
+
+    ctx.obj['LOGGER'].info("%s '%s' ..." % (op_type.capitalize(), obj_type))
 
     if obj.id == None:
         raise Exception('EGA Object id missing.')
 
     # we directly go to submit
-    url = "%s%s/%s?action=SUBMIT" % (
+    url = "%s%s/%s?action=%s" % (
                                         api_url(ctx),
-                                        endpoint,
-                                        obj.id
+                                        _obj_type_to_endpoint(obj_type),
+                                        obj.id,
+                                        op_type.upper()
                                     )
 
     headers = {
@@ -140,54 +159,38 @@ def validate_obj(ctx, obj, obj_type):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.put(url,headers=headers)
-    ctx.obj['LOGGER'].debug(r.text)  # for debug
+    ctx.obj['LOGGER'].debug("Response after '%s': \n%s" % (op_type, r.text))  # for debug
     r_data = json.loads(r.text)
-    
 
     # enable this when EGA fixes the validation bug
     if r_data.get('header', {}).get('code') != "200":
         raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
 
-    result = r_data.get('response').get('result',[]) if r_data.get('response') else None
+    ctx.obj['LOGGER'].info("%s '%s' completed." % (op_type.capitalize(), obj_type))
 
-    if result and result[0].get('validationErrorMessages'):
-        err = "\n".join(result[0].get('validationErrorMessages'))
-        ctx.obj['LOGGER'].info('Validation error: %s' % err)  # for debug
-        if err == 'Alias %s already exists in another %s' % (obj.alias, obj_type):
-            objects_with_err = query_by_id(ctx, endpoint, obj.alias, 'ALIAS')
-            for s in objects_with_err:
-                if s.get('status') == 'VALIDATED_WITH_ERRORS':
-                    delete(ctx, endpoint, s.get('id'))
-        else:
-            raise Exception
-        
-    # we only need to do this for sample which we have alias assigned by us
-    if obj_type == 'sample':
-        for s in query_by_id(ctx, endpoint, obj.alias, 'ALIAS'):
-            ctx.obj['LOGGER'].info('%s with alias: %s, id: %s' % (obj_type, s.get('alias'), s.get('id')))  # for debug
-            ctx.obj['LOGGER'].debug(json.dumps(s))  # for debug
-            if s.get('status') in ('SUBMITTED'):  # use the good object id
-                obj.id = s.get('id')
-            break
-
-    ctx.obj['LOGGER'].info("Validation completed.")
+    return r_data.get('response').get('result',[]) if r_data.get('response') else []
 
 
-def obj_type_to_endpoint(obj_type):
+def update_obj(ctx, obj, obj_type):
+    """
+    Not implemented yet
+    """
+    pass
+
+
+def _obj_type_to_endpoint(obj_type):
     if obj_type in ('sample', 'experiment', 'run'):
-        endpoint = '%ss' % obj_type
+        return '%ss' % obj_type
     elif obj_type == 'analysis':
-        endpoint = 'analyses'
+        return 'analyses'
     elif obj_type == 'study':
-        endpoint = 'studies'
+        return 'studies'
     else:
         raise Exception('Not supported EGA object type %s' % obj_type)
 
-    return endpoint
-
 
 def query_by_id(ctx, obj_type, obj_id, id_type):
-    url = "%s%s/%s?idType=%s" % (api_url(ctx), obj_type, obj_id, id_type)
+    url = "%s%s/%s?idType=%s" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_id, id_type)
 
     headers = {
         'Content-Type': 'application/json',
@@ -195,7 +198,7 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
     }
 
     r = requests.get(url, headers=headers)
-    ctx.obj['LOGGER'].debug(r.text)  # for debug
+    ctx.obj['LOGGER'].debug("Response after querying '%s' by '%s' (%s): \n%s" % (obj_type, obj_id, id_type, r.text))  # for debug
     r_data = json.loads(r.text)
     if r_data.get('response'):
         return r_data.get('response').get('result',[])
@@ -211,8 +214,8 @@ def delete(ctx, obj_type, obj_id):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.delete(url, headers=headers)
-    ctx.obj['LOGGER'].debug('Deleted: %s %s' % (obj_type, obj_id))  # for debug
-    ctx.obj['LOGGER'].debug(r.text)  # for debug
+    ctx.obj['LOGGER'].info('Deleted: %s %s' % (obj_type, obj_id))  # for debug
+    ctx.obj['LOGGER'].debug("Response after deleting '%s' with ID '%s': \n%s" % (obj_type, obj_id, r.text))  # for debug
 
 
 def submit_submission(ctx,submission):

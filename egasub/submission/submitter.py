@@ -1,7 +1,7 @@
 from click import echo
 
 from ..icgc.services import id_service
-from ..ega.services import login, logout, submit_obj
+from ..ega.services import login, logout, object_submission
 from ..ega.entities import Attribute
 
 
@@ -9,7 +9,7 @@ class Submitter(object):
     def __init__(self, ctx):
         self.ctx = ctx
 
-    def submit(self, submittable, dry_run=None):
+    def submit(self, submittable, dry_run=True):
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             self.ctx.obj['LOGGER'].info('Processing %s' % submittable.sample.alias)
 
@@ -26,15 +26,15 @@ class Submitter(object):
                     )
 
 
-                submit_obj(self.ctx, submittable.sample, 'sample')
+                object_submission(self.ctx, submittable.sample, 'sample', dry_run)
 
                 submittable.experiment.sample_id = submittable.sample.id
                 submittable.experiment.study_id = self.ctx.obj['SETTINGS']['STUDY_ID']
 
-                submit_obj(self.ctx, submittable.experiment, 'experiment')
+                object_submission(self.ctx, submittable.experiment, 'experiment', dry_run)
                 submittable.run.sample_id = submittable.sample.id
                 submittable.run.experiment_id = submittable.experiment.id
-                submit_obj(self.ctx, submittable.run, 'run')
+                object_submission(self.ctx, submittable.run, 'run', dry_run)
 
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.sample.alias)
             except Exception as error:

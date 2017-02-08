@@ -8,7 +8,7 @@ from egasub.ega.entities import EgaEnums
 
 @click.group()
 @click.option('--debug/--no-debug', '-d', default=False)
-@click.option('--info/--no-info','-i',default=False)
+@click.option('--info/--no-info','-i',default=True)
 @click.pass_context
 def main(ctx, debug, info):
     # initializing ctx.obj
@@ -42,7 +42,7 @@ def submit(ctx, submission_dir):
         ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx, submission_dir)
+    perform_submission(ctx, submission_dir, dry_run=False)
 
 @main.command()
 @click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
@@ -62,7 +62,7 @@ def dry_run(ctx, submission_dir):
         ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx, submission_dir, True)
+    perform_submission(ctx, submission_dir, dry_run=True)
 
 
 @main.command()
