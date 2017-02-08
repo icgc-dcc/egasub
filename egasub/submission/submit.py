@@ -121,16 +121,13 @@ def submit_dataset(ctx):
     for i in xrange(0,len(values)):
         print ids[i]+"\t- "+values[i]
     
-    print run_references    
-    exit()
-    
     echo("-----------")
     while True:
         dataset_type_id = prompt("Select the dataset type: ")
         if dataset_type_id in ids:
             break
         
-    dataset = Dataset('alias',[dataset_type_id],1,[],[],'a title',[],[])
+    dataset = Dataset('alias',[dataset_type_id],1,run_references,[],'a title',[],[])
     submission = Submission('Empty title', None,SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
     
