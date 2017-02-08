@@ -145,6 +145,10 @@ class Experiment(Submittable):
         if not any(strategy['tag'] == str(self.experiment.library_strategy_id) for strategy in ega_enums.lookup("library_strategies")):
             self._add_local_validation_error("experiment",self.experiment.alias,"libraryStrategies","Invalid value '%s'" % self.experiment.library_strategy_id)
 
+        # Library layout validation
+        if not any(layout['tag'] == str(self.experiment.library_layout_id) for layout in ega_enums.lookup("library_layouts")):
+            self._add_local_validation_error("experiment",self.experiment.alias,"libraryLayoutId","Invalid value '%s'" % self.experiment.library_layout_id)
+
         # Run file type validation
         if not any(file_type['tag'] == str(self.run.run_file_type_id) for file_type in ega_enums.lookup("file_types")):
             self._add_local_validation_error("run",self.run.alias,"runFileTypeId","Invalid value '%s'" % self.run.run_file_type_id)
