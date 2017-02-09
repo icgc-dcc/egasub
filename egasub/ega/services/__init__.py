@@ -122,7 +122,6 @@ def register_obj(ctx, obj, obj_type):
     r = requests.post(url,data=json.dumps(obj.to_dict()), headers=headers)
     ctx.obj['LOGGER'].debug("Response after registering: \n%s" % r.text)  # for debug
     r_data = json.loads(r.text)
-    
 
     if r_data['header']['code'] == "200":
         obj.id = r_data['response']['result'][0]['id']
@@ -206,7 +205,6 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
     if r_data.get('response'):
         return r_data.get('response').get('result',[])
     else:
-        print r_data
         return []
 
 
