@@ -70,7 +70,8 @@ def test_to_dict():
             'sampleAge' : 10,
             'sampleDetail' : 'some details',
             'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
-            'id' : 33
+            'id' : 33,
+            'status': None
         }, sample.to_dict()) == 0
 
         

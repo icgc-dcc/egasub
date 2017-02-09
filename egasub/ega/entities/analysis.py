@@ -5,7 +5,7 @@ from attribute import Attribute
 
 class Analysis(object):
     def __init__(self, alias, title, description, study_id, sample_references, analysis_center, analysis_date,
-                 analysis_type_id, files, attributes, genome_id, chromosome_references, experiment_type_id,platform):
+                 analysis_type_id, files, attributes, genome_id, chromosome_references, experiment_type_id,platform,status=None):
         self.title = title
         self.description = description
         self.study_id = study_id
@@ -20,6 +20,7 @@ class Analysis(object):
         self.experiment_type_id = experiment_type_id
         self.platform = platform
         self.alias = alias
+        self.status = status
 
     def to_dict(self):
         return {
@@ -36,7 +37,8 @@ class Analysis(object):
             'chromosomeReferences' : map(lambda ref: ref.to_dict(), self.chromosome_references),
             'experimentTypeId' : self.experiment_type_id,
             'platform' : self.platform,
-            'alias' : self.alias
+            'alias' : self.alias,
+            'status': self.status
             }
 
     def to_xml(self):

@@ -12,11 +12,17 @@ class Alignment(Analysis):
         self._ftp_file_validation_errors = []
         self._path = path
         self._parse_meta()
-        self._status = self._check_status()
 
         self._sample = Sample.from_dict(self.metadata.get('sample'))
         self._analysis = EAnalysis.from_dict(self.metadata.get('analysis'))
         self._analysis.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+
+    @property
+    def status(self):
+        if self.analysis.status:
+            return self.analysis.status
+        else:
+            return 'NEW'  # hardcoded for now
 
     @property
     def type(self):

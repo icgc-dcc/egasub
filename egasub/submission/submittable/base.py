@@ -1,6 +1,7 @@
 import os
 import re
 import yaml
+import time
 from click import echo
 from abc import ABCMeta, abstractmethod, abstractproperty
 
@@ -37,9 +38,9 @@ class Submittable(object):
     def metadata(self):
         return self._metadata
 
-    @property
+    @abstractproperty
     def status(self):
-        return self._status
+        return
 
     @property
     def local_validation_errors(self):
@@ -68,6 +69,17 @@ class Submittable(object):
         try:
             with open(yaml_file, 'r') as yaml_stream:
                 self._metadata = yaml.load(yaml_stream)
+
+            # some basic validation of the YAML
+            if self.type == 'experiment':
+                if 'alias' in self._metadata.get('experiment', {}):
+                    raise Exception("Can not have 'alias' for 'experiment' in %s." % yaml_file)
+                if 'alias' in self._metadata.get('run', {}):
+                    raise Exception("Can not have 'alias' for 'run' in %s." % yaml_file)
+            if self.type == 'analysis':
+                if 'alias' in self._metadata.get('analysis', {}):
+                    raise Exception("Can not have 'alias' for 'analysis' in %s." % yaml_file)
+
         except:
             raise Exception('Not an properly formed submission directory: %s' % self.submission_dir)
 
@@ -100,12 +112,44 @@ class Submittable(object):
     def ftp_files_remote_validate(self):
         pass
 
-    def _check_status(self):
-        """
-        This will check local log info to get the status
-        """
-        # hardcode to 'NEW' for now
-        return 'NEW'
+    def restore_latest_object_status(self, obj_type):
+        if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
+            return
+
+        obj = getattr(self, obj_type)
+
+        status_file = os.path.join(self.path, '.status', '%s.log' % obj_type)
+
+        try:
+            with open(status_file, 'r') as f:
+                lines = f.readlines()
+                if lines:
+                    line = lines[-1]
+                    id_, alias, status, timestamp = line.split('\t')
+                    if obj.alias and not obj.alias == alias:
+                        pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
+                    else:
+                        obj.alias = alias
+                        obj.status = status
+        except:
+            return
+
+    def record_object_status(self, obj_type):
+        if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
+            return
+
+        status_dir = os.path.join(self.path, '.status')
+
+        if not os.path.exists(status_dir):
+            os.makedirs(status_dir)
+
+        status_file = os.path.join(status_dir, '%s.log' % obj_type)
+
+        obj = getattr(self, obj_type)
+
+        with open(status_file, 'a') as f:
+            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time()))]))
+
 
 class Experiment(Submittable):
     @property
@@ -120,7 +164,16 @@ class Experiment(Submittable):
     def run(self):
         return self._run
 
+    # Future todo: move these validations to a new Validator class
     def local_validate(self, ega_enums):
+        # Alias validation
+        if not self.sample.alias == self.submission_dir:
+            self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample's alias must be set and match the submission directory name '%s'." % (self.sample.alias, self.submission_dir))
+
+        # subjustId validation
+        if not self.sample.subject_id:
+            self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId must be set.")
+
         # Gender validation
         if not any(gender['tag'] == str(self.sample.gender_id) for gender in ega_enums.lookup("genders")):
             self._add_local_validation_error("sample",self.sample.alias,"gender","Invalid value '%s'" % self.sample.gender_id)
@@ -145,9 +198,14 @@ class Experiment(Submittable):
         if not any(strategy['tag'] == str(self.experiment.library_strategy_id) for strategy in ega_enums.lookup("library_strategies")):
             self._add_local_validation_error("experiment",self.experiment.alias,"libraryStrategies","Invalid value '%s'" % self.experiment.library_strategy_id)
 
+        # Library layout validation
+        if not any(layout['tag'] == str(self.experiment.library_layout_id) for layout in ega_enums.lookup("library_layouts")):
+            self._add_local_validation_error("experiment",self.experiment.alias,"libraryLayoutId","Invalid value '%s'" % self.experiment.library_layout_id)
+
         # Run file type validation
         if not any(file_type['tag'] == str(self.run.run_file_type_id) for file_type in ega_enums.lookup("file_types")):
             self._add_local_validation_error("run",self.run.alias,"runFileTypeId","Invalid value '%s'" % self.run.run_file_type_id)
+
 
 
 class Analysis(Submittable):

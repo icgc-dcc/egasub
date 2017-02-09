@@ -2,22 +2,22 @@ import os
 import click
 import utils
 from click import echo
-from submission import init_workspace, perform_submission, init_submission_dir, generate_report
+from submission import init_workspace, perform_submission, init_submission_dir, generate_report, submit_dataset
 from egasub.ega.entities import EgaEnums
 
 
 @click.group()
-@click.option('--debug/--no-debug', '-d', default=False, envvar='EGASUB_DEBUG')
+@click.option('--debug/--no-debug', '-d', default=False)
+@click.option('--info/--no-info','-i',default=True)
 @click.pass_context
-def main(ctx, debug):
+def main(ctx, debug, info):
     # initializing ctx.obj
     ctx.obj = {}
     ctx.obj['IS_TEST'] = False
-    
     ctx.obj['CURRENT_DIR'] = os.getcwd()
     ctx.obj['IS_TEST_PROJ'] = None
     ctx.obj['WORKSPACE_PATH'] = utils.find_workspace_root(cwd=ctx.obj['CURRENT_DIR'])
-    utils.initialize_log(ctx, debug)
+    utils.initialize_log(ctx, debug, info)
 
 
 @main.command()
@@ -42,7 +42,7 @@ def submit(ctx, submission_dir):
         ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx, submission_dir)
+    perform_submission(ctx, submission_dir, dry_run=False)
 
 @main.command()
 @click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
@@ -62,7 +62,7 @@ def dry_run(ctx, submission_dir):
         ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
 
-    perform_submission(ctx, submission_dir, True)
+    perform_submission(ctx, submission_dir, dry_run=True)
 
 
 @main.command()
@@ -114,6 +114,26 @@ def new(ctx,submission_dir):
     utils.initialize_app(ctx)
     
     init_submission_dir(ctx, submission_dir)
+    
+@main.command()
+@click.option('--submit', '-s', is_flag=True)
+@click.option('--dry_run', '-d', is_flag=True)
+@click.pass_context
+def dataset(ctx,submit,dry_run):
+    """
+    Submit a dataset with the samples
+    """
+    utils.initialize_app(ctx)
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
+    
+    if submit:
+        submit_dataset(ctx, dry_run=False)
+    elif dry_run:
+        submit_dataset(ctx, dry_run=True)
+    else:
+        ctx.obj['LOGGER'].error("You must choose one of the options: --submit or --dry_run")
+        ctx.abort()
+
 
 if __name__ == '__main__':
   main()

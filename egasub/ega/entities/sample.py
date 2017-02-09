@@ -5,7 +5,7 @@ from .attribute import Attribute
 class Sample(object):
     def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
                  cell_line,region,phenotype, subject_id, anonymized_name, bio_sample_id,
-                 sample_age, sample_detail, attributes,id):
+                 sample_age, sample_detail, attributes,id, status=None):
         self.alias = alias
         self.title = title
         self.description  = description
@@ -22,6 +22,7 @@ class Sample(object):
         self.sample_detail = sample_detail
         self.attributes = attributes
         self.id = id
+        self.status = status
 
 
     def to_dict(self):
@@ -41,7 +42,8 @@ class Sample(object):
             'sampleAge' : self.sample_age,
             'sampleDetail' : self.sample_detail,
             'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes),
-            'id' : self.id
+            'id' : self.id,
+            'status': self.status
             }
 
 
