@@ -222,6 +222,8 @@ def _obj_type_to_endpoint(obj_type):
         return 'analyses'
     elif obj_type == 'study':
         return 'studies'
+    elif obj_type == 'dataset':
+        return 'datasets'
     else:
         raise Exception('Not supported EGA object type %s' % obj_type)
 
@@ -268,4 +270,3 @@ def submit_submission(ctx,submission):
 
     r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-

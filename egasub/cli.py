@@ -2,7 +2,7 @@ import os
 import click
 import utils
 from click import echo
-from submission import init_workspace, perform_submission, init_submission_dir, generate_report
+from submission import init_workspace, perform_submission, init_submission_dir, generate_report, submit_dataset
 from egasub.ega.entities import EgaEnums
 
 
@@ -114,6 +114,26 @@ def new(ctx,submission_dir):
     utils.initialize_app(ctx)
     
     init_submission_dir(ctx, submission_dir)
+    
+@main.command()
+@click.option('--submit', '-s', is_flag=True)
+@click.option('--dry_run', '-d', is_flag=True)
+@click.pass_context
+def dataset(ctx,submit,dry_run):
+    """
+    Submit a dataset with the samples
+    """
+    utils.initialize_app(ctx)
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
+    
+    if submit:
+        submit_dataset(ctx, dry_run=False)
+    elif dry_run:
+        submit_dataset(ctx, dry_run=True)
+    else:
+        ctx.obj['LOGGER'].error("You must choose one of the options: --submit or --dry_run")
+        ctx.abort()
+
 
 if __name__ == '__main__':
   main()

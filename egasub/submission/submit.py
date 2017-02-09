@@ -1,8 +1,8 @@
 import os
 import sys
-from click import echo
+from click import echo, prompt
 
-from ..ega.entities import Study, Submission, SubmissionSubsetData
+from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
 from ..ega.services import login, logout, object_submission, query_by_id, \
                             prepare_submission, submit_submission
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
@@ -88,5 +88,79 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
+    
+    
+def submit_dataset(ctx, dry_run=True):
+    ctx.obj['LOGGER'].info("Login ...")
+    
+    try:
+        login(ctx)
+    except CredentialsError as error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
+        
+    dataset_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['dataset_types']['response']['result']
+    ids = [dataset['tag'] for dataset in dataset_types]
+    values = [dataset['value'] for dataset in dataset_types]
+    
+    policy_id = ctx.obj['SETTINGS']['ega_policy_id']
+    
+    run_references = []
+    not_submitted = []
+    for sub_folder in os.listdir(ctx.obj['CURRENT_DIR']):
+        sub_folder_path = os.path.join(ctx.obj['CURRENT_DIR'],sub_folder)
+        run_file_log = os.path.join(sub_folder_path,'.status','run.log')
+        status = submittable_status(run_file_log)
+        if status[2] == 'SUBMITTED':
+            run_references.append(status[1])  # 1 is alias, 0 is id
+        else:
+            not_submitted.append(sub_folder)
 
+    if not_submitted:
+        ctx.obj['LOGGER'].error("These samples have not been submitted yet: %s" % ','.join(not_submitted))
+        logout(ctx)
+        ctx.abort()
+
+    for i in xrange(0,len(values)):
+        print ids[i]+"\t- "+values[i]
+    
+    echo("-----------")
+    while True:
+        dataset_type_id = prompt("Select the dataset type: ")
+        if dataset_type_id in ids:
+            break
+
+    # TODO: need to determine these values for the dataset
+    dataset = Dataset(
+                        'alias',
+                        [dataset_type_id],
+                        1,
+                        run_references,
+                        [],
+                        'a title',
+                        [],
+                        []
+                    )
+    submission = Submission('Empty title', None, SubmissionSubsetData.create_empty())
+    prepare_submission(ctx, submission)
+
+    try:
+        object_submission(ctx, dataset, 'dataset', dry_run)
+    except Exception, err:
+        ctx.obj['LOGGER'].error("Submitting dataset failed: %s" % err)
+        logout(ctx)
+        ctx.abort()
+
+    ctx.obj['LOGGER'].info("Logging out the session")    
+    logout(ctx)
+
+
+def submittable_status(_file):
+    try:
+        with open(_file,'r') as f:
+            for last in f:
+                pass
+        return last.strip().split('\t')
+    except:
+        return [None, None, None, None]
 
