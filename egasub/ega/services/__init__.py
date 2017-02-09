@@ -88,63 +88,37 @@ def prepare_submission(ctx, submission):
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
 
 
-def object_submission(ctx, obj, obj_type, dry_run=True, update_if_exist=False):
+def object_submission(ctx, obj, obj_type, dry_run=True):
     if obj.alias:  # only lookup for existing object when alias is available
         existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
         for o in existing_objects:
-            if o.get('status') == 'SUBMITTED':
+            if o.get('status') == 'SUBMITTED' and not obj.id == o.get('id'):
                 obj.id = o.get('id')
                 obj.status = o.get('status')
-                if update_if_exist:
-                    ctx.obj['LOGGER'].warning("%s with alias '%s' already exists in '%s' status, can not update object in 'SUBMITTED' status." \
-                                         % (obj_type, obj.alias, o.get('status')))
-
                 ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
                                          % (obj_type, obj.alias, o.get('status')))
-
-                return obj
-
-        if not obj.id:
-            for o in existing_objects:
-                if o.get('status') == 'VALIDATED' and not obj.id:  # there should be only one VALIDATE object with the same alias
-                    obj.id = o.get('id')
-                    if update_if_exist:
-                        # update the object on the server side
-                        try:
-                            update_obj(ctx, obj, obj_type)
-                            if dry_run and not obj_type == 'sample':
-                                validate_obj(ctx, obj, obj_type)
-                            else:
-                                submit_obj(ctx, obj, obj_type)
-                        except:
-                            ctx.obj['LOGGER'].warning("%s with alias '%s' already exists, however, 'update' request failed." \
-                                                 % (obj_type, obj.alias))
-                            raise Exception("Update request failed")
-
-                    else:
-                        ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
-                                             % (obj_type, obj.alias, o.get('status')))
-                else:
-                    # delete unneeded objects (not in good status)
-                    delete_obj(ctx, obj_type, o.get('id'))
-
-            if obj.id: return obj
+            else:
+                ctx.obj['LOGGER'].debug("%s with alias '%s' already exists in '%s' status, deleting it." \
+                                         % (obj_type, obj.alias, o.get('status')))
+                delete_obj(ctx, obj_type, o.get('id'))
+        if obj.id:
+            return obj
 
     try:
         register_obj(ctx, obj, obj_type)
     except Exception, err:
-        raise Exception("Error occurred while creating '%s', error: \n%s" % (obj_type, err))
+        raise Exception("Error occurred while creating '%s': \n%s" % (obj_type, err))
 
-    if dry_run and not obj_type == 'sample':
+    if dry_run:
         try:
             validate_obj(ctx, obj, obj_type)
-        except:
-            raise Exception("Error occurred while validating '%s'" % obj_type)
+        except Exception, err:
+            raise Exception("Error occurred while validating '%s': \n%s" % (obj_type, err))
     else:
         try:
             submit_obj(ctx, obj, obj_type)
-        except:
-            raise Exception("Error occurred while submitting '%s'" % obj_type)
+        except Exception, err:
+            raise Exception("Error occurred while submitting '%s': \n%s" % (obj_type, err))
 
     return obj
 
@@ -210,6 +184,8 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
     # enable this when EGA fixes the validation bug
     if r_data.get('header', {}).get('code') != "200":
         raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
+    elif op_type == 'submit' and not r_data.get('response').get('result')[0].get('status') == 'SUBMITTED':
+        raise Exception("Submission failed: \n%s" % '\n'.join(r_data.get('response').get('result')[0].get('submissionErrorMessages')))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
 
@@ -275,8 +251,11 @@ def delete_obj(ctx, obj_type, obj_id):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
     r = requests.delete(url, headers=headers)
-    ctx.obj['LOGGER'].info('Deleted: %s %s' % (obj_type, obj_id))  # for debug
     ctx.obj['LOGGER'].debug("Response after deleting '%s' with ID '%s': \n%s" % (obj_type, obj_id, r.text))  # for debug
+    r_data = json.loads(r.text)
+
+    if r_data['header']['code'] == "200":
+        ctx.obj['LOGGER'].debug('Deleted: %s %s' % (obj_type, obj_id))  # for debug
 
 
 def submit_submission(ctx,submission):

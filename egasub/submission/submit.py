@@ -49,8 +49,8 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         ctx.obj['LOGGER'].info("Start processing '%s'" % submission_dir)
         try:
             submittable = Submittable_class(submission_dir)
-        except:
-            ctx.obj['LOGGER'].error("Skip %s as it appears to be not a well formed submission directory." % submission_dir)
+        except Exception, err:
+            ctx.obj['LOGGER'].error("Skip '%s' as it appears to be not a well formed submission directory. Error: %s" % (submission_dir, err))
             continue
 
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
@@ -80,13 +80,9 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     if not submittables:
         ctx.obj['LOGGER'].warning('Nothing to submit.')
     else:
-        if dry_run:
-            ok_to_sub = [s.submission_dir for s in submittables]
-            ctx.obj['LOGGER'].info("Dry run completed, items OK for submission: %s" % ",".join(ok_to_sub))
-        else:
-            submitter = Submitter(ctx)
-            for submittable in submittables:
-                submitter.submit(submittable)
+        submitter = Submitter(ctx)
+        for submittable in submittables:
+            submitter.submit(submittable, dry_run)
 
     # TODO: submit submission, do we need this?
 

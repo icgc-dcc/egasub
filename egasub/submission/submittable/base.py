@@ -168,7 +168,11 @@ class Experiment(Submittable):
     def local_validate(self, ega_enums):
         # Alias validation
         if not self.sample.alias == self.submission_dir:
-            self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample alias must be set and match the submission directory name '%s'." % (self.sample.alias, self.submission_dir))
+            self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample's alias must be set and match the submission directory name '%s'." % (self.sample.alias, self.submission_dir))
+
+        # subjustId validation
+        if not self.sample.subject_id:
+            self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId must be set.")
 
         # Gender validation
         if not any(gender['tag'] == str(self.sample.gender_id) for gender in ega_enums.lookup("genders")):
