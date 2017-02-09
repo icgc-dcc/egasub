@@ -98,18 +98,17 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     if not (study_alias and study_id):
         # let user create one
         echo("Please enter the following to create a new EGS study.")
-        while True:
-            study = Study(
-                prompt("Study alias (required)"), # alias
-                prompt("Study type ID (required, 8 for Cancer Genomics)", default=8), # studyTypeId, Cancer Genomics
-                prompt("Short study name", default=""), # should take it from config
-                prompt("Study title (required)"), # should take it from config
-                prompt("Study abstract (required)"), # should take it from config
-                None,  # ownTerm
-                [],  # pubMedIds
-                [],   # customTags
-                None
-            )
+        study = Study(
+            prompt("Study alias (required)"), # alias
+            prompt("Study type ID (required, 8 for Cancer Genomics)", default=8), # studyTypeId, Cancer Genomics
+            prompt("Short study name", default=""), # should take it from config
+            prompt("Study title (required)"), # should take it from config
+            prompt("Study abstract (required)"), # should take it from config
+            None,  # ownTerm
+            [],  # pubMedIds
+            [],   # customTags
+            None
+        )
 
         object_submission(ctx, study, 'study', dry_run=False)
         study_alias = study.alias
