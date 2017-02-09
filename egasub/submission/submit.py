@@ -23,25 +23,6 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
 
-    """
-    #study_alias = ctx.obj['SETTINGS']['icgc_project_code']
-    # need to set this up using 'init' command
-    study_alias = ctx.obj['SETTINGS']['ega_study_alias']
-    study = Study(
-        study_alias, # alias
-        8, # studyTypeId, Cancer Genomics
-        'Short study name', # should take it from config
-        'Study title', # should take it from config
-        'Study abstract', # should take it from config
-        None,  # ownTerm
-        [],  # pubMedIds
-        [],   # customTags
-        None
-    )
-    query_by_id(ctx, 'study', study_alias, 'ALIAS')[0].get('id')
-    ctx.obj['SETTINGS']['ega_study_id'] = study.id
-    """
-
     # get class by string
     submission_type = ctx.obj['CURRENT_DIR_TYPE']
     Submittable_class = eval(submission_type.capitalize())
@@ -55,6 +36,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
             ctx.obj['LOGGER'].error("Skip '%s' as it appears to be not a well formed submission directory. Error: %s" % (submission_dir, err))
             continue
 
+        ctx.obj['LOGGER'].info("Perform local validation.")
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
         try:

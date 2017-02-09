@@ -12,3 +12,4 @@ from dataset import Dataset
 from dac import Dac
 from policy import Policy
 from contact import Contact
+from sample_reference import SampleReference

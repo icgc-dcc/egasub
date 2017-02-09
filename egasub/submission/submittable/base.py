@@ -150,21 +150,6 @@ class Submittable(object):
         with open(status_file, 'a') as f:
             f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time()))]))
 
-
-class Experiment(Submittable):
-    @property
-    def sample(self):
-        return self._sample
-
-    @property
-    def experiment(self):
-        return self._experiment
-
-    @property
-    def run(self):
-        return self._run
-
-    # Future todo: move these validations to a new Validator class
     def local_validate(self, ega_enums):
         # Alias validation
         if not self.sample.alias == self.submission_dir:
@@ -181,6 +166,28 @@ class Experiment(Submittable):
         # Case or control validation
         if not any(cc['tag'] == str(self.sample.case_or_control_id) for cc in ega_enums.lookup("case_control")):
             self._add_local_validation_error("sample",self.sample.alias,"caseOrControl","Invalid value '%s'" % self.sample.case_or_control_id)
+
+        # phenotype validation
+        if not self.sample.phenotype:
+            self._add_local_validation_error("sample",self.sample.phenotype,"phenotype","Invalid value, sample's phenotype must be set.")
+
+
+class Experiment(Submittable):
+    @property
+    def sample(self):
+        return self._sample
+
+    @property
+    def experiment(self):
+        return self._experiment
+
+    @property
+    def run(self):
+        return self._run
+
+    # Future todo: move these validations to a new Validator class
+    def local_validate(self, ega_enums):
+        super(Experiment, self).local_validate(ega_enums)
 
         # Instrument model validation
         if not any(model['tag'] == str(self.experiment.instrument_model_id) for model in ega_enums.lookup("instrument_models")):
@@ -207,13 +214,13 @@ class Experiment(Submittable):
             self._add_local_validation_error("run",self.run.alias,"runFileTypeId","Invalid value '%s'" % self.run.run_file_type_id)
 
 
-
 class Analysis(Submittable):
     @property
     def analysis(self):
         return self._analysis
 
-    def local_validate(self,ega_enums):
+    def local_validate(self, ega_enums):
+        super(Analysis, self).local_validate(ega_enums)
         # Analysis type validation
         if not any(cc['tag'] == str(self.analysis.analysis_type_id) for cc in ega_enums.lookup("analysis_types")):
             self._add_local_validation_error("analysis",self.analysis.alias,"analysisTypes","Invalid value '%s'" % self.analysis.analysis_type_id)
@@ -222,9 +229,13 @@ class Analysis(Submittable):
         if not any(cc['tag'] == str(self.analysis.genome_id) for cc in ega_enums.lookup("reference_genomes")):
             self._add_local_validation_error("analysis",self.analysis.alias,"referenceGenomes","Invalid value '%s'" % self.analysis.genome_id)
 
-        # Reference genomes type validation
-        if not any(cc['tag'] == str(self.analysis.experiment_type_id) for cc in ega_enums.lookup("experiment_types")):
-            self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s'" % self.analysis.experiment_type_id)
+        # experimentTypeId type validation
+        if not type(self.analysis.experiment_type_id) == list:
+            self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value: experimentTypeId must be a list.")
+
+        for e_type in self.analysis.experiment_type_id:
+            if not any(cc['tag'] == str(e_type) for cc in ega_enums.lookup("experiment_types")):
+                self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s' in experimentTypeId" % e_type)
 
         #TODO
         # Chromosome references validation

@@ -5,7 +5,7 @@ from attribute import Attribute
 
 class Analysis(object):
     def __init__(self, alias, title, description, study_id, sample_references, analysis_center, analysis_date,
-                 analysis_type_id, files, attributes, genome_id, chromosome_references, experiment_type_id,platform,status=None):
+                 analysis_type_id, files, attributes, genome_id, chromosome_references, experiment_type_id,platform,status=None, id_=None):
         self.title = title
         self.description = description
         self.study_id = study_id
@@ -21,6 +21,7 @@ class Analysis(object):
         self.platform = platform
         self.alias = alias
         self.status = status
+        self.id = id_
 
     def to_dict(self):
         return {
@@ -55,8 +56,8 @@ class Analysis(object):
                 analysis_dict.get('analysisCenter'),
                 analysis_dict.get('analysisDate'),
                 analysis_dict.get('analysisTypeId'),
-                [],
-                [],
+                [] if not analysis_dict.get('files') else map(lambda file_dict: File.from_dict(file_dict), analysis_dict.get('files')),
+                [], # attribute
                 analysis_dict.get('genomeId'),
                 [],
                 analysis_dict.get('experimentTypeId'),
