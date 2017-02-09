@@ -26,6 +26,7 @@ class Unaligned(Experiment):
 
             self._run.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
         except Exception, err:
+            raise Exception(err)
             raise Exception("Can not create 'unaligned' submission from this directory: %s. Please verify it's content. Error: %s" % (self._path, err))
 
     @property
