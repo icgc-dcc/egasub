@@ -9,4 +9,6 @@ from attribute import Attribute
 from submission_subset_data import SubmissionSubsetData
 from ega_enums import EgaEnums
 from dataset import Dataset
-
+from dac import Dac
+from policy import Policy
+from contact import Contact

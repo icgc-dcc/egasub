@@ -23,6 +23,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
 
+    """
     #study_alias = ctx.obj['SETTINGS']['icgc_project_code']
     # need to set this up using 'init' command
     study_alias = ctx.obj['SETTINGS']['ega_study_alias']
@@ -37,8 +38,9 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         [],   # customTags
         None
     )
-    object_submission(ctx, study, 'study', dry_run)
-    ctx.obj['SETTINGS']['STUDY_ID'] = study.id
+    query_by_id(ctx, 'study', study_alias, 'ALIAS')[0].get('id')
+    ctx.obj['SETTINGS']['ega_study_id'] = study.id
+    """
 
     # get class by string
     submission_type = ctx.obj['CURRENT_DIR_TYPE']
