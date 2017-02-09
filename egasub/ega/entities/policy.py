@@ -1,14 +1,15 @@
 
 
 class Policy(object):
-    def __init__(self, alias, dac_id, title, policy_text, url):
+    def __init__(self, alias, dac_id, title, policy_text, url, id_=None):
         self.alias = alias
         self.dac_id = dac_id
         self.title = title
         self.policy_text = policy_text
         self.url = url
+        self.id = id_
 
-        
+
     def to_dict(self):
         return {
             'alias' : self.alias,

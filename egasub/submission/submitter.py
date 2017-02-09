@@ -35,15 +35,11 @@ class Submitter(object):
                         )
                     )
 
-                # set update_if_exist to True by default for now
-                # proper way to do it is to set to True when there is a change
-                # TODO: add hash property to Sample, Experiment etc object, in order to be able
-                #       to detect change
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
                 submittable.record_object_status('sample')
 
                 submittable.experiment.sample_id = submittable.sample.id
-                submittable.experiment.study_id = self.ctx.obj['SETTINGS']['STUDY_ID']
+                submittable.experiment.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
 
                 object_submission(self.ctx, submittable.experiment, 'experiment', dry_run)
                 submittable.record_object_status('experiment')
