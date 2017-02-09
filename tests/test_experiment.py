@@ -16,7 +16,8 @@ experiment_to_dict = {
         'sampleId' : 1022,
         'studyId' : 3000,
         'alias' : 'an alias',
-        'id' : 22
+        'id' : 22,
+        'status': None
     }
 
 def test_title():

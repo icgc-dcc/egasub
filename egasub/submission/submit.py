@@ -37,8 +37,8 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         [],   # customTags
         None
     )
-    study_id = object_submission(ctx, study, 'study', dry_run)
-    ctx.obj['SETTINGS']['STUDY_ID'] = study_id
+    object_submission(ctx, study, 'study', dry_run)
+    ctx.obj['SETTINGS']['STUDY_ID'] = study.id
 
     # get class by string
     submission_type = ctx.obj['CURRENT_DIR_TYPE']
@@ -46,6 +46,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     submittables = []
     for submission_dir in submission_dirs:
+        ctx.obj['LOGGER'].info("Start processing '%s'" % submission_dir)
         try:
             submittable = Submittable_class(submission_dir)
         except:
@@ -53,11 +54,11 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
             continue
 
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
-        
+
         try:
             submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
         except Exception, e:
-            ctx.obj['LOGGER'].error("FTP server error: %s",str(e))
+            ctx.obj['LOGGER'].error("FTP file check error, please make sure data files uploaded to the EGA FTP server already.")
             continue
 
         for err in submittable.local_validation_errors:
@@ -68,18 +69,26 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
         # only process submittables at certain states and no local
         # validation error
-        if submittable.status in ('NEW') \
+        if not submittable.status == 'SUBMITTED' \
                 and not submittable.local_validation_errors:
             submittables.append(submittable)
-            
+        elif submittable.status == 'SUBMITTED':
+            ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
+        else:
+            ctx.obj['LOGGER'].info("Skip '%s' as it failed validation, please check log for details." % submittable.submission_dir)
+
     if not submittables:
         ctx.obj['LOGGER'].warning('Nothing to submit.')
-        
-    submitter = Submitter(ctx)
-    for submittable in submittables:
-        submitter.submit(submittable, dry_run)
+    else:
+        if dry_run:
+            ok_to_sub = [s.submission_dir for s in submittables]
+            ctx.obj['LOGGER'].info("Dry run completed, items OK for submission: %s" % ",".join(ok_to_sub))
+        else:
+            submitter = Submitter(ctx)
+            for submittable in submittables:
+                submitter.submit(submittable)
 
-    # TODO: submit submission
+    # TODO: submit submission, do we need this?
 
     ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)

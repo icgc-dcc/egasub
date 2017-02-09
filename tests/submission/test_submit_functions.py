@@ -23,6 +23,7 @@ def test_prepare_submission(ctx):
     prepare_submission(ctx,submission)
     assert ctx.obj['SUBMISSION']['id'] == "12345"
     
+"""
 def test_submit_obj(ctx):
     study = Study(
             "test_alias", # alias
@@ -36,7 +37,8 @@ def test_submit_obj(ctx):
             None
         )
     object_submission(ctx,study,"study")
-        
+"""
+
 def test_logout_function(ctx):
     logout(ctx)
     assert not 'sessionToken' in ctx.obj['SUBMISSION']

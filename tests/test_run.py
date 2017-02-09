@@ -27,7 +27,8 @@ def test_to_dict():
             'experimentId':5,
             'files' : map(lambda file: file.to_dict(), files),
             'alias' : 'an alias',
-            'id' : 22
+            'id' : 22,
+            'status': None
         }, run.to_dict()) == 0
     
 def test_alias():

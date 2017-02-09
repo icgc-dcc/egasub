@@ -88,20 +88,65 @@ def prepare_submission(ctx, submission):
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
 
 
-def object_submission(ctx, obj, obj_type, dry_run=True):
-    existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
-    for o in existing_objects:
-        if o.get('status') == 'SUBMITTED' or (dry_run and o.get('status') == 'VALIDATED'):
-            obj.id = o.get('id')
-            ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
-                                     % (obj_type, obj.alias, o.get('status')))
-            return
+def object_submission(ctx, obj, obj_type, dry_run=True, update_if_exist=False):
+    if obj.alias:  # only lookup for existing object when alias is available
+        existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
+        for o in existing_objects:
+            if o.get('status') == 'SUBMITTED':
+                obj.id = o.get('id')
+                obj.status = o.get('status')
+                if update_if_exist:
+                    ctx.obj['LOGGER'].warning("%s with alias '%s' already exists in '%s' status, can not update object in 'SUBMITTED' status." \
+                                         % (obj_type, obj.alias, o.get('status')))
 
-    register_obj(ctx, obj, obj_type)
-    if dry_run:
-        validate_obj(ctx, obj, obj_type)
+                ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
+                                         % (obj_type, obj.alias, o.get('status')))
+
+                return obj
+
+        if not obj.id:
+            for o in existing_objects:
+                if o.get('status') == 'VALIDATED' and not obj.id:  # there should be only one VALIDATE object with the same alias
+                    obj.id = o.get('id')
+                    if update_if_exist:
+                        # update the object on the server side
+                        try:
+                            update_obj(ctx, obj, obj_type)
+                            if dry_run and not obj_type == 'sample':
+                                validate_obj(ctx, obj, obj_type)
+                            else:
+                                submit_obj(ctx, obj, obj_type)
+                        except:
+                            ctx.obj['LOGGER'].warning("%s with alias '%s' already exists, however, 'update' request failed." \
+                                                 % (obj_type, obj.alias))
+                            raise Exception("Update request failed")
+
+                    else:
+                        ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
+                                             % (obj_type, obj.alias, o.get('status')))
+                else:
+                    # delete unneeded objects (not in good status)
+                    delete_obj(ctx, obj_type, o.get('id'))
+
+            if obj.id: return obj
+
+    try:
+        register_obj(ctx, obj, obj_type)
+    except Exception, err:
+        raise Exception("Error occurred while creating '%s', error: \n%s" % (obj_type, err))
+
+    if dry_run and not obj_type == 'sample':
+        try:
+            validate_obj(ctx, obj, obj_type)
+        except:
+            raise Exception("Error occurred while validating '%s'" % obj_type)
     else:
-        submit_obj(ctx, obj, obj_type)
+        try:
+            submit_obj(ctx, obj, obj_type)
+        except:
+            raise Exception("Error occurred while submitting '%s'" % obj_type)
+
+    return obj
 
 
 def register_obj(ctx, obj, obj_type):
@@ -125,6 +170,7 @@ def register_obj(ctx, obj, obj_type):
 
     if r_data['header']['code'] == "200":
         obj.id = r_data['response']['result'][0]['id']
+        obj.alias = r_data['response']['result'][0]['alias']
     else:
         raise Exception(r_data['header']['userMessage'])
 
@@ -146,7 +192,6 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
     if obj.id == None:
         raise Exception('EGA Object id missing.')
 
-    # we directly go to submit
     url = "%s%s/%s?action=%s" % (
                                         api_url(ctx),
                                         _obj_type_to_endpoint(obj_type),
@@ -166,16 +211,32 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
     if r_data.get('header', {}).get('code') != "200":
         raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
 
-    ctx.obj['LOGGER'].info("%s '%s' completed." % (op_type.capitalize(), obj_type))
+    obj.status = r_data.get('response').get('result')[0].get('status')
 
-    return r_data.get('response').get('result',[]) if r_data.get('response') else []
+    ctx.obj['LOGGER'].info("%s '%s' completed." % (op_type.capitalize(), obj_type))
 
 
 def update_obj(ctx, obj, obj_type):
-    """
-    Not implemented yet
-    """
-    pass
+    url = "%s%s/%s?action=EDIT" % (
+                                        api_url(ctx),
+                                        _obj_type_to_endpoint(obj_type),
+                                        obj.id
+                                    )
+
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+
+    r = requests.put(url, headers=headers, data=json.dumps(obj.to_dict()))
+    ctx.obj['LOGGER'].debug("Response after updating: \n%s" % r.text)  # for debug
+    r_data = json.loads(r.text)
+
+    if r_data['header']['code'] == "200":
+        obj.id = r_data['response']['result'][0]['id']
+        obj.alias = r_data['response']['result'][0]['alias']
+    else:
+        raise Exception(r_data['header']['userMessage'])
 
 
 def _obj_type_to_endpoint(obj_type):
@@ -206,8 +267,8 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
         return []
 
 
-def delete(ctx, obj_type, obj_id):
-    url = "%s%s/%s" % (EGA_SUB_URL_PROD, obj_type, obj_id)
+def delete_obj(ctx, obj_type, obj_id):
+    url = "%s%s/%s" % (EGA_SUB_URL_PROD, _obj_type_to_endpoint(obj_type), obj_id)
 
     headers = {
         'Content-Type': 'application/json',

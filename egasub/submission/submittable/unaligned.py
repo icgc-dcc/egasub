@@ -11,13 +11,29 @@ class Unaligned(Experiment):
         self._local_validation_errors = []
         self._ftp_file_validation_errors = []
         self._path = path
-        self._parse_meta()
-        self._status = self._check_status()
 
-        self._sample = Sample.from_dict(self.metadata.get('sample'))
-        self._experiment = EExperiment.from_dict(self.metadata.get('experiment'))
-        self._run = ERun.from_dict(self.metadata.get('run'))
-        self._run.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+        try:
+            self._parse_meta()
+
+            self._sample = Sample.from_dict(self.metadata.get('sample'))
+            self.restore_latest_object_status('sample')
+
+            self._experiment = EExperiment.from_dict(self.metadata.get('experiment'))
+            self.restore_latest_object_status('experiment')
+
+            self._run = ERun.from_dict(self.metadata.get('run'))
+            self.restore_latest_object_status('run')
+
+            self._run.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+        except:
+            raise Exception("Can not create 'unaligned' submission from this directory: %s. Please verify it's content." % self._path)
+
+    @property
+    def status(self):
+        if self.run.status:
+            return self.run.status
+        else:
+            return 'NEW'  # hardcoded for now
 
     @property
     def files(self):

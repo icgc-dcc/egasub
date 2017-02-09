@@ -71,6 +71,7 @@ def test_to_dict():
         'files' : map(lambda file: file.to_dict(), files),
         'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
         'chromosomeReferences' : map(lambda ref: ref.to_dict(), chromosome_references),
-        'alias' : 'an alias'
+        'alias' : 'an alias',
+        'status': None
     }, analysis.to_dict()) == 0
 
