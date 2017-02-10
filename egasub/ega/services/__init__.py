@@ -33,11 +33,11 @@ def login(ctx):
     
     #Check for the ega_submitter account
     if not ctx.obj['SETTINGS'].get('ega_submitter_account'):
-        raise CredentialsError(Exception('Your ega_submitter_account is missing in .egasub/config.yaml file.'))
+        raise CredentialsError(Exception("Your 'ega_submitter_account' is missing."))
     
     #Check for the ega submitter password
     if not ctx.obj['SETTINGS'].get('ega_submitter_password'):
-        raise CredentialsError(Exception('Your ega_submitter_password is missing in .egasub/config.yaml file.'))
+        raise CredentialsError(Exception("Your 'ega_submitter_password' is missing."))
     
     payload = {
         "username": ctx.obj['SETTINGS'].get('ega_submitter_account'),
@@ -50,8 +50,8 @@ def login(ctx):
     
     #Check if the credentials are accepted
     if r_data["header"]['code'] != '200':
-        raise CredentialsError(Exception('Your credentials are invalid. Verify your username and password in config.yaml file.'))
-    
+        raise CredentialsError(Exception('Your credentials are invalid. Verify your EGA submitter username and password.'))
+
     ctx.obj['SUBMISSION'] = {}
     ctx.obj['SUBMISSION']['sessionToken'] = r_data['response']['result'][0]['session']['sessionToken']
 
@@ -92,8 +92,9 @@ def object_submission(ctx, obj, obj_type, dry_run=True):
     if obj.alias:  # only lookup for existing object when alias is available
         existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
         for o in existing_objects:
-            if o.get('status') == 'SUBMITTED' and not obj.id == o.get('id'):
-                obj.id = o.get('id')
+            if o.get('status') == 'SUBMITTED':
+                if not obj.id == o.get('id'):
+                    obj.id = o.get('id')
                 obj.status = o.get('status')
                 ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
                                          % (obj_type, obj.alias, o.get('status')))
@@ -184,8 +185,17 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
     # enable this when EGA fixes the validation bug
     if r_data.get('header', {}).get('code') != "200":
         raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
-    elif op_type == 'submit' and not r_data.get('response').get('result')[0].get('status') == 'SUBMITTED':
-        raise Exception("Submission failed: \n%s" % '\n'.join(r_data.get('response').get('result')[0].get('submissionErrorMessages')))
+    elif (op_type == 'submit' and not r_data.get('response').get('result')[0].get('status') == 'SUBMITTED'):
+        errors = []
+        error_validation = r_data.get('response').get('result')[0].get('validationErrorMessages')
+        error_submission = r_data.get('response').get('result')[0].get('submissionErrorMessages')
+
+        errors = error_validation if error_validation else []
+        errors = errors + (error_submission if error_submission else [])
+        raise Exception("Submission failed: \n%s" % '\n'.join(errors))
+    elif (op_type == 'validate' and not r_data.get('response').get('result')[0].get('status') == 'VALIDATED'):
+        errors = r_data.get('response').get('result')[0].get('validationErrorMessages')
+        ctx.obj['LOGGER'].warning("Validation exception ('sample not found' error will disappear when perform 'submit' instead of 'dry_run'): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
 
@@ -216,7 +226,7 @@ def update_obj(ctx, obj, obj_type):
 
 
 def _obj_type_to_endpoint(obj_type):
-    if obj_type in ('sample', 'experiment', 'run'):
+    if obj_type in ('sample', 'experiment', 'run', 'dac'):
         return '%ss' % obj_type
     elif obj_type == 'analysis':
         return 'analyses'
@@ -224,12 +234,14 @@ def _obj_type_to_endpoint(obj_type):
         return 'studies'
     elif obj_type == 'dataset':
         return 'datasets'
+    elif obj_type == 'policy':
+        return 'policies'
     else:
         raise Exception('Not supported EGA object type %s' % obj_type)
 
 
 def query_by_id(ctx, obj_type, obj_id, id_type):
-    url = "%s%s/%s?idType=%s" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_id, id_type)
+    url = "%s%s/%s?idType=%s&skip=0&limit=0" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_id, id_type)
 
     headers = {
         'Content-Type': 'application/json',
@@ -238,6 +250,23 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
 
     r = requests.get(url, headers=headers)
     ctx.obj['LOGGER'].debug("Response after querying '%s' by '%s' (%s): \n%s" % (obj_type, obj_id, id_type, r.text))  # for debug
+    r_data = json.loads(r.text)
+    if r_data.get('response'):
+        return r_data.get('response').get('result',[])
+    else:
+        return []
+
+
+def query_by_type(ctx, obj_type, obj_status="SUBMITTED"):
+    url = "%s%s?status=%s&skip=0&limit=0" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_status)
+
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
+    }
+
+    r = requests.get(url, headers=headers)
+    ctx.obj['LOGGER'].debug("Response after querying '%s' by status '%s': \n%s" % (obj_type, obj_status, r.text))  # for debug
     r_data = json.loads(r.text)
     if r_data.get('response'):
         return r_data.get('response').get('result',[])

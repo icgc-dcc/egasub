@@ -2,7 +2,7 @@ from click import echo
 
 from ..icgc.services import id_service
 from ..ega.services import login, logout, object_submission, delete_obj
-from ..ega.entities import Attribute
+from ..ega.entities import Attribute, SampleReference
 
 
 class Submitter(object):
@@ -14,36 +14,12 @@ class Submitter(object):
             self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.sample.alias)
 
             try:
-                submittable.sample.attributes.append(
-                        Attribute(
-                            'icgc_sample_id',
-                            id_service(self.ctx, 'sample',
-                                self.ctx.obj['SETTINGS']['icgc_project_code'],
-                                submittable.sample.alias,
-                                True,True
-                            )
-                        )
-                    )
-                submittable.sample.attributes.append(
-                        Attribute(
-                            'icgc_donor_id',
-                            id_service(self.ctx, 'donor',
-                                self.ctx.obj['SETTINGS']['icgc_project_code'],
-                                submittable.sample.subject_id,
-                                True,True
-                            )
-                        )
-                    )
-
-                # set update_if_exist to True by default for now
-                # proper way to do it is to set to True when there is a change
-                # TODO: add hash property to Sample, Experiment etc object, in order to be able
-                #       to detect change
+                self.set_icgc_ids(submittable.sample)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
                 submittable.record_object_status('sample')
 
                 submittable.experiment.sample_id = submittable.sample.id
-                submittable.experiment.study_id = self.ctx.obj['SETTINGS']['STUDY_ID']
+                submittable.experiment.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
 
                 object_submission(self.ctx, submittable.experiment, 'experiment', dry_run)
                 submittable.record_object_status('experiment')
@@ -70,15 +46,58 @@ class Submitter(object):
                 delete_obj(self.ctx, 'experiment', submittable.experiment.id)
 
 
-        if self.ctx.obj['CURRENT_DIR_TYPE'] == 'alignment':
-            """
-            TODO: to be implemented
-            """
-            echo("Not implemented yet.")
+        if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
+            try:
+                self.set_icgc_ids(submittable.sample)
+                object_submission(self.ctx, submittable.sample, 'sample', dry_run)
+                submittable.record_object_status('sample')
 
-        if self.ctx.obj['CURRENT_DIR_TYPE'] == 'variation':
-            """
-            TODO: to be implemented
-            """
-            echo("Not implemented yet.")
+                submittable.analysis.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
+                submittable.analysis.sample_references = [
+                                                            SampleReference(
+                                                                    submittable.sample.id,
+                                                                    submittable.sample.alias
+                                                                )
+                                                            ]
+                object_submission(self.ctx, submittable.analysis, 'analysis', dry_run)
+                submittable.record_object_status('analysis')
 
+                self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.sample.alias)
+            except Exception as error:
+                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.sample.alias, str(error)))
+
+            # now remove all created object that is not in SUBMITTED status
+            self.ctx.obj['LOGGER'].info('Clean up unneeded objects ...')
+            if not submittable.sample.status == 'SUBMITTED' and submittable.sample.id:
+                delete_obj(self.ctx, 'sample', submittable.sample.id)
+
+            if not submittable.analysis.status == 'SUBMITTED' and submittable.analysis.id:
+                delete_obj(self.ctx, 'analysis', submittable.analysis.id)
+
+
+    def set_icgc_ids(self, sample):
+        sample.attributes.append(
+                Attribute(
+                    'icgc_sample_id',
+                    id_service(
+                        self.ctx, 'sample',
+                        self.ctx.obj['SETTINGS']['icgc_project_code'],
+                        sample.alias,
+                        True,True
+                    )
+                )
+            )
+
+        sample.attributes.append(
+                Attribute(
+                    'icgc_donor_id',
+                    id_service(
+                        self.ctx, 'donor',
+                        self.ctx.obj['SETTINGS']['icgc_project_code'],
+                        sample.subject_id,
+                        True,True
+                    )
+                )
+            )
+
+        sample.attributes.append(Attribute('submitted_using', 'egasub'))

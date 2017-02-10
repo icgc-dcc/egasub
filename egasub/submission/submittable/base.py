@@ -5,8 +5,14 @@ import time
 from click import echo
 from abc import ABCMeta, abstractmethod, abstractproperty
 
-from egasub.ega.entities import Sample, Analysis as EAnalysis, Experiment as EExperiment
 from egasub.exceptions import Md5sumFileError
+from egasub.ega.entities import Sample, Attribute, \
+                                File as EFile, \
+                                Analysis as EAnalysis, \
+                                Experiment as EExperiment
+from egasub.ega.services.ftp import file_exists
+
+
 
 def _get_md5sum(md5sum_file):
     try:
@@ -80,8 +86,8 @@ class Submittable(object):
                 if 'alias' in self._metadata.get('analysis', {}):
                     raise Exception("Can not have 'alias' for 'analysis' in %s." % yaml_file)
 
-        except:
-            raise Exception('Not an properly formed submission directory: %s' % self.submission_dir)
+        except Exception, e:
+            raise Exception('Not a properly formed submission directory: %s' % self.submission_dir)
 
         self._parse_md5sum_file()
 
@@ -150,21 +156,6 @@ class Submittable(object):
         with open(status_file, 'a') as f:
             f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time()))]))
 
-
-class Experiment(Submittable):
-    @property
-    def sample(self):
-        return self._sample
-
-    @property
-    def experiment(self):
-        return self._experiment
-
-    @property
-    def run(self):
-        return self._run
-
-    # Future todo: move these validations to a new Validator class
     def local_validate(self, ega_enums):
         # Alias validation
         if not self.sample.alias == self.submission_dir:
@@ -181,6 +172,34 @@ class Experiment(Submittable):
         # Case or control validation
         if not any(cc['tag'] == str(self.sample.case_or_control_id) for cc in ega_enums.lookup("case_control")):
             self._add_local_validation_error("sample",self.sample.alias,"caseOrControl","Invalid value '%s'" % self.sample.case_or_control_id)
+
+        # phenotype validation
+        if not self.sample.phenotype:
+            self._add_local_validation_error("sample",self.sample.phenotype,"phenotype","Invalid value, sample's phenotype must be set.")
+
+
+    def ftp_files_remote_validate(self,host,username, password):
+        for _file in self._analysis.files:
+            if not file_exists(host,username,password,_file.file_name):
+                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s" % _file.file_name)
+
+
+class Experiment(Submittable):
+    @property
+    def sample(self):
+        return self._sample
+
+    @property
+    def experiment(self):
+        return self._experiment
+
+    @property
+    def run(self):
+        return self._run
+
+    # Future todo: move these validations to a new Validator class
+    def local_validate(self, ega_enums):
+        super(Experiment, self).local_validate(ega_enums)
 
         # Instrument model validation
         if not any(model['tag'] == str(self.experiment.instrument_model_id) for model in ega_enums.lookup("instrument_models")):
@@ -207,28 +226,73 @@ class Experiment(Submittable):
             self._add_local_validation_error("run",self.run.alias,"runFileTypeId","Invalid value '%s'" % self.run.run_file_type_id)
 
 
-
 class Analysis(Submittable):
+    def __init__(self, path):
+        self._local_validation_errors = []
+        self._ftp_file_validation_errors = []
+        self._path = path
+
+        try:
+            self._parse_meta()
+
+            self._sample = Sample.from_dict(self.metadata.get('sample'))
+            self.restore_latest_object_status('sample')
+
+            self._analysis = EAnalysis.from_dict(self.metadata.get('analysis'))
+            self.restore_latest_object_status('analysis')
+
+            self._analysis.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+
+            # not sure for what reason, EGA validation expect to have at least one attribute
+            self._analysis.attributes = [
+                Attribute('submitted_using', 'egasub')
+            ]
+        except Exception, err:
+            raise Exception("Can not create 'alignment' submission from this directory: %s. Please verify it's content. Error: %s" % (self._path, err))
+
+
+    @property
+    def status(self):
+        if self.analysis.status:
+            return self.analysis.status
+        else:
+            return 'NEW'  # hardcoded for now
+
+    @property
+    def type(self):
+        return self.__class__.__bases__[0].__name__.lower()
+
+    @property
+    def files(self):
+        return self._analysis.files
+
+    @property
+    def sample(self):
+        return self._sample
+
     @property
     def analysis(self):
         return self._analysis
 
-    def local_validate(self,ega_enums):
-        # Analysis type validation
-        if not any(cc['tag'] == str(self.analysis.analysis_type_id) for cc in ega_enums.lookup("analysis_types")):
-            self._add_local_validation_error("analysis",self.analysis.alias,"analysisTypes","Invalid value '%s'" % self.analysis.analysis_type_id)
-
+    def local_validate(self, ega_enums):
+        super(Analysis, self).local_validate(ega_enums)
         # Reference genomes type validation
         if not any(cc['tag'] == str(self.analysis.genome_id) for cc in ega_enums.lookup("reference_genomes")):
             self._add_local_validation_error("analysis",self.analysis.alias,"referenceGenomes","Invalid value '%s'" % self.analysis.genome_id)
 
-        # Reference genomes type validation
-        if not any(cc['tag'] == str(self.analysis.experiment_type_id) for cc in ega_enums.lookup("experiment_types")):
-            self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s'" % self.analysis.experiment_type_id)
+        # experimentTypeId type validation
+        if not type(self.analysis.experiment_type_id) == list:
+            self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value: experimentTypeId must be a list.")
 
-        #TODO
+        for e_type in self.analysis.experiment_type_id:
+            if not any(cc['tag'] == str(e_type) for cc in ega_enums.lookup("experiment_types")):
+                self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s' in experimentTypeId" % e_type)
+
         # Chromosome references validation
-        #if not any(cc['tag'] == str(self.analysis.experiment_type_id) for cc in ega_enums.lookup("experiment_types")):
-        #    self._add_local_validation_error("analysis",self.analysis.alias,"experiment_types","Invalid experiment type value")
+        if not type(self.analysis.chromosome_references) == list:
+            self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value: chromosomeReferences must be a list.")
 
+        for chr_ref in self.analysis.chromosome_references:
+            if not any(cc['tag'] == str(chr_ref.value) for cc in ega_enums.lookup("reference_chromosomes")):
+                self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value '%s' in chromosomeReferences" % chr_ref.value)
 

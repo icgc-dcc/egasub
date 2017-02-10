@@ -1,6 +1,6 @@
 
 class ChromosomeReference(object):
-    def __init__(self,value,label):
+    def __init__(self,value,label=None):
         self.value = value
         self.label = label
         
