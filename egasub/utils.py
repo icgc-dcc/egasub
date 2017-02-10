@@ -7,6 +7,7 @@ from click import echo
 from egasub.ega.entities.file import File
 import logging
 import datetime
+from egasub.ega.entities import EgaEnums
 
 
 
@@ -29,6 +30,8 @@ def initialize_app(ctx):
     if not ctx.obj['CURRENT_DIR_TYPE']:
         ctx.obj['LOGGER'].critical('The current working directory does not associate with any supported EGA data types: unaligned|alignment|variation')
         ctx.abort()
+        
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
         
 def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')

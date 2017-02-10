@@ -12,5 +12,6 @@ def test_contacts():
         assert cmp(
         {
             'title' : 'a title',
-            'contacts' : map(lambda contact: contact.to_dict(), contacts)
+            'contacts' : map(lambda contact: contact.to_dict(), contacts),
+            'alias' : None
         }, dac.to_dict()) == 0

@@ -32,7 +32,6 @@ def submit(ctx, submission_dir):
         ctx.abort()
 
     utils.initialize_app(ctx)
-    ctx.obj['EGA_ENUMS'] = EgaEnums()
 
     if not ctx.obj.get('WORKSPACE_PATH'):
         ctx.obj['LOGGER'].critical('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
@@ -56,7 +55,6 @@ def dry_run(ctx, submission_dir):
         ctx.abort()
 
     utils.initialize_app(ctx)
-    ctx.obj['EGA_ENUMS'] = EgaEnums()
 
     if not submission_dir:
         ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
@@ -96,6 +94,7 @@ def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,
         ctx.obj['LOGGER'].critical('Already in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
 
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
     init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code )
     
 
@@ -124,7 +123,6 @@ def dataset(ctx,submit,dry_run):
     Submit a dataset with the samples
     """
     utils.initialize_app(ctx)
-    ctx.obj['EGA_ENUMS'] = EgaEnums()
     
     if submit:
         submit_dataset(ctx, dry_run=False)
