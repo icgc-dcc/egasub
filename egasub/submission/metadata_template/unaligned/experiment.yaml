@@ -11,8 +11,6 @@ experiment:
   libraryLayoutId:              # Visit https://ega.crg.eu/submitterportal/v1/enums/library_layouts
   pairedNominalLength:          #
   pairedNominalSdev:            #
-  sampleId:                     # ID of the related sample
-  studyId:                      # ID of the related study
 
 # Enter the informations concerning the sample
 sample:
