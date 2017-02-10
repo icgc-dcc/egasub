@@ -14,7 +14,7 @@ class Submitter(object):
             self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.sample.alias)
 
             try:
-                self.set_icgc_ids(submittable.sample)
+                self.set_icgc_ids(submittable.sample, dry_run)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
                 submittable.record_object_status('sample')
 
@@ -48,7 +48,7 @@ class Submitter(object):
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
-                self.set_icgc_ids(submittable.sample)
+                self.set_icgc_ids(submittable.sample, dry_run)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
                 submittable.record_object_status('sample')
 
@@ -75,7 +75,7 @@ class Submitter(object):
                 delete_obj(self.ctx, 'analysis', submittable.analysis.id)
 
 
-    def set_icgc_ids(self, sample):
+    def set_icgc_ids(self, sample, dry_run=True):
         sample.attributes.append(
                 Attribute(
                     'icgc_sample_id',
@@ -83,7 +83,8 @@ class Submitter(object):
                         self.ctx, 'sample',
                         self.ctx.obj['SETTINGS']['icgc_project_code'],
                         sample.alias,
-                        True,True
+                        True, # create param
+                        dry_run  # is_test param, eq to dry_run
                     )
                 )
             )
@@ -95,7 +96,8 @@ class Submitter(object):
                         self.ctx, 'donor',
                         self.ctx.obj['SETTINGS']['icgc_project_code'],
                         sample.subject_id,
-                        True,True
+                        True,
+                        dry_run
                     )
                 )
             )

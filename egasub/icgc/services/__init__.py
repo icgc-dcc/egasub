@@ -1,8 +1,8 @@
 import requests
 import json
 
-ICGC_ID_SERVICE_URL_TEST = "http://hetl2-dcc.res.oicr.on.ca:8000"
-ICGC_ID_SERVICE_URL_PROD = "http://hetl2-dcc.res.oicr.on.ca:8000"
+ICGC_ID_SERVICE_URL_TEST = "http://hetl2-dcc.res.oicr.on.ca:9000" # dry run uses this
+ICGC_ID_SERVICE_URL_PROD = "https://id.icgc.org" # submit uses this
 
 ICGC_ID_SERVICE_ENDPOINTS = {
     "id": {
@@ -46,15 +46,17 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
                                 ])
     create_param = '='.join(['create', 'true' if create else 'false'])
 
-
-    r = requests.get("%s/%s?%s&%s&%s" % (url, path, project_param,
+    try:
+        r = requests.get("%s/%s?%s&%s&%s" % (url, path, project_param,
                                             submitter_id_param, create_param),
                        headers={
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Bearer %s' % ctx.obj['SETTINGS'].get('icgc_id_service_token')
                                 }
                     )
-    
+    except:
+        raise Exception("Failed calling ICGC ID service at %s" % url)
+
     try:
         r_data = json.loads(r.text)
         if "error" in r_data:
