@@ -294,5 +294,5 @@ class Analysis(Submittable):
 
         for chr_ref in self.analysis.chromosome_references:
             if not any(cc['tag'] == str(chr_ref.value) for cc in ega_enums.lookup("reference_chromosomes")):
-                self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value '%s' in chromosomeReferences" % chromosome)
+                self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value '%s' in chromosomeReferences" % chr_ref.value)
 
