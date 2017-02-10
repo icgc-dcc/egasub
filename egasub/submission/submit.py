@@ -29,6 +29,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     submittables = []
     for submission_dir in submission_dirs:
+        submission_dir = submission_dir.rstrip('/')
         ctx.obj['LOGGER'].info("Start processing '%s'" % submission_dir)
         try:
             submittable = Submittable_class(submission_dir)
