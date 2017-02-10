@@ -2,6 +2,7 @@ import yaml
 from file import File
 from sample_reference import SampleReference
 from attribute import Attribute
+from chromosome_reference import ChromosomeReference
 
 class Analysis(object):
     def __init__(self, alias, title, description, study_id, sample_references, analysis_center, analysis_date,
@@ -59,7 +60,7 @@ class Analysis(object):
                 [] if not analysis_dict.get('files') else map(lambda file_dict: File.from_dict(file_dict), analysis_dict.get('files')),
                 [], # attribute
                 analysis_dict.get('genomeId'),
-                [],
+                [] if not analysis_dict.get('chromosomeReferences') else map(lambda tag: ChromosomeReference(tag), analysis_dict.get('chromosomeReferences')),
                 analysis_dict.get('experimentTypeId'),
                 analysis_dict.get('platform')
             )

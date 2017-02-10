@@ -46,7 +46,7 @@ class Submitter(object):
                 delete_obj(self.ctx, 'experiment', submittable.experiment.id)
 
 
-        if self.ctx.obj['CURRENT_DIR_TYPE'] == 'alignment':
+        if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
                 self.set_icgc_ids(submittable.sample)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
@@ -73,12 +73,6 @@ class Submitter(object):
 
             if not submittable.analysis.status == 'SUBMITTED' and submittable.analysis.id:
                 delete_obj(self.ctx, 'analysis', submittable.analysis.id)
-
-        if self.ctx.obj['CURRENT_DIR_TYPE'] == 'variation':
-            """
-            TODO: to be implemented
-            """
-            echo("Not implemented yet.")
 
 
     def set_icgc_ids(self, sample):

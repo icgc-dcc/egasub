@@ -13,3 +13,4 @@ from dac import Dac
 from policy import Policy
 from contact import Contact
 from sample_reference import SampleReference
+from chromosome_reference import ChromosomeReference
