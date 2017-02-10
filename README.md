@@ -35,6 +35,5 @@ Detailed SOP for ICGC submitters is availabe [here](https://wiki.oicr.on.ca/disp
 
 ## Support
 
-Full version of the EGA submission standard operating procedure (SOP) can be found here: (add link). Should you need further assistance, please contact ICGC DCC at `dcc-support@icgc.org`.
-
+Should you need assistance, please contact ICGC DCC at dcc-support@icgc.org.
 
