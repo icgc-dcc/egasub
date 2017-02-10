@@ -29,6 +29,7 @@ tests_require = parse_requirements('requirements-test.txt', session=PipSession()
 
 setup(
     name = 'egasub',
+    version='0.1.0rc1',
     description = 'ICGC tool for assisting EGA data submission',
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires = [str(ir.req) for ir in install_reqs],
