@@ -9,7 +9,7 @@ analysis:
     - 24
     - 25
     - 26
-  experimentTypeId: 0  # whole genome sequencing
+  experimentTypeId: [ 0 ]  # whole genome sequencing
   platform: Illumina HiSeq 2000
 sample:
   alias: sample_x

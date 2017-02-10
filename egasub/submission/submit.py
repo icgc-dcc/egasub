@@ -18,6 +18,9 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     except CredentialsError as error:
         ctx.obj['LOGGER'].critical(str(error))
         ctx.abort()
+    except Exception, error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
 
     ctx.obj['LOGGER'].info("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
@@ -80,7 +83,10 @@ def submit_dataset(ctx, dry_run=True):
     
     try:
         login(ctx)
-    except CredentialsError as error:
+    except CredentialsError, error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
+    except Exception, error:
         ctx.obj['LOGGER'].critical(str(error))
         ctx.abort()
         
