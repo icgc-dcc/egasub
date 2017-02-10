@@ -4,7 +4,7 @@ analysis:
   description:              # A brief description of the analysis
   analysisCenter:           # Analysis center  
   analysisDate:             # Date of the analysis, eg, "2017-02-10"
-  analysisTypeId: 0         # Visit https://ega.crg.eu/submitterportal/v1/enums/analysis_types, 0 for reference alignment
+  analysisTypeId: 1         # Visit https://ega.crg.eu/submitterportal/v1/enums/analysis_types, 1 for sequence variation
   genomeId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/reference_genomes, 15 for GRCh37, 1 for GRCh38
   chromosomeReferences: []  # List of chromosome references, https://ega.crg.eu/submitterportal/v1/enums/reference_chromosomes
   experimentTypeId: []      # Visit https://ega.crg.eu/submitterportal/v1/enums/experiment_types
