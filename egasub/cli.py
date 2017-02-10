@@ -43,6 +43,7 @@ def submit(ctx, submission_dir):
 
     perform_submission(ctx, submission_dir, dry_run=False)
 
+
 @main.command()
 @click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
@@ -63,6 +64,7 @@ def dry_run(ctx, submission_dir):
     perform_submission(ctx, submission_dir, dry_run=True)
 
 
+'''
 @main.command()
 @click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
 @click.pass_context
@@ -77,7 +79,7 @@ def status(ctx, submission_dir):
     utils.initialize_app(ctx)
 
     generate_report(ctx, submission_dir)
-
+'''
 
 @main.command()
 @click.option('--ega_submitter_account')
@@ -103,7 +105,7 @@ def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,
 @click.pass_context
 def new(ctx,submission_dir):
     """
-    Initialize new submission folders.
+    Initialize new submission folder(s).
     """
 
     if '.' in submission_dir or '..' in submission_dir:
