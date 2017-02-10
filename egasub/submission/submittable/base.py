@@ -300,6 +300,10 @@ class Analysis(Submittable):
         if not self.analysis.title:
             self._add_local_validation_error("analysis",self.analysis.alias,"title","Invalid value: analysis title must be provided.")
 
+        # Analysis description validation
+        if not self.analysis.description:
+            self._add_local_validation_error("analysis",self.analysis.alias,"description","Invalid value: analysis description must be provided.")
+
         # Chromosome references validation
         if not type(self.analysis.chromosome_references) == list:
             self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value: chromosomeReferences must be a list.")

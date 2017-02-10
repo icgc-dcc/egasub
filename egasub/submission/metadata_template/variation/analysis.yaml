@@ -27,4 +27,4 @@ sample:
 
 # Enter the informations concerning the files produced by the alignment
 files:
-  - fileName:               # Name of the file: Ex. alignment.*/{submission_folder}/{file_name}.bam.gpg
+  - fileName:               # Name of the file: Ex. alignment.*/{submission_folder}/{file_name}.vcf.gz.gpg
