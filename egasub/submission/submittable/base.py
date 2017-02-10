@@ -276,10 +276,6 @@ class Analysis(Submittable):
 
     def local_validate(self, ega_enums):
         super(Analysis, self).local_validate(ega_enums)
-        # Analysis type validation
-        if not any(cc['tag'] == str(self.analysis.analysis_type_id) for cc in ega_enums.lookup("analysis_types")):
-            self._add_local_validation_error("analysis",self.analysis.alias,"analysisTypes","Invalid value '%s'" % self.analysis.analysis_type_id)
-
         # Reference genomes type validation
         if not any(cc['tag'] == str(self.analysis.genome_id) for cc in ega_enums.lookup("reference_genomes")):
             self._add_local_validation_error("analysis",self.analysis.alias,"referenceGenomes","Invalid value '%s'" % self.analysis.genome_id)
@@ -292,9 +288,11 @@ class Analysis(Submittable):
             if not any(cc['tag'] == str(e_type) for cc in ega_enums.lookup("experiment_types")):
                 self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s' in experimentTypeId" % e_type)
 
-        #TODO
         # Chromosome references validation
-        #if not any(cc['tag'] == str(self.analysis.experiment_type_id) for cc in ega_enums.lookup("experiment_types")):
-        #    self._add_local_validation_error("analysis",self.analysis.alias,"experiment_types","Invalid experiment type value")
+        if not type(self.analysis.chromosome_references) == list:
+            self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value: chromosomeReferences must be a list.")
 
+        for chr_ref in self.analysis.chromosome_references:
+            if not any(cc['tag'] == str(chr_ref.value) for cc in ega_enums.lookup("reference_chromosomes")):
+                self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value '%s' in chromosomeReferences" % chromosome)
 
