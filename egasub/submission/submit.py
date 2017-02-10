@@ -44,22 +44,21 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         ctx.obj['LOGGER'].info("Perform local validation.")
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
+        for err in submittable.local_validation_errors:
+            ctx.obj['LOGGER'].error("Local validation error for submission dir '%s': \n%s" % (submittable.submission_dir,err))
+
         try:
             submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
         except Exception, e:
             ctx.obj['LOGGER'].error("FTP file check error, please make sure data files uploaded to the EGA FTP server already.")
-            continue
 
-        for err in submittable.local_validation_errors:
-            ctx.obj['LOGGER'].error("Local validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
-            
         for err in submittable.ftp_file_validation_errors:
             ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
 
         # only process submittables at certain states and no local
         # validation error
         if not submittable.status == 'SUBMITTED' \
-                and not submittable.local_validation_errors:
+                and not (submittable.local_validation_errors or submittable.ftp_file_validation_errors):
             submittables.append(submittable)
         elif submittable.status == 'SUBMITTED':
             ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
