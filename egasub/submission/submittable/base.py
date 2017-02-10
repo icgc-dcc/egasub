@@ -86,8 +86,8 @@ class Submittable(object):
                 if 'alias' in self._metadata.get('analysis', {}):
                     raise Exception("Can not have 'alias' for 'analysis' in %s." % yaml_file)
 
-        except:
-            raise Exception('Not an properly formed submission directory: %s' % self.submission_dir)
+        except Exception, e:
+            raise Exception('Not a properly formed submission directory: %s' % self.submission_dir)
 
         self._parse_md5sum_file()
 

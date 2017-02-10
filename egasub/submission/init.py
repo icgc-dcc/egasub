@@ -90,27 +90,60 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     study_alias = None
     study_id = None
     if studies:
-        """
-        TO be implemented
-        """
-        echo("Please pickup one study from below or choose none to create a new study in the next step.")
+        echo("Study ID\tAlias\tStudy Type\tTitle")
+        echo("-----------------------------------------------")
+        parse_dict = []
+        i=1
+        for study in studies:
+            parse_dict.append({'index':i,'alias':study['alias'],'studyType':study['studyType'],'title':study['title'],'studyAbstract':study['studyAbstract'],'studyTypeId':study['studyTypeId'],'studyId':study['id'],'shortName':study['shortName']})
+            echo(str(i)+". "+study['id']+"\t"+study['alias']+"\t"+study['studyType']+"\t"+study['title'])
+            i+=1
+        echo("-----------------------------------------------")
+
+        while True:
+            study_key = prompt("Select an existing study or enter 0 to create a new study: ", default=0)
+            if study_key >= 0 and study_key <= len(parse_dict):
+                break
+
+        if study_key != 0:
+            for study in parse_dict:
+                if study['index'] == study_key:
+                    echo(study['alias']+" selected")
+                    study_alias = study['alias']
+                    study_id = study['studyId']
+                    break
 
     if not (study_alias and study_id):
-        # let user create one
         echo("Please enter the following to create a new EGS study.")
+        study_alias = prompt("Study alias (required)")
+                
+        study_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['study_types']['response']['result']
+        ids = [dataset['tag'] for dataset in study_types]
+        values = [dataset['value'] for dataset in study_types]
+        for i in xrange(0,len(values)):
+            echo(ids[i]+"\t- "+values[i])
+
+        while True:
+            study_type_id = prompt("Study type ID (required, 8 for Cancer Genomics)", default=8)
+            if study_type_id >=0 and study_type_id <= len(study_types):
+                break
+
+        study_title = prompt("Study title (required)")
+        study_abstract = prompt("Study abstract (required)")
+        study_short_name = prompt("Short study name", default="")
         study = Study(
-            prompt("Study alias (required)"), # alias
-            prompt("Study type ID (required, 8 for Cancer Genomics)", default=8), # studyTypeId, Cancer Genomics
-            prompt("Short study name", default=""), # should take it from config
-            prompt("Study title (required)"), # should take it from config
-            prompt("Study abstract (required)"), # should take it from config
+            study_alias, # alias
+            study_type_id, # studyTypeId, Cancer Genomics
+            study_short_name, # should take it from config
+            study_title, # should take it from config
+            study_abstract, # should take it from config
             None,  # ownTerm
             [],  # pubMedIds
             [],   # customTags
             None
         )
-
         object_submission(ctx, study, 'study', dry_run=False)
+
         study_alias = study.alias
         study_id = study.id
 
@@ -126,15 +159,14 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
 
     yaml_info['ega_policy_id'] = policy.id
 
-    login(ctx)
-
 
 # EGA REST API based submission does not handle this properly yet,
 # we were advised to create dummy Dac and Policy object to get things started 
 def make_dummy_dac():
     return Dac(
             "ICGC DACO",
-            [Contact("Helpdesk", "dcc-support@icgc.org", "ICGC", "")]
+            [Contact("Helpdesk", "dcc-support@icgc.org", "ICGC", "")],
+            "ICGC DACO"
         )
 
 def make_dummy_policy(dac_id):

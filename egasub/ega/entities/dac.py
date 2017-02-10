@@ -10,9 +10,9 @@ class Dac(object):
     def to_dict(self):
         return {
             'title' : self.title,
-            'contacts' :  map(lambda contact: contact.to_dict(), self.contacts)
+            'contacts' :  map(lambda contact: contact.to_dict(), self.contacts),
+            'alias': self.alias
         }
-
 
     def to_xml(self):
         pass
