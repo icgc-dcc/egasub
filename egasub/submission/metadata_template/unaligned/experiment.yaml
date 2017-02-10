@@ -8,7 +8,7 @@ experiment:
   designDescription:            # A brief description of the design
   libraryName:                  # 
   libraryConstructionProtocol:  #
-  libraryLayoutId:              # 
+  libraryLayoutId:              # Visit https://ega.crg.eu/submitterportal/v1/enums/library_layouts
   pairedNominalLength:          #
   pairedNominalSdev:            #
   sampleId:                     # ID of the related sample
@@ -16,18 +16,18 @@ experiment:
 
 # Enter the informations concerning the sample
 sample:
-  alias:                        # submitter's ID for the sample, ensure this is the same as what's submitted to ICGC DCC
-  caseOrControlId:              # Visit https://ega.crg.eu/submitterportal/v1/enums/case_control
-  genderId:                     # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
-  organismPart:                 #
-  cellLine:                     #
-  region:                       #
-  phenotype:                    #
-  subjectId:                    #
-  anonymizedName:               #
-  biosampleId:                  #
-  sampleAge:                    # Age of the sample
-  sampleDetail:                 # Details about the sample
+  alias:                    # Submitter's sample ID
+  caseOrControlId:          # Visit https://ega.crg.eu/submitterportal/v1/enums/case_control
+  genderId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
+  organismPart:             # 
+  cellLine:                 #
+  region:                   #
+  phenotype:                #
+  subjectId:                # Subject ID can be seen as submitter's donor ID
+  anonymizedName:           #
+  bioSampleId:              #
+  sampleAge:                # Age of the sample
+  sampleDetail:             # Details about the sample
 
 # A run may be seen as a lane of a flowcell
 run:
@@ -36,3 +36,4 @@ run:
 # Files produced by a sequencing run, two files for paired end seq, one file for single end seq
 files:
   - fileName:                   # Name of the file: Ex. unaligned.*/{submission_folder}/{file_name}.fq.gz.gpg
+
