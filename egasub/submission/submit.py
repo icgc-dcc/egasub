@@ -58,7 +58,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         # only process submittables at certain states and no local
         # validation error
         if not submittable.status == 'SUBMITTED' \
-                and not (submittable.local_validation_errors or submittable.ftp_file_validation_errors):
+                and not submittable.local_validation_errors:
             submittables.append(submittable)
         elif submittable.status == 'SUBMITTED':
             ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
