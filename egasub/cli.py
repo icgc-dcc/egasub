@@ -122,7 +122,7 @@ def new(ctx,submission_dir):
 @click.pass_context
 def dataset(ctx,submit,dry_run):
     """
-    Submit or test a dataset submissoin.
+    Submit or test a dataset submission.
     """
     utils.initialize_app(ctx)
     
