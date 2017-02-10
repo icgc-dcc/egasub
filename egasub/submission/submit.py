@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 from click import echo, prompt
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
@@ -103,12 +104,12 @@ def submit_dataset(ctx, dry_run=True):
         run_file_log = os.path.join(sub_folder_path,'.status','run.log')
         status = submittable_status(run_file_log)
         if status[2] == 'SUBMITTED':
-            run_references.append(status[1])  # 1 is alias, 0 is id
+            run_references.append(status[0])  # 1 is alias, 0 is id
         else:
             not_submitted.append(sub_folder)
 
     if not_submitted:
-        ctx.obj['LOGGER'].error("These samples have not been submitted yet: %s" % ','.join(not_submitted))
+        ctx.obj['LOGGER'].error("Sample(s) has not been submitted yet: %s" % ','.join(not_submitted))
         logout(ctx)
         ctx.abort()
 
@@ -117,18 +118,20 @@ def submit_dataset(ctx, dry_run=True):
     
     echo("-----------")
     while True:
-        dataset_type_id = prompt("Select the dataset type: ")
+        dataset_type_id = prompt("Select the dataset type")
         if dataset_type_id in ids:
             break
+        echo("Incorrect choice, please select one code listed above.")
 
-    # TODO: need to determine these values for the dataset
+    # use current dir as default dataset alias
+    dataset_alias = os.path.basename(ctx.obj['CURRENT_DIR'])
     dataset = Dataset(
-                        'alias',
+                        prompt("Enter dataset alias (unique name)", default=dataset_alias),
                         [dataset_type_id],
-                        1,
+                        policy_id,
                         run_references,
                         [],
-                        'a title',
+                        prompt("Enter dataset title"),
                         [],
                         []
                     )

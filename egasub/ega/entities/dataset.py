@@ -2,7 +2,7 @@
 class Dataset(object):
     
     def __init__(self,alias,dataset_type_ids, policy_id, runs_references, analysis_references, title,
-                 dataset_links, attributes):
+                 dataset_links, attributes, id_=None):
         self.alias = alias
         self.dataset_type_ids = dataset_type_ids
         self.policy_id = policy_id
@@ -11,6 +11,7 @@ class Dataset(object):
         self.title = title
         self.dataset_links = dataset_links
         self.attributes = attributes
+        self.id = id_
 
         
     def to_dict(self):
