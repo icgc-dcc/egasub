@@ -92,8 +92,9 @@ def object_submission(ctx, obj, obj_type, dry_run=True):
     if obj.alias:  # only lookup for existing object when alias is available
         existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
         for o in existing_objects:
-            if o.get('status') == 'SUBMITTED' and not obj.id == o.get('id'):
-                obj.id = o.get('id')
+            if o.get('status') == 'SUBMITTED':
+                if not obj.id == o.get('id'):
+                    obj.id = o.get('id')
                 obj.status = o.get('status')
                 ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
                                          % (obj_type, obj.alias, o.get('status')))
@@ -237,7 +238,7 @@ def _obj_type_to_endpoint(obj_type):
 
 
 def query_by_id(ctx, obj_type, obj_id, id_type):
-    url = "%s%s/%s?idType=%s" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_id, id_type)
+    url = "%s%s/%s?idType=%s&skip=0&limit=0" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_id, id_type)
 
     headers = {
         'Content-Type': 'application/json',
@@ -254,7 +255,7 @@ def query_by_id(ctx, obj_type, obj_id, id_type):
 
 
 def query_by_type(ctx, obj_type, obj_status="SUBMITTED"):
-    url = "%s%s?status=%s" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_status)
+    url = "%s%s?status=%s&skip=0&limit=0" % (api_url(ctx), _obj_type_to_endpoint(obj_type), obj_status)
 
     headers = {
         'Content-Type': 'application/json',
