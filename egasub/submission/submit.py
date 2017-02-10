@@ -50,7 +50,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         try:
             submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
         except Exception, e:
-            ctx.obj['LOGGER'].error("FTP file check error, please make sure data files uploaded to the EGA FTP server already.")
+            ctx.obj['LOGGER'].error("FTP file check error, please make sure data file is defined in metdata YAML and uploaded to the EGA FTP server.")
 
         for err in submittable.ftp_file_validation_errors:
             ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))

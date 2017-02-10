@@ -205,6 +205,14 @@ class Experiment(Submittable):
         if not any(model['tag'] == str(self.experiment.instrument_model_id) for model in ega_enums.lookup("instrument_models")):
             self._add_local_validation_error("experiment",self.experiment.alias,"instrumentModel","Invalid value '%s'" % self.experiment.instrument_model_id)
 
+        # Library name validation
+        if not self.experiment.library_name:
+            self._add_local_validation_error("experiment",self.experiment.alias,"libraryName","Invalid value, library name must be provided")
+
+        # Experiment design description validation
+        if not self.experiment.design_description:
+            self._add_local_validation_error("experiment",self.experiment.alias,"designDescription","Invalid value, design description must be provided")
+
         # Library source validation
         if not any(source['tag'] == str(self.experiment.library_source_id) for source in ega_enums.lookup("library_sources")):
             self._add_local_validation_error("experiment",self.experiment.alias,"librarySources","Invalid value '%s'" % self.experiment.library_source_id)
@@ -278,7 +286,7 @@ class Analysis(Submittable):
         super(Analysis, self).local_validate(ega_enums)
         # Reference genomes type validation
         if not any(cc['tag'] == str(self.analysis.genome_id) for cc in ega_enums.lookup("reference_genomes")):
-            self._add_local_validation_error("analysis",self.analysis.alias,"referenceGenomes","Invalid value '%s'" % self.analysis.genome_id)
+            self._add_local_validation_error("analysis",self.analysis.alias,"genomeId","Invalid value '%s'" % self.analysis.genome_id)
 
         # experimentTypeId type validation
         if not type(self.analysis.experiment_type_id) == list:
@@ -287,6 +295,10 @@ class Analysis(Submittable):
         for e_type in self.analysis.experiment_type_id:
             if not any(cc['tag'] == str(e_type) for cc in ega_enums.lookup("experiment_types")):
                 self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value '%s' in experimentTypeId" % e_type)
+
+        # Analysis titile validation
+        if not self.analysis.title:
+            self._add_local_validation_error("analysis",self.analysis.alias,"title","Invalid value: analysis title must be provided.")
 
         # Chromosome references validation
         if not type(self.analysis.chromosome_references) == list:
