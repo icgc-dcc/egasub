@@ -12,7 +12,7 @@ EGASUB is a command line tool assists ICGC members submitting their NGS sequence
 curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
 
 # clone the source code
-git clone git@github.com:icgc-dcc/egasub.git
+git clone https://github.com/icgc-dcc/egasub.git
 
 # run tests
 cd egasub
