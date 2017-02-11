@@ -37,7 +37,7 @@ egasub
 
 ## SOP for ICGC submitters
 
-Detailed SOP for ICGC submitters is availabe [here](https://wiki.oicr.on.ca/display/DCCBIO/EGA+Submission+Tool+SOP)
+Detailed SOP for ICGC submitters is availabe [here](https://wiki.oicr.on.ca/display/DCCBIO/EGA+Submission+Tool+SOP).
 
 ## Support
 

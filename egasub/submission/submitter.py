@@ -14,7 +14,8 @@ class Submitter(object):
             self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.sample.alias)
 
             try:
-                self.set_icgc_ids(submittable.sample, dry_run)
+                if not dry_run:  # only to get ICGC ID when not dry_run
+                    self.set_icgc_ids(submittable.sample, dry_run)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
                 submittable.record_object_status('sample')
 
@@ -48,7 +49,8 @@ class Submitter(object):
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
-                self.set_icgc_ids(submittable.sample, dry_run)
+                if not dry_run:  # only to get ICGC ID when not dry_run
+                    self.set_icgc_ids(submittable.sample, dry_run)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
                 submittable.record_object_status('sample')
 

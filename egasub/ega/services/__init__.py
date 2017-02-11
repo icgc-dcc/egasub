@@ -184,7 +184,11 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
 
     # enable this when EGA fixes the validation bug
     if r_data.get('header', {}).get('code') != "200":
-        raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
+        raise Exception("Error message: \n  userMessage: %s\n  developerMessage: %s" % (
+                                                    r_data.get('header', {}).get('userMessage'),
+                                                    r_data.get('header', {}).get('developerMessage')
+                                                )
+                        )
     elif (op_type == 'submit' and not r_data.get('response').get('result')[0].get('status') == 'SUBMITTED'):
         errors = []
         error_validation = r_data.get('response').get('result')[0].get('validationErrorMessages')
