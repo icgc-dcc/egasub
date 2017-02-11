@@ -80,6 +80,9 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     except CredentialsError as error:
         ctx.obj['LOGGER'].critical("Login failed: %s" % str(error))
         ctx.abort()
+    except Exception, error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
 
     ctx.obj['LOGGER'].info("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())

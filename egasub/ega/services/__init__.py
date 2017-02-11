@@ -96,7 +96,7 @@ def object_submission(ctx, obj, obj_type, dry_run=True):
                 if not obj.id == o.get('id'):
                     obj.id = o.get('id')
                 obj.status = o.get('status')
-                ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, no need to submit." \
+                ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, not submitting." \
                                          % (obj_type, obj.alias, o.get('status')))
             else:
                 ctx.obj['LOGGER'].debug("%s with alias '%s' already exists in '%s' status, deleting it." \
@@ -184,7 +184,11 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
 
     # enable this when EGA fixes the validation bug
     if r_data.get('header', {}).get('code') != "200":
-        raise Exception("Error message: %s" % r_data.get('header', {}).get('userMessage'))
+        raise Exception("Error message: \n  userMessage: %s\n  developerMessage: %s" % (
+                                                    r_data.get('header', {}).get('userMessage'),
+                                                    r_data.get('header', {}).get('developerMessage')
+                                                )
+                        )
     elif (op_type == 'submit' and not r_data.get('response').get('result')[0].get('status') == 'SUBMITTED'):
         errors = []
         error_validation = r_data.get('response').get('result')[0].get('validationErrorMessages')
@@ -192,10 +196,10 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
 
         errors = error_validation if error_validation else []
         errors = errors + (error_submission if error_submission else [])
-        raise Exception("Submission failed: \n%s" % '\n'.join(errors))
+        raise Exception("Submission failed (Note that 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
     elif (op_type == 'validate' and not r_data.get('response').get('result')[0].get('status') == 'VALIDATED'):
         errors = r_data.get('response').get('result')[0].get('validationErrorMessages')
-        ctx.obj['LOGGER'].warning("Validation exception ('sample not found' error will disappear when perform 'submit' instead of 'dry_run'): \n%s" % '\n'.join(errors))
+        ctx.obj['LOGGER'].warning("Validation exception (Note that 'Sample not found' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
 

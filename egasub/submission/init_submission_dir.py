@@ -21,7 +21,7 @@ def init_submission_dir(ctx, submission_dirs):
         dest_file = os.path.join(d, file_name)
 
         if os.path.isfile(dest_file):
-            ctx.obj['LOGGER'].info("Skipping directory '%s', as it already contains the file : %s" % (d, file_name))
+            ctx.obj['LOGGER'].warning("Skipping directory '%s', as it already contains the file: %s" % (d, file_name))
             continue
 
         copyfile(src_file, dest_file)

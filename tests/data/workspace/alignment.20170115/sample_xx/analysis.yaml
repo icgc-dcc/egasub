@@ -9,12 +9,12 @@ analysis:
     - 24
     - 25
     - 26
-  experimentTypeId: [ 0 ]  # not valid
+  experimentTypeId: [ 0 ]
   platform: Illumina HiSeq 2000
 sample:
   alias: sample_xx
   caseOrControlId: 0
-  genderId: 1  # not valid
+  genderId: 1
   organismPart: 
   cellLine: 
   region:

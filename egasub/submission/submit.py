@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 from click import echo, prompt
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
@@ -18,6 +19,9 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     except CredentialsError as error:
         ctx.obj['LOGGER'].critical(str(error))
         ctx.abort()
+    except Exception, error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
 
     ctx.obj['LOGGER'].info("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
@@ -29,6 +33,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     submittables = []
     for submission_dir in submission_dirs:
+        submission_dir = submission_dir.rstrip('/')
         ctx.obj['LOGGER'].info("Start processing '%s'" % submission_dir)
         try:
             submittable = Submittable_class(submission_dir)
@@ -39,15 +44,14 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         ctx.obj['LOGGER'].info("Perform local validation.")
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
+        for err in submittable.local_validation_errors:
+            ctx.obj['LOGGER'].error("Local validation error for submission dir '%s': \n%s" % (submittable.submission_dir,err))
+
         try:
             submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
         except Exception, e:
-            ctx.obj['LOGGER'].error("FTP file check error, please make sure data files uploaded to the EGA FTP server already.")
-            continue
+            ctx.obj['LOGGER'].error("FTP file check error, please make sure data file is defined in metdata YAML and uploaded to the EGA FTP server.")
 
-        for err in submittable.local_validation_errors:
-            ctx.obj['LOGGER'].error("Local validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
-            
         for err in submittable.ftp_file_validation_errors:
             ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
 
@@ -79,7 +83,10 @@ def submit_dataset(ctx, dry_run=True):
     
     try:
         login(ctx)
-    except CredentialsError as error:
+    except CredentialsError, error:
+        ctx.obj['LOGGER'].critical(str(error))
+        ctx.abort()
+    except Exception, error:
         ctx.obj['LOGGER'].critical(str(error))
         ctx.abort()
         
@@ -89,19 +96,25 @@ def submit_dataset(ctx, dry_run=True):
     
     policy_id = ctx.obj['SETTINGS']['ega_policy_id']
     
-    run_references = []
+    run_or_analysis_references = []
+    is_run = False
     not_submitted = []
     for sub_folder in os.listdir(ctx.obj['CURRENT_DIR']):
         sub_folder_path = os.path.join(ctx.obj['CURRENT_DIR'],sub_folder)
-        run_file_log = os.path.join(sub_folder_path,'.status','run.log')
-        status = submittable_status(run_file_log)
+        if ctx.obj['CURRENT_DIR_TYPE'] == "unaligned":
+            file_log = os.path.join(sub_folder_path,'.status','run.log')
+            is_run = True
+        else:
+            file_log = os.path.join(sub_folder_path,'.status','analysis.log')
+        status = submittable_status(file_log)
+
         if status[2] == 'SUBMITTED':
-            run_references.append(status[1])  # 1 is alias, 0 is id
+            run_or_analysis_references.append(status[0])  # 1 is alias, 0 is id
         else:
             not_submitted.append(sub_folder)
 
     if not_submitted:
-        ctx.obj['LOGGER'].error("These samples have not been submitted yet: %s" % ','.join(not_submitted))
+        ctx.obj['LOGGER'].error("Sample(s) has not been submitted yet: %s" % ','.join(not_submitted))
         logout(ctx)
         ctx.abort()
 
@@ -110,18 +123,20 @@ def submit_dataset(ctx, dry_run=True):
     
     echo("-----------")
     while True:
-        dataset_type_id = prompt("Select the dataset type: ")
+        dataset_type_id = prompt("Select the dataset type")
         if dataset_type_id in ids:
             break
+        echo("Incorrect choice, please select one code listed above.")
 
-    # TODO: need to determine these values for the dataset
+    # use current dir as default dataset alias
+    dataset_alias = os.path.basename(ctx.obj['CURRENT_DIR'])
     dataset = Dataset(
-                        'alias',
+                        prompt("Enter dataset alias (unique name)", default=dataset_alias),
                         [dataset_type_id],
-                        1,
-                        run_references,
-                        [],
-                        'a title',
+                        policy_id,
+                        run_or_analysis_references if is_run else [], # run reference
+                        [] if is_run else run_or_analysis_references, # analysis referenece
+                        prompt("Enter dataset title"),
                         [],
                         []
                     )
