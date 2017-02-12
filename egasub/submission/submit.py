@@ -116,7 +116,7 @@ def submit_dataset(ctx, dry_run=True):
             not_submitted.append(sub_folder)
 
     if not_submitted:
-        ctx.obj['LOGGER'].error("Sample(s) has not been submitted yet: \n%s" % '\n'.join(not_submitted))
+        ctx.obj['LOGGER'].error("Error: all submission directories must be in 'SUBMITTED' status before a dataset can be created. The following submission directories have not been submitted: \n%s" % '\n'.join(not_submitted))
         logout(ctx)
         ctx.abort()
 
@@ -133,7 +133,7 @@ def submit_dataset(ctx, dry_run=True):
     # use the second part of the current dir as default dataset alias
     dataset_alias = os.path.basename(ctx.obj['CURRENT_DIR']).split('.')[1]
     while True:
-        dataset_alias = prompt("Enter dataset alias (unique name)", default=dataset_alias)
+        dataset_alias = prompt("Enter dataset alias (unique dataset name)", default=dataset_alias)
         if re.match(r'^[a-zA-Z0-9_\-]+$', dataset_alias):
             break
         echo("Dataset alias can only contain letter, digit, underscore (_) or dash (-)")
