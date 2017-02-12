@@ -34,26 +34,28 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     submittables = []
     for submission_dir in submission_dirs:
         submission_dir = submission_dir.rstrip('/')
-        ctx.obj['LOGGER'].info("Start processing '%s'" % submission_dir)
+
         try:
             submittable = Submittable_class(submission_dir)
         except Exception, err:
             ctx.obj['LOGGER'].error("Skip '%s' as it appears to be not a well formed submission directory. Error: %s" % (submission_dir, err))
             continue
 
-        ctx.obj['LOGGER'].info("Perform local validation.")
+        ctx.obj['LOGGER'].info("Perform local validation for '%s'." % submission_dir)
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
         for err in submittable.local_validation_errors:
             ctx.obj['LOGGER'].error("Local validation error for submission dir '%s': \n%s" % (submittable.submission_dir,err))
 
-        try:
-            submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
-        except Exception, e:
-            ctx.obj['LOGGER'].error("FTP file check error, please make sure data file is defined in metdata YAML and uploaded to the EGA FTP server.")
+        if not submittable.local_validation_errors:  # only perform file check when there is no local validation error
+            ctx.obj['LOGGER'].info("Perform file check on EGA FTP server for '%s'." % submission_dir)
+            try:
+                submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
+            except Exception, e:
+                ctx.obj['LOGGER'].error("FTP file check error, please make sure data file is defined in metdata YAML and uploaded to the EGA FTP server.")
 
-        for err in submittable.ftp_file_validation_errors:
-            ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
+            for err in submittable.ftp_file_validation_errors:
+                ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
 
         # only process submittables at certain states and no local
         # validation error
@@ -114,7 +116,7 @@ def submit_dataset(ctx, dry_run=True):
             not_submitted.append(sub_folder)
 
     if not_submitted:
-        ctx.obj['LOGGER'].error("Sample(s) has not been submitted yet: %s" % ','.join(not_submitted))
+        ctx.obj['LOGGER'].error("Sample(s) has not been submitted yet: \n%s" % '\n'.join(not_submitted))
         logout(ctx)
         ctx.abort()
 
@@ -128,10 +130,17 @@ def submit_dataset(ctx, dry_run=True):
             break
         echo("Incorrect choice, please select one code listed above.")
 
-    # use current dir as default dataset alias
-    dataset_alias = os.path.basename(ctx.obj['CURRENT_DIR'])
+    # use the second part of the current dir as default dataset alias
+    dataset_alias = os.path.basename(ctx.obj['CURRENT_DIR']).split('.')[1]
+    while True:
+        dataset_alias = prompt("Enter dataset alias (unique name)", default=dataset_alias)
+        if re.match(r'^[a-zA-Z0-9_\-]+$', dataset_alias):
+            break
+        echo("Dataset alias can only contain letter, digit, underscore (_) or dash (-)")
+        dataset_alias = os.path.basename(ctx.obj['CURRENT_DIR']).split('.')[1]
+
     dataset = Dataset(
-                        prompt("Enter dataset alias (unique name)", default=dataset_alias),
+                        dataset_alias,
                         [dataset_type_id],
                         policy_id,
                         run_or_analysis_references if is_run else [], # run reference
@@ -161,5 +170,5 @@ def submittable_status(_file):
                 pass
         return last.strip().split('\t')
     except:
-        return [None, None, None, None]
+        return [None, None, None, None, None]
 

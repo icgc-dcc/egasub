@@ -28,8 +28,10 @@ with open('requirements-test.txt') as f:
 
 setup(
     name = 'egasub',
-    version='0.1.0rc1',
+    version='0.1.0rc2',
+    url='https://github.com/icgc-dcc/egasub',
     description = 'ICGC tool for assisting EGA data submission',
+    license='GPL-3.0',
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires = install_reqs,
     tests_require = tests_require,

@@ -10,30 +10,30 @@ class Submitter(object):
         self.ctx = ctx
 
     def submit(self, submittable, dry_run=True):
-        if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
-            self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.sample.alias)
+        self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.submission_dir)
 
+        if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             try:
                 if not dry_run:  # only to get ICGC ID when not dry_run
                     self.set_icgc_ids(submittable.sample, dry_run)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-                submittable.record_object_status('sample')
+                submittable.record_object_status('sample', dry_run)
 
                 submittable.experiment.sample_id = submittable.sample.id
                 submittable.experiment.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
 
                 object_submission(self.ctx, submittable.experiment, 'experiment', dry_run)
-                submittable.record_object_status('experiment')
+                submittable.record_object_status('experiment', dry_run)
 
                 submittable.run.sample_id = submittable.sample.id
                 submittable.run.experiment_id = submittable.experiment.id
 
                 object_submission(self.ctx, submittable.run, 'run', dry_run)
-                submittable.record_object_status('run')
+                submittable.record_object_status('run', dry_run)
 
-                self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.sample.alias)
+                self.ctx.obj['LOGGER'].info("Finished processing '%s'" % submittable.submission_dir)
             except Exception as error:
-                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.sample.alias, error))
+                self.ctx.obj['LOGGER'].error("Failed processing '%s': %s" % (submittable.submission_dir, error))
 
             # now remove all created object that is not in SUBMITTED status
             self.ctx.obj['LOGGER'].info('Clean up unneeded objects ...')
@@ -52,7 +52,7 @@ class Submitter(object):
                 if not dry_run:  # only to get ICGC ID when not dry_run
                     self.set_icgc_ids(submittable.sample, dry_run)
                 object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-                submittable.record_object_status('sample')
+                submittable.record_object_status('sample', dry_run)
 
                 submittable.analysis.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
                 submittable.analysis.sample_references = [
@@ -62,11 +62,11 @@ class Submitter(object):
                                                                 )
                                                             ]
                 object_submission(self.ctx, submittable.analysis, 'analysis', dry_run)
-                submittable.record_object_status('analysis')
+                submittable.record_object_status('analysis', dry_run)
 
-                self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.sample.alias)
+                self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.submission_dir)
             except Exception as error:
-                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.sample.alias, str(error)))
+                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, str(error)))
 
             # now remove all created object that is not in SUBMITTED status
             self.ctx.obj['LOGGER'].info('Clean up unneeded objects ...')
