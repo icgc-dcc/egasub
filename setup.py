@@ -28,7 +28,7 @@ with open('requirements-test.txt') as f:
 
 setup(
     name = 'egasub',
-    version='0.1.0rc2',
+    version='0.1.0rc3',
     url='https://github.com/icgc-dcc/egasub',
     description = 'ICGC tool for assisting EGA data submission',
     license='GPL-3.0',
