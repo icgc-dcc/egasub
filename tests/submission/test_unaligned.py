@@ -8,6 +8,7 @@ from egasub.exceptions import Md5sumFileError
 
 
 def test_unaligned():
+    initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')
     unaligned = Unaligned('sample_y')
 
@@ -80,6 +81,8 @@ def test_unaligned():
                     'status': None
                 }
             )  == 0
+            
+    os.chdir(initial_directory)
 
 
 # disable this test, need to replace it with a good one
