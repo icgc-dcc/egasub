@@ -41,6 +41,10 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
             ctx.obj['LOGGER'].error("Skip '%s' as it appears to be not a well formed submission directory. Error: %s" % (submission_dir, err))
             continue
 
+        if submittable.status == 'SUBMITTED':  # if already SUBMITTED
+            ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
+            continue
+
         ctx.obj['LOGGER'].info("Perform local validation for '%s'." % submission_dir)
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
@@ -62,8 +66,6 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         if not submittable.status == 'SUBMITTED' \
                 and not submittable.local_validation_errors:
             submittables.append(submittable)
-        elif submittable.status == 'SUBMITTED':
-            ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
         else:
             ctx.obj['LOGGER'].info("Skip '%s' as it failed validation, please check log for details." % submittable.submission_dir)
 

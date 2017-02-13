@@ -28,7 +28,7 @@ def initialize_app(ctx):
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
     #echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])  # for debug
     if not ctx.obj['CURRENT_DIR_TYPE']:
-        ctx.obj['LOGGER'].critical("You must run this command directly under a 'submission batch' directory named with this pattern: (unaligned|alignment|variation)\.([a-zA-Z0-9_\-]+)")
+        ctx.obj['LOGGER'].critical("You must run this command directly under a 'submission batch' directory named with this pattern: (unaligned|alignment|variation)\.([a-zA-Z0-9_\-]+). You can create 'submission batch' directories under the current workspace: %s" % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
         
     ctx.obj['EGA_ENUMS'] = EgaEnums()
