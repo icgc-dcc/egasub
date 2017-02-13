@@ -199,7 +199,7 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
         raise Exception("Submission failed (Note that 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
     elif (op_type == 'validate' and not r_data.get('response').get('result')[0].get('status') == 'VALIDATED'):
         errors = r_data.get('response').get('result')[0].get('validationErrorMessages')
-        ctx.obj['LOGGER'].warning("Validation exception (Note that 'Sample not found' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
+        ctx.obj['LOGGER'].warning("Validation exception (Note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
 

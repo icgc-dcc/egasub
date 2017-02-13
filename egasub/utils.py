@@ -28,7 +28,7 @@ def initialize_app(ctx):
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
     #echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])  # for debug
     if not ctx.obj['CURRENT_DIR_TYPE']:
-        ctx.obj['LOGGER'].critical('The current working directory does not associate with any supported EGA data types: unaligned|alignment|variation')
+        ctx.obj['LOGGER'].critical("You must run this command directly under a 'submission batch' directory named with this pattern: (unaligned|alignment|variation)\.([a-zA-Z0-9_\-]+). You can create 'submission batch' directories under the current workspace: %s" % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
         
     ctx.obj['EGA_ENUMS'] = EgaEnums()
@@ -103,7 +103,7 @@ def get_current_dir_type(ctx):
     workplace = ctx.obj['WORKSPACE_PATH']
     current_dir = ctx.obj['CURRENT_DIR']
 
-    pattern = re.compile('%s/(unaligned|alignment|variation)\.' % workplace)
+    pattern = re.compile('^%s/(unaligned|alignment|variation)\.([a-zA-Z0-9_\-]+)$' % workplace)
     m = re.match(pattern, current_dir)
     if m and m.group(1):
         return m.group(1)
