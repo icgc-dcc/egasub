@@ -33,10 +33,6 @@ def submit(ctx, submission_dir):
 
     utils.initialize_app(ctx)
 
-    if not ctx.obj.get('WORKSPACE_PATH'):
-        ctx.obj['LOGGER'].critical('Not in an EGA submission workspace %s' % ctx.obj['WORKSPACE_PATH'])
-        ctx.abort()
-
     if not submission_dir:
         ctx.obj['LOGGER'].critical('You must specify at least one submission directory.')
         ctx.abort()
