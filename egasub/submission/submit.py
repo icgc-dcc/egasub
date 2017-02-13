@@ -4,7 +4,7 @@ import re
 from click import echo, prompt
 
 from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
-from ..ega.services import login, logout, object_submission, query_by_id, \
+from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
                             prepare_submission, submit_submission
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
 from .submittable import Unaligned, Alignment, Variation
@@ -156,6 +156,9 @@ def submit_dataset(ctx, dry_run=True):
 
     try:
         object_submission(ctx, dataset, 'dataset', dry_run)
+        # clean up unneeded dataset
+        if dataset.id and not dataset.status == 'SUBMITTED':
+            delete_obj(ctx, 'dataset', dataset.id)
     except Exception, err:
         ctx.obj['LOGGER'].error("Submitting dataset failed: %s" % err)
         logout(ctx)
