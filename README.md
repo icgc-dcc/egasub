@@ -21,9 +21,9 @@ export PATH="~/.local/bin:$PATH"
 pipsi install egasub
 ```
 
-Note: to install a specific version of `egasub`, do this:
+Note: to install a specific version of `egasub`, e.g., `0.1.0rc3` do this:
 ```
-pipsi install egasub==<version>
+pipsi install egasub==0.1.0rc3
 ```
 
 ### Install latest develop
