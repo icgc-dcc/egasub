@@ -5,7 +5,6 @@ from egasub.ega.entities import Sample, \
                                 Experiment as EExperiment, \
                                 Analysis as EAnalysis
 from egasub.exceptions import Md5sumFileError
-from StdSuites.AppleScript_Suite import reference
 
 
 def test_variation():
