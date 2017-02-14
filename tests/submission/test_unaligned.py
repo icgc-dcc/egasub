@@ -9,7 +9,7 @@ from egasub.exceptions import Md5sumFileError
 
 def test_unaligned():
     os.chdir('tests/data/workspace/unaligned.20170110/')
-    unaligned = Unaligned('sample_y')
+    unaligned = Unaligned('ssample_y')
 
     assert isinstance(unaligned.sample, Sample)
     assert isinstance(unaligned.experiment, EExperiment)
@@ -26,7 +26,7 @@ def test_unaligned():
                     'region': None,
                     'subjectId': 'abc',
                     'organismPart': None,
-                    'alias': 'sample_y',
+                    'alias': 'ssample_y',
                     'caseOrControlId': 2,
                     'id': None,
                     'phenotype': 'Breast cancer',

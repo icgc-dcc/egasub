@@ -37,11 +37,8 @@ def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
     logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
     
-    if debug:
-        logger.setLevel(logging.DEBUG)
-    elif info:
-        logger.setLevel(logging.INFO) 
-    
+    logger.setLevel(logging.DEBUG)
+
     if ctx.obj['WORKSPACE_PATH'] == None:
         logger = logging.getLogger('ega_submission')
         ch = logging.StreamHandler()
@@ -50,17 +47,24 @@ def initialize_log(ctx, debug, info):
         return
     
     log_directory = os.path.join(ctx.obj['WORKSPACE_PATH'],".log")
-    log_file = os.path.join(log_directory,"%s.log" % re.sub(r'[-:.]', '_', datetime.datetime.utcnow().isoformat()))
-    
+    log_file = "%s.log" % re.sub(r'[-:.]', '_', datetime.datetime.utcnow().isoformat())
+    ctx.obj['log_file'] = log_file
+    log_file = os.path.join(log_directory, log_file)
+
     if not os.path.isdir(log_directory):
         os.mkdir(log_directory)
         
     fh = logging.FileHandler(log_file)
+    fh.setLevel(logging.DEBUG)  # always set fh to debug
     fh.setFormatter(logFormatter)
-    
+
     ch = logging.StreamHandler()
     ch.setFormatter(logFormatter)
-    
+    if debug:
+        ch.setLevel(logging.DEBUG)
+    elif info:
+        ch.setLevel(logging.INFO)
+
     logger.addHandler(fh)
     logger.addHandler(ch)
     
