@@ -36,21 +36,6 @@ class Submitter(object):
             except Exception as error:
                 self.ctx.obj['LOGGER'].error("Failed processing '%s': %s" % (submittable.submission_dir, error))
 
-            '''
-            # Do we really need to clean it up if we keep the alias and be able to follow up with it?
-            #
-            # now remove all created object that is not in SUBMITTED status
-            self.ctx.obj['LOGGER'].info('Clean up unneeded objects ...')
-            if not 'SUBMITTED' in submittable.sample.status and submittable.sample.id:
-                delete_obj(self.ctx, 'sample', submittable.sample.id)
-
-            if not 'SUBMITTED' in submittable.run.status and submittable.run.id:  # need to delete run before experiment
-                delete_obj(self.ctx, 'run', submittable.run.id)
-
-            if not 'SUBMITTED' in submittable.experiment.status and submittable.experiment.id:
-                delete_obj(self.ctx, 'experiment', submittable.experiment.id)
-            '''
-
         if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
                 if not dry_run:  # only to get ICGC ID when not dry_run
@@ -72,18 +57,6 @@ class Submitter(object):
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.submission_dir)
             except Exception as error:
                 self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, str(error)))
-
-            '''
-            # Do we really need to clean it up if we keep the alias and be able to follow up with it?
-            #
-            # now remove all created object that is not in SUBMITTED status
-            self.ctx.obj['LOGGER'].info('Clean up unneeded objects ...')
-            if not 'SUBMITTED' in submittable.sample.status and submittable.sample.id:
-                delete_obj(self.ctx, 'sample', submittable.sample.id)
-
-            if not 'SUBMITTED' in submittable.analysis.status and submittable.analysis.id:
-                delete_obj(self.ctx, 'analysis', submittable.analysis.id)
-            '''
 
 
     def set_icgc_ids(self, sample, dry_run=True):

@@ -106,7 +106,7 @@ def object_submission(ctx, obj, obj_type, dry_run=True):
             else:
                 ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, updating it." \
                                          % (obj_type, obj.alias, o.get('status')))
-                #delete_obj(ctx, obj_type, o.get('id'))  # let's not delete it, just update it with the new obj
+
                 update_obj(ctx, obj, obj_type)
 
     if not obj.id:
