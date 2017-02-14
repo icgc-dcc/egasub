@@ -27,7 +27,7 @@ sample:
   sampleAge:                # Age of the sample
   sampleDetail:             # Details about the sample
 
-# A run may be seen as a lane of a flowcell
+# Enter run information
 run:
   runFileTypeId:                # Visit https://ega.crg.eu/submitterportal/v1/enums/file_types
 

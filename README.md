@@ -7,7 +7,7 @@ EGASUB is a command line tool assists ICGC members submitting their NGS sequence
 
 ##Installation
 
-### Install pipsi first (if not installed yet)
+Install pipsi first (if not installed yet)
 ```
 # install pipsi
 curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python
@@ -16,23 +16,23 @@ curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | pyt
 export PATH="~/.local/bin:$PATH"
 ```
 
-### Install the latest `egasub` release
+Install latest `egasub` release
 ```
 pipsi install egasub
 ```
 
-Note: to install a specific version of `egasub`, do this:
+Note: to install a specific version of `egasub`, e.g., `0.1.0rc3` do this:
 ```
-pipsi install egasub==<version>
+pipsi install egasub==0.1.0rc3
 ```
 
-### Install latest develop
+If you'd like to play with the latest development version (not recommended for production use), install it from source as below.
 
 ```
 # clone the source code
 git clone https://github.com/icgc-dcc/egasub.git
 
-# run tests (optional)
+# run tests
 cd egasub
 python setup.py test
 

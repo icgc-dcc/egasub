@@ -77,7 +77,6 @@ def prepare_submission(ctx, submission):
     
     url = "%ssubmissions" % api_url(ctx)
 
-    
     headers = {
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
@@ -92,23 +91,29 @@ def object_submission(ctx, obj, obj_type, dry_run=True):
     if obj.alias:  # only lookup for existing object when alias is available
         existing_objects = query_by_id(ctx, obj_type, obj.alias, 'ALIAS')
         for o in existing_objects:
-            if o.get('status') == 'SUBMITTED':
-                if not obj.id == o.get('id'):
-                    obj.id = o.get('id')
+            if not obj.id == o.get('id'):
+                obj.id = o.get('id')
+
+            # if status includes SUBMITTED, it can not be updated.
+            # message from REST endpoint: Deletion not implemented yet for entities in status
+            # PARTIALLY_SUBMITTED, SUBMITTED, SUBMITTED_DRAFT, SUBMITTED_VALIDATED and SUBMITTED_VALIDATED_WITH_ERRORS
+            if 'SUBMITTED' in o.get('status'):
                 obj.status = o.get('status')
                 ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, not submitting." \
                                          % (obj_type, obj.alias, o.get('status')))
-            else:
-                ctx.obj['LOGGER'].debug("%s with alias '%s' already exists in '%s' status, deleting it." \
-                                         % (obj_type, obj.alias, o.get('status')))
-                delete_obj(ctx, obj_type, o.get('id'))
-        if obj.id:
-            return obj
 
-    try:
-        register_obj(ctx, obj, obj_type)
-    except Exception, err:
-        raise Exception("Error occurred while creating '%s': \n%s" % (obj_type, err))
+                return obj
+            else:
+                ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, updating it." \
+                                         % (obj_type, obj.alias, o.get('status')))
+
+                update_obj(ctx, obj, obj_type)
+
+    if not obj.id:
+        try:
+            register_obj(ctx, obj, obj_type)
+        except Exception, err:
+            raise Exception("Error occurred while creating '%s': \n%s" % (obj_type, err))
 
     if dry_run:
         try:
@@ -196,10 +201,10 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
 
         errors = error_validation if error_validation else []
         errors = errors + (error_submission if error_submission else [])
-        raise Exception("Submission failed (Note that 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
+        raise Exception("Submission failed (Note that 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
     elif (op_type == 'validate' and not r_data.get('response').get('result')[0].get('status') == 'VALIDATED'):
         errors = r_data.get('response').get('result')[0].get('validationErrorMessages')
-        ctx.obj['LOGGER'].warning("Validation exception (Note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
+        ctx.obj['LOGGER'].warning("Validation exception (Note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
 
@@ -227,6 +232,8 @@ def update_obj(ctx, obj, obj_type):
         obj.alias = r_data['response']['result'][0]['alias']
     else:
         raise Exception(r_data['header']['userMessage'])
+
+    ctx.obj['LOGGER'].info("Update '%s' completed." % obj_type)
 
 
 def _obj_type_to_endpoint(obj_type):
