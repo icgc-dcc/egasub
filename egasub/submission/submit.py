@@ -46,6 +46,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
             ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
             continue
 
+        '''
         ctx.obj['LOGGER'].info("Perform local validation for '%s'." % submission_dir)
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
@@ -61,6 +62,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
             for err in submittable.ftp_file_validation_errors:
                 ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
+        '''
 
         # only process submittables at certain states and no local
         # validation error
@@ -114,7 +116,7 @@ def submit_dataset(ctx, dry_run=True):
             file_log = os.path.join(sub_folder_path,'.status','analysis.log')
         status = submittable_status(file_log)
 
-        if status[2] == 'SUBMITTED':
+        if status and status[2] == 'SUBMITTED':
             run_or_analysis_references.append(status[0])  # 1 is alias, 0 is id
         else:
             not_submitted.append(sub_folder)
@@ -177,5 +179,5 @@ def submittable_status(_file):
                 pass
         return last.strip().split('\t')
     except:
-        return [None, None, None, None, None]
+        return None
 
