@@ -210,7 +210,7 @@ class Submittable(object):
         # validate file path
         expected_file_path_start = "%s/%s/" % (self.submission_batch, self.submission_dir)
         for f in self.files:
-            if not f.file_name.startswith(expected_file_path_start):
+            if not f or not f.file_name or not f.file_name.startswith(expected_file_path_start):
                 self._add_local_validation_error("file",None,"files.fileName","File path incorrect for '%s', expected file path starts with '%s'" % (f.file_name, expected_file_path_start))
 
     # TODO: should move this to file check as part of local validation, will need to come up with a way 

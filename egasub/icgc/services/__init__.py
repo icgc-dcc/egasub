@@ -7,15 +7,15 @@ ICGC_ID_SERVICE_URL_PROD = "https://id.icgc.org" # submit uses this
 ICGC_ID_SERVICE_ENDPOINTS = {
     "id": {
         "donor": {
-            "path": "/donor/id",
+            "path": "donor/id",
             "params": ["submittedProjectId", "submittedDonorId"]
         },
         "specimen": {
-            "path": "/specimen/id",
+            "path": "specimen/id",
             "params": ["submittedProjectId", "submittedSpecimenId"]
         },
         "sample": {
-            "path": "/sample/id",
+            "path": "sample/id",
             "params": ["submittedProjectId", "submittedSampleId"]
         }
     }
@@ -47,21 +47,18 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
     create_param = '='.join(['create', 'true' if create else 'false'])
 
     try:
-        r = requests.get("%s/%s?%s&%s&%s" % (url, path, project_param,
-                                            submitter_id_param, create_param),
+        full_url = "%s/%s?%s&%s&%s" % (url, path, project_param, submitter_id_param, create_param)
+
+        r = requests.get(full_url,
                        headers={
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Bearer %s' % ctx.obj['SETTINGS'].get('icgc_id_service_token')
                                 }
                     )
     except:
-        raise Exception("Failed calling ICGC ID service at %s" % url)
+        raise Exception("Failed calling ICGC ID service with: %s" % full_url)
 
-    try:
-        r_data = json.loads(r.text)
-        if "error" in r_data:
-            raise Exception("Invalid ICGC credentials. Check your ICGC service Token - Server error: %s" % (r_data["error"]))
-        return r_data
-    except Exception:
-        return r.text
+    if "error" in r.text:
+        raise Exception("Failed calling ICGC ID serivce with: %s. Server response: %s" % (full_url, r.text))
 
+    return r.text

@@ -69,7 +69,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
                 and not submittable.ftp_file_validation_errors:
             submittables.append(submittable)
         else:
-            ctx.obj['LOGGER'].info("Skip '%s' as it failed validation, please check log for details." % submittable.submission_dir)
+            ctx.obj['LOGGER'].info("Skip '%s' as it failed validation, please check log file '../.log/%s' for details." % (submittable.submission_dir, ctx.obj['log_file']))
 
     if not submittables:
         ctx.obj['LOGGER'].warning('Nothing to submit.')

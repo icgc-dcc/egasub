@@ -1,6 +1,4 @@
-
 from ftplib import FTP
-from click import echo
 
 def file_exists(host, username, password,file_path):
     ftp = FTP(host)
