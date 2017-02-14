@@ -118,14 +118,15 @@ def submit_dataset(ctx, dry_run=True):
             run_or_analysis_references.append(status[0])  # 1 is alias, 0 is id
         else:
             not_submitted.append(sub_folder)
-
+        
     if not_submitted:
         ctx.obj['LOGGER'].error("Error: all submission directories must be in 'SUBMITTED' status before a dataset can be created. The following submission directories have not been submitted: \n%s" % '\n'.join(not_submitted))
         logout(ctx)
         ctx.abort()
 
-    for i in xrange(0,len(values)):
-        print ids[i]+"\t- "+values[i]
+    value_dict = dict(zip(ids,values))
+    for i in xrange(0,len(value_dict)):
+        print "["+str(i)+"]\t"+value_dict.get(str(i))
     
     echo("-----------")
     while True:
