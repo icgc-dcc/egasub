@@ -46,7 +46,6 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
             ctx.obj['LOGGER'].info("Skip '%s' as it has already been submitted." % submittable.submission_dir)
             continue
 
-        '''
         ctx.obj['LOGGER'].info("Perform local validation for '%s'." % submission_dir)
         submittable.local_validate(ctx.obj['EGA_ENUMS'])
 
@@ -62,7 +61,6 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
             for err in submittable.ftp_file_validation_errors:
                 ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
-        '''
 
         # only process submittables at certain states and no local
         # validation error
