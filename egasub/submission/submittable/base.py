@@ -31,7 +31,10 @@ class Submittable(object):
     def __init__(self, path):
         path = path.rstrip('/')
         if '/' in path:
-            raise Exception("Specified submission directory '%s' must not contain '/'" % path)
+            raise Exception("Submission directory '%s' can not contain '/'" % path)
+
+        if path.upper().startswith('SA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
+            raise Exception("Submission directory '%s' can not start with 'SA' or 'sa', this is reserved for ICGC DCC." % path)
 
         self._local_validation_errors = []
         self._ftp_file_validation_errors = []
@@ -104,7 +107,7 @@ class Submittable(object):
                     raise Exception("Can not have 'alias' for 'analysis' in %s." % yaml_file)
 
         except Exception, e:
-            raise Exception('Not a properly formed submission directory: %s' % self.submission_dir)
+            raise Exception('Not a properly formed submission directory: %s. Please make sure YAML is well-formed. Error: %s' % (self.submission_dir, e))
 
         self._parse_md5sum_file()
 
@@ -131,10 +134,6 @@ class Submittable(object):
     def local_validate(self):
         pass
     
-    @abstractmethod
-    def ftp_files_remote_validate(self):
-        pass
-
     def restore_latest_object_status(self, obj_type):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
             return
@@ -158,7 +157,7 @@ class Submittable(object):
         except:
             pass  # do nothing on error
 
-    def record_object_status(self, obj_type, dry_run):
+    def record_object_status(self, obj_type, dry_run, submission_session, log_file):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
             return
 
@@ -173,7 +172,7 @@ class Submittable(object):
 
         op_type = 'dry_run' if dry_run else 'submit'
         with open(status_file, 'a') as f:
-            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type]))
+            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file]))
 
     def local_validate(self, ega_enums):
         # Alias validation
@@ -187,6 +186,10 @@ class Submittable(object):
         # subjustId validation
         if not self.sample.subject_id:
             self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId must be set.")
+
+        # subjustId validation: can not start with DO/do/Do/dO
+        if self.sample.subject_id.upper().startswith('DO'):
+            self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId can not start with 'DO', this is reserved for ICGC DCC.")
 
         # Gender validation
         if not any(gender['tag'] == str(self.sample.gender_id) for gender in ega_enums.lookup("genders")):

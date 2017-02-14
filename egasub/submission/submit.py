@@ -26,6 +26,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
     ctx.obj['LOGGER'].info("Login success")
     submission = Submission('title', 'a description',SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
+    ctx.obj['LOGGER'].info("Start submission session: %s" % ctx.obj['SUBMISSION']['id'])
 
     # get class by string
     submission_type = ctx.obj['CURRENT_DIR_TYPE']
@@ -56,7 +57,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
             try:
                 submittable.ftp_files_remote_validate('ftp.ega.ebi.ac.uk',ctx.obj['SETTINGS']['ega_submitter_account'],ctx.obj['SETTINGS']['ega_submitter_password'])
             except Exception, e:
-                ctx.obj['LOGGER'].error("FTP file check error, please make sure data file is defined in metdata YAML and uploaded to the EGA FTP server.")
+                raise Exception('FTP file check error: %s' % e)
 
             for err in submittable.ftp_file_validation_errors:
                 ctx.obj['LOGGER'].error("FTP files remote validation error(s) for submission dir '%s': %s" % (submittable.submission_dir,err))
@@ -64,7 +65,8 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         # only process submittables at certain states and no local
         # validation error
         if not submittable.status == 'SUBMITTED' \
-                and not submittable.local_validation_errors:
+                and not submittable.local_validation_errors \
+                and not submittable.ftp_file_validation_errors:
             submittables.append(submittable)
         else:
             ctx.obj['LOGGER'].info("Skip '%s' as it failed validation, please check log for details." % submittable.submission_dir)
@@ -112,7 +114,7 @@ def submit_dataset(ctx, dry_run=True):
             file_log = os.path.join(sub_folder_path,'.status','analysis.log')
         status = submittable_status(file_log)
 
-        if status[2] == 'SUBMITTED':
+        if status and status[2] == 'SUBMITTED':
             run_or_analysis_references.append(status[0])  # 1 is alias, 0 is id
         else:
             not_submitted.append(sub_folder)
@@ -175,5 +177,5 @@ def submittable_status(_file):
                 pass
         return last.strip().split('\t')
     except:
-        return [None, None, None, None, None]
+        return None
 
