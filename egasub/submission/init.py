@@ -32,7 +32,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
                 break
             else:
                 echo("Please enter a project from the following list:")
-                echo('\t'.join(projects))
+                echo(', '.join(projects))
         
     yaml_info = {
         'ega_submitter_account': ega_submitter_account,
@@ -93,15 +93,16 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     study_alias = None
     study_id = None
     if studies:
-        echo("Study ID\tAlias\tStudy Type\tTitle")
-        echo("-----------------------------------------------")
+        echo("\t"+truncate_string("Title", 20)+"\t"+truncate_string("Alias", 20)+"\t"+truncate_string("Study Type", 20)+"\t"+truncate_string("Study ID", 20))
+        echo("-"*95)
         parse_dict = []
         i=1
         for study in studies:
             parse_dict.append({'index':i,'alias':study['alias'],'studyType':study['studyType'],'title':study['title'],'studyAbstract':study['studyAbstract'],'studyTypeId':study['studyTypeId'],'studyId':study['id'],'shortName':study['shortName']})
-            echo(str(i)+". "+study['id']+"\t"+study['alias']+"\t"+study['studyType']+"\t"+study['title'])
+            index = "%03d" % (i)
+            echo(str(index)+". "+truncate_string(study['title'],20)+"\t"+truncate_string(study['alias'],20)+"\t"+truncate_string(study['studyType'],20)+"\t"+truncate_string(study['id'],20))
             i+=1
-        echo("-----------------------------------------------")
+        echo("-"*95)
 
         while True:
             study_key = prompt("Select an existing study or enter 0 to create a new study: ", default=0)
@@ -161,6 +162,11 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     object_submission(ctx, policy, 'policy', dry_run=False)
 
     yaml_info['ega_policy_id'] = policy.id
+    
+def truncate_string(s, n):
+    if len(s)>n: final_string = s[:n]+"..."
+    else: final_string = s[:n]
+    return final_string.ljust(n)
 
 
 # EGA REST API based submission does not handle this properly yet,
