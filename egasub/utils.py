@@ -35,7 +35,7 @@ def initialize_app(ctx):
         
 def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
-    logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+    logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-4.4s] %(message)s")
     
     logger.setLevel(logging.DEBUG)
 
@@ -59,7 +59,7 @@ def initialize_log(ctx, debug, info):
     fh.setFormatter(logFormatter)
 
     ch = logging.StreamHandler()
-    ch.setFormatter(logFormatter)
+    ch.setFormatter(logging.Formatter("[%(levelname)-4.4s] %(message)s"))
     if debug:
         ch.setLevel(logging.DEBUG)
     elif info:

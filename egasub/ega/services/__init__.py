@@ -233,6 +233,8 @@ def update_obj(ctx, obj, obj_type):
     else:
         raise Exception(r_data['header']['userMessage'])
 
+    ctx.obj['LOGGER'].info("Update '%s' completed." % obj_type)
+
 
 def _obj_type_to_endpoint(obj_type):
     if obj_type in ('sample', 'experiment', 'run', 'dac'):
