@@ -1,7 +1,16 @@
 #!/usr/bin/env python
+import re
+import ast
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+
+with open('egasub/__init__.py', 'rb') as f:
+    version = str(ast.literal_eval(_version_re.search(
+        f.read().decode('utf-8')).group(1)))
+
 
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass into py.test")]
@@ -28,7 +37,7 @@ with open('requirements-test.txt') as f:
 
 setup(
     name = 'egasub',
-    version='0.1.0rc4',
+    version=version,
     url='https://github.com/icgc-dcc/egasub',
     description = 'ICGC tool for assisting EGA data submission',
     license='GPL-3.0',
