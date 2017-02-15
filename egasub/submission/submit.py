@@ -39,7 +39,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
         try:
             submittable = Submittable_class(submission_dir)
         except Exception, err:
-            ctx.obj['LOGGER'].error("Skip '%s' as it appears to be not a well formed submission directory. Error: %s" % (submission_dir, err))
+            ctx.obj['LOGGER'].error("Skip '%s' as it appears to be not a well-formed submission directory. Error: %s" % (submission_dir, err))
             continue
 
         if submittable.status == 'SUBMITTED':  # if already SUBMITTED
