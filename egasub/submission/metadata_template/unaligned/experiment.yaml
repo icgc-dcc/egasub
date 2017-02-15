@@ -11,29 +11,27 @@ experiment:
   libraryLayoutId:              # Visit https://ega.crg.eu/submitterportal/v1/enums/library_layouts
   pairedNominalLength:          #
   pairedNominalSdev:            #
-  sampleId:                     # ID of the related sample
-  studyId:                      # ID of the related study
 
 # Enter the informations concerning the sample
 sample:
-  alias:                    # Submitter's sample ID
+  alias:                    # Submitter's sample ID. For ICGC projects, this must be the same as submitted to DCC
   caseOrControlId:          # Visit https://ega.crg.eu/submitterportal/v1/enums/case_control
   genderId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
   organismPart:             # 
   cellLine:                 #
   region:                   #
   phenotype:                #
-  subjectId:                # Subject ID can be seen as submitter's donor ID
+  subjectId:                # Submitter's donor ID. For ICGC projects, this must be the same as submitted to DCC
   anonymizedName:           #
   bioSampleId:              #
   sampleAge:                # Age of the sample
   sampleDetail:             # Details about the sample
 
-# A run may be seen as a lane of a flowcell
+# Enter run information
 run:
   runFileTypeId:                # Visit https://ega.crg.eu/submitterportal/v1/enums/file_types
 
 # Files produced by a sequencing run, two files for paired end seq, one file for single end seq
 files:
-  - fileName:                   # Name of the file: Ex. unaligned.*/{submission_folder}/{file_name}.fq.gz.gpg
+  - fileName:                   # Name of the file: Ex. unaligned.*/{sample_alias}/{file_name}.fq.gz.gpg
 

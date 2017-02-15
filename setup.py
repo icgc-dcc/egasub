@@ -1,9 +1,16 @@
 #!/usr/bin/env python
+import re
+import ast
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-from pip.req import parse_requirements
-from pip.download import PipSession
+
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+
+with open('egasub/__init__.py', 'rb') as f:
+    version = str(ast.literal_eval(_version_re.search(
+        f.read().decode('utf-8')).group(1)))
+
 
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass into py.test")]
@@ -23,20 +30,22 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
-
-install_reqs = parse_requirements('requirements.txt', session=PipSession())
-tests_require = parse_requirements('requirements-test.txt', session=PipSession())
+with open('requirements.txt') as f:
+    install_reqs = f.read().splitlines()
+with open('requirements-test.txt') as f:
+    tests_require = f.read().splitlines()
 
 setup(
     name = 'egasub',
-    version='0.1.0rc1',
+    version=version,
+    url='https://github.com/icgc-dcc/egasub',
     description = 'ICGC tool for assisting EGA data submission',
+    license='GPL-3.0',
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    install_requires = [str(ir.req) for ir in install_reqs],
-    tests_require = [str(ir.req) for ir in tests_require],
+    install_requires = install_reqs,
+    tests_require = tests_require,
     cmdclass = {'test': PyTest},
     package_data={'egasub': [
-                                'ega/data/policy/*.xml',
                                 'ega/data/enums/*.json',
                                 'submission/metadata_template/*/*.yaml'
                             ]},

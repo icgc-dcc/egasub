@@ -1,4 +1,5 @@
 import pytest
+import os
 from egasub.submission.submittable import Unaligned
 from egasub.ega.entities import Sample, \
                                 Experiment as EExperiment, \
@@ -7,7 +8,8 @@ from egasub.exceptions import Md5sumFileError
 
 
 def test_unaligned():
-    unaligned = Unaligned('tests/data/workspace/unaligned.20170110/sample_y')
+    os.chdir('tests/data/workspace/unaligned.20170110/')
+    unaligned = Unaligned('ssample_y')
 
     assert isinstance(unaligned.sample, Sample)
     assert isinstance(unaligned.experiment, EExperiment)
@@ -24,7 +26,7 @@ def test_unaligned():
                     'region': None,
                     'subjectId': 'abc',
                     'organismPart': None,
-                    'alias': 'sample_y',
+                    'alias': 'ssample_y',
                     'caseOrControlId': 2,
                     'id': None,
                     'phenotype': 'Breast cancer',

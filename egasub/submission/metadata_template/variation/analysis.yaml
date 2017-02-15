@@ -12,19 +12,19 @@ analysis:
 
 # Enter the informations concerning the sample
 sample:
-  alias:                    # Submitter's sample ID
+  alias:                    # Submitter's sample ID. For ICGC projects, this must be the same as submitted to DCC
   caseOrControlId:          # Visit https://ega.crg.eu/submitterportal/v1/enums/case_control
   genderId:                 # Visit https://ega.crg.eu/submitterportal/v1/enums/genders
   organismPart:             # 
   cellLine:                 #
   region:                   #
   phenotype:                #
-  subjectId:                # Subject ID can be seen as submitter's donor ID
+  subjectId:                # Submitter's donor ID. For ICGC projects, this must be the same as submitted to DCC
   anonymizedName:           #
   bioSampleId:              #
   sampleAge:                # Age of the sample
   sampleDetail:             # Details about the sample
 
-# Enter the informations concerning the files produced by the alignment
+# Enter the informations concerning the files produced by the variation caller
 files:
-  - fileName:               # Name of the file: Ex. alignment.*/{submission_folder}/{file_name}.bam.gpg
+  - fileName:               # Name of the file: Ex. variation.*/{sample_alias}/{file_name}.vcf.gz.gpg
