@@ -130,10 +130,6 @@ class Submittable(object):
             unencrypt_md5sum_file = os.path.join(self.path, re.sub(r'\.gpg$', '', data_file_name) + '.md5')
             f['unencryptedChecksum'] = _get_md5sum(unencrypt_md5sum_file)
 
-    @abstractmethod
-    def local_validate(self):
-        pass
-    
     def restore_latest_object_status(self, obj_type):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
             return
@@ -151,9 +147,9 @@ class Submittable(object):
                     id_, alias, status, timestamp = status_values[0:4]
                     if obj.alias and not obj.alias == alias:
                         pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
-                    else:
+                    else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
-                        obj.status = status
+                        # obj.status = status  # we shouldn't need to restore status either, should get it from the server
         except:
             pass  # do nothing on error
 

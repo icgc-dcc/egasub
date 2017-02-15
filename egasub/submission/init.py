@@ -50,8 +50,9 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     script_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     
     if os.access(current_dir, os.W_OK):
-        os.mkdir(egasub_dir)
-        ctx.obj['LOGGER'].info("Creation of .egasub directory")
+        if not os.path.exists(egasub_dir):
+            ctx.obj['LOGGER'].info("Creation of .egasub directory")
+            os.mkdir(egasub_dir)
         
         with open(os.path.join(egasub_dir,'config.yaml'),'w') as outfile:
             yaml.safe_dump(yaml_info,outfile,default_flow_style=False)

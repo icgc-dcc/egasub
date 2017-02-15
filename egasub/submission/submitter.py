@@ -35,6 +35,24 @@ class Submitter(object):
                 self.ctx.obj['LOGGER'].info("Finished processing '%s'" % submittable.submission_dir)
             except Exception as error:
                 self.ctx.obj['LOGGER'].error("Failed processing '%s': %s" % (submittable.submission_dir, error))
+            finally:
+                # we only clean up when it's dry_run, which will never turn something new into 'SUBMITTED'
+                # objects created by dry_run that are not in 'SUBMITTED' status can be safely deleted
+                if dry_run:
+                    self.ctx.obj['LOGGER'].info('Clean up unneeded objects created by dry_run ...')
+                    if not 'SUBMITTED' in submittable.sample.status and \
+                            submittable.sample.id:
+                        delete_obj(self.ctx, 'sample', submittable.sample.id)
+
+                    # additional condition for run: can not delete run when the associated experiment is in SUBMITTED status
+                    if not 'SUBMITTED' in submittable.experiment.status and \
+                            not 'SUBMITTED' in submittable.run.status and \
+                            submittable.run.id:  # need to delete run before experiment
+                        delete_obj(self.ctx, 'run', submittable.run.id)
+
+                    if not 'SUBMITTED' in submittable.experiment.status and \
+                            submittable.experiment.id:
+                        delete_obj(self.ctx, 'experiment', submittable.experiment.id)
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
@@ -57,6 +75,18 @@ class Submitter(object):
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.submission_dir)
             except Exception as error:
                 self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, str(error)))
+            finally:
+                # we only clean up when it's dry_run, which will never turn something new into 'SUBMITTED'
+                # objects created by dry_run that are not in 'SUBMITTED' status can be safely deleted
+                if dry_run:
+                    self.ctx.obj['LOGGER'].info('Clean up unneeded objects created by dry_run ...')
+                    if not 'SUBMITTED' in submittable.sample.status and \
+                            submittable.sample.id:
+                        delete_obj(self.ctx, 'sample', submittable.sample.id)
+
+                    if not 'SUBMITTED' in submittable.analysis.status and \
+                            submittable.analysis.id:
+                        delete_obj(self.ctx, 'analysis', submittable.analysis.id)
 
 
     def set_icgc_ids(self, sample, dry_run=True):
