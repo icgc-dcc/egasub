@@ -16,8 +16,6 @@ def initialize_app(ctx):
         ctx.obj['LOGGER'].critical('Not in an EGA submission workspace! Please run "egasub init" to initiate an EGA workspace.')
         ctx.abort()
 
-    #echo('Info: workspace is \'%s\'' % ctx.obj['WORKSPACE_PATH'])
-
     # read the settings
     ctx.obj['SETTINGS'] = get_settings(ctx.obj['WORKSPACE_PATH'])
     if not ctx.obj['SETTINGS']:
@@ -26,7 +24,7 @@ def initialize_app(ctx):
 
     # figure out the current dir type, e.g., study, sample or analysis
     ctx.obj['CURRENT_DIR_TYPE'] = get_current_dir_type(ctx)
-    #echo('Info: submission data type is \'%s\'' % ctx.obj['CURRENT_DIR_TYPE'])  # for debug
+
     if not ctx.obj['CURRENT_DIR_TYPE']:
         ctx.obj['LOGGER'].critical("You must run this command directly under a 'submission batch' directory named with this pattern: (unaligned|alignment|variation)\.([a-zA-Z0-9_\-]+). You can create 'submission batch' directories under the current workspace: %s" % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
@@ -35,13 +33,17 @@ def initialize_app(ctx):
         
 def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
-    logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-4.4s] %(message)s")
+    logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s] %(message)s")
     
     logger.setLevel(logging.DEBUG)
 
     if ctx.obj['WORKSPACE_PATH'] == None:
         logger = logging.getLogger('ega_submission')
         ch = logging.StreamHandler()
+        if debug:
+            ch.setLevel(logging.DEBUG)
+        elif info:
+            ch.setLevel(logging.INFO)
         logger.addHandler(ch)
         ctx.obj['LOGGER'] = logger
         return
@@ -59,7 +61,7 @@ def initialize_log(ctx, debug, info):
     fh.setFormatter(logFormatter)
 
     ch = logging.StreamHandler()
-    ch.setFormatter(logging.Formatter("[%(levelname)-4.4s] %(message)s"))
+    ch.setFormatter(logging.Formatter("[%(levelname)-5.5s] %(message)s"))
     if debug:
         ch.setLevel(logging.DEBUG)
     elif info:
@@ -79,7 +81,10 @@ def find_workspace_root(cwd=os.getcwd()):
         for root, dirs, _ in os.walk(current_root):
             if not searching_for - set(dirs):
                 # found the directories, stop
-                return root
+                if os.path.isfile(os.path.join(root, '.egasub', 'config.yaml')):
+                    return root
+                else:
+                    return None
             # only need to search for the current dir
             break
 
