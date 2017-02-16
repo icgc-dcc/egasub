@@ -3,6 +3,7 @@ from click import echo
 from ..icgc.services import id_service
 from ..ega.services import object_submission, delete_obj
 from ..ega.entities import Attribute, SampleReference
+from egasub import __version__ as ver
 
 
 class Submitter(object):
@@ -14,6 +15,12 @@ class Submitter(object):
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             try:
+                # readiness check before performing 'submit', this is helpful
+                # preventing from the situation experiment is submitted but run failed
+                if not dry_run and not (submittable.experiment.status == 'VALIDATED' and submittable.run.status == 'VALIDATED'):
+                    raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Experiment object status '%s', run object status '%s'" \
+                                                    % (submittable.submission_dir, submittable.experiment.status, submittable.run.status))
+
                 if not dry_run:  # only to get ICGC ID when not dry_run
                     self.set_icgc_ids(submittable.sample, dry_run)
 
@@ -33,7 +40,7 @@ class Submitter(object):
                 submittable.record_object_status('run', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
 
                 self.ctx.obj['LOGGER'].info("Finished processing '%s'" % submittable.submission_dir)
-            except Exception as error:
+            except Exception, error:
                 self.ctx.obj['LOGGER'].error("Failed processing '%s': %s" % (submittable.submission_dir, error))
             finally:
                 # we only clean up when it's dry_run, which will never turn something new into 'SUBMITTED'
@@ -56,6 +63,11 @@ class Submitter(object):
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
+                # readiness check before performing 'submit'
+                if not dry_run and not submittable.analysis.status == 'VALIDATED':
+                    raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Analysis object status '%s'" \
+                                                    % (submittable.submission_dir, submittable.analysis.status))
+
                 if not dry_run:  # only to get ICGC ID when not dry_run
                     self.set_icgc_ids(submittable.sample, dry_run)
 
@@ -73,8 +85,8 @@ class Submitter(object):
                 submittable.record_object_status('analysis', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
 
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.submission_dir)
-            except Exception as error:
-                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, str(error)))
+            except Exception, error:
+                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, error))
             finally:
                 # we only clean up when it's dry_run, which will never turn something new into 'SUBMITTED'
                 # objects created by dry_run that are not in 'SUBMITTED' status can be safely deleted
@@ -116,4 +128,4 @@ class Submitter(object):
                 )
             )
 
-        sample.attributes.append(Attribute('submitted_using', 'egasub'))
+        sample.attributes.append(Attribute('submitted_using', 'egasub %s' % ver))

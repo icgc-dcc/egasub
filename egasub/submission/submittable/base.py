@@ -149,7 +149,7 @@ class Submittable(object):
                         pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
-                        # obj.status = status  # we shouldn't need to restore status either, should get it from the server
+                        obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
         except:
             pass  # do nothing on error
 
