@@ -2,6 +2,17 @@ import pytest
 import httpretty
 import logging
 
+class callcounted(object):
+    """Decorator to determine number of calls for a method"""
+
+    def __init__(self,method):
+        self.method=method
+        self.counter=0
+
+    def __call__(self,*args,**kwargs):
+        self.counter+=1
+        return self.method(*args,**kwargs)
+
 class test_ctx(object):
     def __init__(self):
         self.obj = {}
@@ -11,6 +22,8 @@ class test_ctx(object):
         
         logger = logging.getLogger('ega_submission')
         self.obj['LOGGER'] = logger
+        self.obj['LOGGER'].error=callcounted(logging.error)
+        self.obj['LOGGER'].warning=callcounted(logging.warning)
 
 test_ctx = test_ctx()
 
