@@ -13,6 +13,17 @@ class Submitter(object):
     def submit(self, submittable, dry_run=True):
         self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.submission_dir)
 
+        # sample readiness check, we can do submit sample when only when it's VALIDATED or SUBMITTED, in latter case, it will be just ignored but the submit process moves on
+        if not dry_run and not submittable.sample.status in ('VALIDATED', 'SUBMITTED'):
+            self.ctx.obj['LOGGER'].error("Failed processing '%s': sample object is not ready to 'submit', please try 'dry_run' first." % submittable.submission_dir)
+            return
+
+        if not dry_run:  # only to get ICGC ID when not dry_run
+            self.set_icgc_ids(submittable.sample, dry_run)
+
+        object_submission(self.ctx, submittable.sample, 'sample', dry_run)
+        submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             try:
                 # readiness check before performing 'submit', this is helpful
@@ -20,12 +31,6 @@ class Submitter(object):
                 if not dry_run and not (submittable.experiment.status == 'VALIDATED' and submittable.run.status == 'VALIDATED'):
                     raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Experiment object status '%s', run object status '%s'" \
                                                     % (submittable.submission_dir, submittable.experiment.status, submittable.run.status))
-
-                if not dry_run:  # only to get ICGC ID when not dry_run
-                    self.set_icgc_ids(submittable.sample, dry_run)
-
-                object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-                submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
 
                 submittable.experiment.sample_id = submittable.sample.id
                 submittable.experiment.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
@@ -67,12 +72,6 @@ class Submitter(object):
                 if not dry_run and not submittable.analysis.status == 'VALIDATED':
                     raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Analysis object status '%s'" \
                                                     % (submittable.submission_dir, submittable.analysis.status))
-
-                if not dry_run:  # only to get ICGC ID when not dry_run
-                    self.set_icgc_ids(submittable.sample, dry_run)
-
-                object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-                submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
 
                 submittable.analysis.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
                 submittable.analysis.sample_references = [
