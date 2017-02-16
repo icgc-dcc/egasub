@@ -160,14 +160,15 @@ def submit_dataset(ctx, dry_run=True):
     try:
         object_submission(ctx, dataset, 'dataset', dry_run)
         # clean up unneeded dataset
-        if dataset.id and not dataset.status == 'SUBMITTED':
+        if dry_run and dataset.id and not 'SUBMITTED' in dataset.status:
+            ctx.obj['LOGGER'].info("Clean up dataset created by dry_run")
             delete_obj(ctx, 'dataset', dataset.id)
     except Exception, err:
         ctx.obj['LOGGER'].error("Submitting dataset failed: %s" % err)
         logout(ctx)
         ctx.abort()
 
-    ctx.obj['LOGGER'].info("Logging out the session")    
+    ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
 
 
