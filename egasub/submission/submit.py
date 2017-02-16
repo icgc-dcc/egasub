@@ -3,7 +3,8 @@ import sys
 import re
 from click import echo, prompt
 
-from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
+from egasub import __version__ as ver
+from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset, Attribute
 from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
                             prepare_submission, submit_submission
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
@@ -152,8 +153,13 @@ def submit_dataset(ctx, dry_run=True):
                         [] if is_run else run_or_analysis_references, # analysis referenece
                         prompt("Enter dataset title"),
                         [],
-                        []
+                        [  # dataset attributes
+                            Attribute('submitted_using', 'egasub %s' % ver),
+                            Attribute('icgc_project_code', ctx.obj['SETTINGS']['icgc_project_code']),
+                            Attribute('icgc_project_url', 'https://dcc.icgc.org/projects/%s' % ctx.obj['SETTINGS']['icgc_project_code'])
+                        ]
                     )
+
     submission = Submission('Empty title', None, SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
 
