@@ -24,6 +24,9 @@ class test_ctx(object):
         self.obj['LOGGER'] = logger
         self.obj['LOGGER'].error=callcounted(logging.error)
         self.obj['LOGGER'].warning=callcounted(logging.warning)
+        
+    #def abort(self):
+    #    exit()
 
 test_ctx = test_ctx()
 
@@ -58,3 +61,38 @@ def mock_server(ctx):
                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
                    content_type="application/json")
     
+    httpretty.register_uri(httpretty.GET, "%ssamples/sample_alias?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%sdatasets/dataset_alias?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%spolicies/policy_alias?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%ssamples?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%sstudies?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%sstudies?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%spolicies?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.GET, "%sdatasets?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
+    
+    httpretty.register_uri(httpretty.DELETE, "%ssamples?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                   content_type="application/json")
