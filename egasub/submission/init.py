@@ -106,7 +106,7 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
         echo("-"*95)
 
         while True:
-            study_key = prompt("Select an existing study or enter 0 to create a new study: ", default=0)
+            study_key = prompt("Select an existing study by entering the line number or enter 0 to create a new study: ", default=0)
             if study_key >= 0 and study_key <= len(parse_dict):
                 break
 
