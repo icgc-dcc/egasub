@@ -204,7 +204,7 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
         raise Exception("Submission failed (note that 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
     elif (op_type == 'validate' and not r_data.get('response').get('result')[0].get('status') == 'VALIDATED'):
         errors = r_data.get('response').get('result')[0].get('validationErrorMessages')
-        ctx.obj['LOGGER'].warning("Validation exception (note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
+        ctx.obj['LOGGER'].error("Validation exception (note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
 
@@ -298,6 +298,8 @@ def delete_obj(ctx, obj_type, obj_id):
 
     if r_data['header']['code'] == "200":
         ctx.obj['LOGGER'].info("Deleted '%s' with ID '%s'" % (obj_type, obj_id))
+    elif r_data['header']['code'] == "404":  # it is a bit odd to have 404 here, but it happened when we tried to delete an object we created earlier, it appears it got deleted earlier when it failed validation
+        ctx.obj['LOGGER'].info("Object '%s' with ID '%s' does not exist, no need to delete" % (obj_type, obj_id))
     else:
         ctx.obj['LOGGER'].warning("Failed deleting '%s' with ID '%s'" % (obj_type, obj_id))
 
