@@ -19,7 +19,7 @@ class test_ctx(object):
         self.obj['SETTINGS'] = {}
         self.obj['SETTINGS']['apiUrl'] = 'http://example.com/'
         self.obj['SUBMISSION'] = {}
-        
+
         logger = logging.getLogger('ega_submission')
         self.obj['LOGGER'] = logger
         self.obj['LOGGER'].error=callcounted(logging.error)

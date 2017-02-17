@@ -13,7 +13,7 @@ def test_unaligned():
     assert isinstance(unaligned.sample, Sample)
     assert isinstance(unaligned.experiment, EExperiment)
     assert isinstance(unaligned.run, ERun)
-    
+
     reference_sample = {
                     'genderId': 1,
                     'cellLine': None,
@@ -87,8 +87,8 @@ def test_unaligned():
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad_99')
         
-    # Missing experiment.yaml file    
-    with pytest.raises(Exception):    
+    # Missing experiment.yaml file
+    with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')
 
     os.chdir(initial_directory)

@@ -6,7 +6,7 @@ class Contact(object):
         self.email = email
         self.organisation = organisation
         self.phone_number = phone_number
-        
+
     def to_dict(self):
         return {
             'contactName' : self.contact_name,

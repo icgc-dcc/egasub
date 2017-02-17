@@ -85,7 +85,7 @@ class Submittable(object):
                 "field": field,
                 "error": message
             })
-        
+
     def _add_ftp_file_validation_error(self,field,message):
         self._ftp_file_validation_errors.append({
                 "field": field,

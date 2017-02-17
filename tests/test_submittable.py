@@ -1,4 +1,4 @@
-from egasub.submission.submittable import Submittable, _get_md5sum, Alignment, Unaligned
+from egasub.submission.submittable import _get_md5sum, Alignment, Unaligned
 from click.testing import CliRunner
 import hashlib
 import os
@@ -9,7 +9,7 @@ def test_get_md5Sum():
     with runner.isolated_filesystem():
         m = hashlib.md5()
         m.update("secret")
-        
+
         file_path = "newfile"
         f = open(file_path,"wb")
         f.write(m.hexdigest())

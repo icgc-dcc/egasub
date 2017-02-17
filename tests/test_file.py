@@ -4,7 +4,7 @@ file_ = File(32,'file name','CheckSum','UnencryptedChecksum','md5')
 
 def test_file_id():
     assert 32 == file_.file_id
-    
+
 def test_file_name():
     assert 'file name' == file_.file_name
     

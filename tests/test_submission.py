@@ -6,7 +6,7 @@ submission = Submission('a title', 'a description', subset)
 
 def test_title():
     assert 'a title' == submission.title
-    
+
 def test_description():
     assert 'a description' == submission.description
     

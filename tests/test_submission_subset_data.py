@@ -4,7 +4,7 @@ subset_data = SubmissionSubsetData([2,3],[5,2],[4,3],[5,1],[88,7],[11,3],[44,11]
 
 def test_analysis_ids():
     assert [2,3] == subset_data.analysis_ids
-    
+
 def test_dac_ids():
     assert [5,2] == subset_data.dac_ids
     

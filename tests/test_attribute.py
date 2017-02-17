@@ -4,7 +4,7 @@ attribute = Attribute('The tag','The value','an unit')
 
 def test_tag():
     assert 'The tag' == attribute.tag
-    
+
 def test_value():
     assert 'The value' == attribute.value
     

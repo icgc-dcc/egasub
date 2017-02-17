@@ -15,7 +15,7 @@ analysis = Analysis('an alias','a title','a description',3,sample_references,'an
 
 def test_title():
     assert 'a title' == analysis.title
-    
+
 def test_description():
     assert 'a description' == analysis.description
     

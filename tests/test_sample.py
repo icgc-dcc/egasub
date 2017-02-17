@@ -6,7 +6,7 @@ sample = Sample('an alias','the title','the description',123,2,'head','test line
 
 def test_title():
     assert 'the title' == sample.title
-    
+
 def test_description():
     assert 'the description' == sample.description
     

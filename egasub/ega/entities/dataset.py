@@ -12,7 +12,6 @@ class Dataset(object):
         self.attributes = attributes
         self.id = id_
 
-        
     def to_dict(self):
         return {
             'alias' : self.alias,

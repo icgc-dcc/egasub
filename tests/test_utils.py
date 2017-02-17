@@ -4,7 +4,6 @@ import pytest
 import os
 
 def test_initialize_app(ctx):
-    
     with pytest.raises(KeyError):
         initialize_app(ctx)
     
@@ -15,7 +14,7 @@ def test_get_current_dir_type(ctx):
     
     ctx.obj['WORKSPACE_PATH'] = ""
     
-    with pytest.raises(KeyError):   
+    with pytest.raises(KeyError):
         get_current_dir_type(ctx)
     
     ctx.obj['CURRENT_DIR'] = ""

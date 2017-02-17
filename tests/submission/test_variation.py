@@ -14,7 +14,7 @@ def test_variation():
 
     assert isinstance(variation.sample, Sample)
     assert isinstance(variation.analysis, EAnalysis)
-    
+
     reference_sample = {
         'genderId': 1,
         'cellLine' : None,
@@ -78,7 +78,7 @@ def test_variation():
 
     assert cmp(variation.sample.to_dict(),reference_sample) == 0
     assert cmp(variation.analysis.to_dict(),reference_analysis)  == 0
-    assert variation.local_validation_errors[0] == {'object_alias':'alias','field':'field','object_type':'type','error':'message'}    
+    assert variation.local_validation_errors[0] == {'object_alias':'alias','field':'field','object_type':'type','error':'message'}
 
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):

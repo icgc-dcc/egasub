@@ -9,7 +9,6 @@ class Policy(object):
         self.url = url
         self.id = id_
 
-
     def to_dict(self):
         return {
             'alias' : self.alias,

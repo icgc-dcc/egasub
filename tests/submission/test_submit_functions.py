@@ -14,7 +14,7 @@ from egasub.ega.entities.policy import Policy
 def test_login_function(ctx, mock_server):
     with pytest.raises(CredentialsError):
         login(ctx)
-        
+
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
     
     with pytest.raises(CredentialsError):
@@ -26,7 +26,7 @@ def test_login_function(ctx, mock_server):
     assert not ctx.obj['SUBMISSION']['sessionToken'] == None
     assert ctx.obj['SUBMISSION']['sessionToken'] == "abcdefg"
 
-def test_prepare_submission(ctx):    
+def test_prepare_submission(ctx):
     response = requests.post("%ssubmissions" % (ctx.obj['SETTINGS']['apiUrl']))
     
     subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11])
@@ -46,9 +46,7 @@ def test_object_submission(ctx,mock_server):
                     'sample_detail',[],'id',None)
     
     study = Study('test_alias','study_type_id','short_name','title','study_abstract','own_term','pub_med_ids',[],'id')
-    
-    dataset = Dataset('dataset_alias',[],'policy_id','','','a title',[],[])
-    
+        
     policy = Policy('policy_alias','dac_id','title','policy_text','url')
         
 def test_query_by_id(ctx, mock_server):
@@ -80,7 +78,6 @@ def test_query_by_type(ctx, mock_server):
 def test_obj_type_to_endpoint():
     _obj_type_to_endpoint("dataset") == "datasets"
     _obj_type_to_endpoint("sample") == "samples"
-    _obj_type_to_endpoint("study") == "studies"
     _obj_type_to_endpoint("policy") == "policies"
     
     with pytest.raises(Exception):

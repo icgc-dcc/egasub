@@ -4,7 +4,7 @@ reference = SampleReference('a value','a label')
 
 def test_value():
     assert 'a value' == reference.value
-    
+
 def test_label():
     assert 'a label' == reference.label
     

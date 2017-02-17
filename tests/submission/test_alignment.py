@@ -14,7 +14,7 @@ def test_alignment():
 
     assert isinstance(alignment.sample, Sample)
     assert isinstance(alignment.analysis, EAnalysis)
-    
+
     reference_sample = {
         'genderId': 1,
         'status': None,

@@ -66,7 +66,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
 def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submitter_password):
     """
     Function to create dummy Dac and Policy, and associate existing EGA study with
-    the EGA submission workspace to be initialized. Will create new EGA study if none exists 
+    the EGA submission workspace to be initialized. Will create new EGA study if none exists
     """
     if not ctx.obj.get('SETTINGS'):
         ctx.obj['SETTINGS'] = {}

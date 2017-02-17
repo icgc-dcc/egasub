@@ -22,7 +22,7 @@ experiment_to_dict = {
 
 def test_title():
     assert 'The title of the experiment' == experiment.title
-    
+
 def test_instrument_model_id():
     assert 2 == experiment.instrument_model_id
     

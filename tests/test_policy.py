@@ -4,7 +4,7 @@ policy = Policy('an alias',123,'Title of DAC','Text about the policy','http://ww
 
 def test_dac_id():
     assert policy.dac_id == 123
-    
+
 def test_title():
     assert policy.title == "Title of DAC"
     
