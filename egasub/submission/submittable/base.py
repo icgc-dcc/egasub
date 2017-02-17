@@ -74,7 +74,7 @@ class Submittable(object):
     @property
     def local_validation_errors(self):
         return self._local_validation_errors
-    
+
     @property
     def ftp_file_validation_errors(self):
         return self._ftp_file_validation_errors
@@ -376,7 +376,7 @@ class Analysis(Submittable):
             self._add_local_validation_error("analysis",self.analysis.alias,"genomeId","Invalid value '%s'" % self.analysis.genome_id)
 
         # experimentTypeId type validation
-        if not type(self.analysis.experiment_type_id) == list:
+        if not isinstance(self.analysis.experiment_type_id) == list:
             self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value: experimentTypeId must be a list.")
 
         for e_type in self.analysis.experiment_type_id:

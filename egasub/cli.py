@@ -104,7 +104,6 @@ def init(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,
 
     ctx.obj['EGA_ENUMS'] = EgaEnums()
     init_workspace(ctx,ega_submitter_account,ega_submitter_password,icgc_id_service_token,icgc_project_code )
-    
 
 @main.command()
 @click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)

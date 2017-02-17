@@ -45,7 +45,7 @@ class Analysis(object):
 
     def to_xml(self):
         pass
-    
+        
     @staticmethod
     def from_dict(analysis_dict):
         return Analysis(

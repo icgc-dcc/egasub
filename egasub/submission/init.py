@@ -11,7 +11,6 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     ctx.obj['LOGGER'].info('Initalizing EGA submission workspace...')
     ctx.obj['LOGGER'].info('Note: information collected below will be stored in')
     ctx.obj['LOGGER'].info('      \'.egasub/config.yaml\' which can be edited later.')
-    
     projects = ["BLCA-CN","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BTCA-JP","BTCA-SG","CLLE-ES","CMDI-UK",
             "COCA-CN","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","LAML-CN","LAML-KR",
             "LIAD-FR","LICA-CN","LICA-FR","LIHM-FR","LINC-JP","LIRI-JP","LUSC-CN","LUSC-KR","MALY-DE","MELA-AU","ORCA-IN","OV-AU",
@@ -171,7 +170,7 @@ def truncate_string(s, n):
 
 
 # EGA REST API based submission does not handle this properly yet,
-# we were advised to create dummy Dac and Policy object to get things started 
+# we were advised to create dummy Dac and Policy object to get things started
 def make_dummy_dac():
     return Dac(
             "ICGC DACO",
