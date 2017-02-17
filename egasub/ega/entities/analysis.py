@@ -1,5 +1,4 @@
 from file import File
-from sample_reference import SampleReference
 from chromosome_reference import ChromosomeReference
 
 class Analysis(object):

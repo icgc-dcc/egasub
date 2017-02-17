@@ -2,7 +2,7 @@ import os
 import re
 import yaml
 import time
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractproperty
 
 from egasub.exceptions import Md5sumFileError
 from egasub.ega.entities import Sample, Attribute, \

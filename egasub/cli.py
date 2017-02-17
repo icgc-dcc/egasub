@@ -1,7 +1,6 @@
 import os
 import click
 import utils
-from click import echo
 from submission import init_workspace, perform_submission, init_submission_dir, submit_dataset
 from egasub.ega.entities import EgaEnums
 from egasub import __version__ as ver

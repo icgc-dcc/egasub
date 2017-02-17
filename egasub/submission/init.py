@@ -1,7 +1,6 @@
 from click import echo, prompt
 import os
 import yaml
-import json
 from ..ega.entities import Dac, Policy, Contact, Study, Submission, SubmissionSubsetData
 from ..ega.services import login, object_submission, query_by_type, prepare_submission
 from ..exceptions import CredentialsError

@@ -1,10 +1,8 @@
 import os
 import re
 import yaml
-import glob
 import ftplib
 from click import echo
-from egasub.ega.entities.file import File
 import logging
 import datetime
 from egasub.ega.entities import EgaEnums
@@ -137,7 +135,7 @@ def ftp_files(path, ctx):
     files = []
     try:
         files = ftp.nlst(path)
-    except ftplib.error_perm, resp:
+    except ftplib.error_perm:
         echo('Error: unable to connect to FTP server.', err=True)
         ctx.abort()
 

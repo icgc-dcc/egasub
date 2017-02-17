@@ -1,4 +1,3 @@
-import yaml
 
 class Attribute(object):
     def __init__(self, tag, value="", unit=None):

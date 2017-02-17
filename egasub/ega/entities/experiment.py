@@ -1,4 +1,3 @@
-import yaml
 
 class Experiment(object):
     def __init__(self, alias, title, instrument_model_id, library_source_id, library_selection_id,

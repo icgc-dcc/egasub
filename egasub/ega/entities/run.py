@@ -1,4 +1,3 @@
-import yaml
 from file import File
 
 class Run(object):

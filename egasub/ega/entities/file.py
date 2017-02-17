@@ -1,5 +1,3 @@
-import yaml
-import os
 
 class File(object):
     def __init__(self,file_id,file_name,checksum,unencrypted_checksum,checksum_method):

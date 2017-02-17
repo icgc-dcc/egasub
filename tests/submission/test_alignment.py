@@ -2,10 +2,7 @@ import pytest
 import os
 from egasub.submission.submittable import Alignment
 from egasub.ega.entities import Sample, \
-                                Experiment as EExperiment, \
                                 Analysis as EAnalysis
-from egasub.exceptions import Md5sumFileError
-
 
 def test_alignment():
     initial_directory = os.getcwd()

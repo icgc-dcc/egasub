@@ -1,7 +1,4 @@
-import click
 from click.testing import CliRunner
-from egasub.cli import main
-from egasub.submission.init import init_workspace
 
 def test_init_function(ctx):
     runner = CliRunner()
