@@ -19,7 +19,11 @@ class Submitter(object):
             return
 
         if not dry_run:  # only to get ICGC ID when not dry_run
-            self.set_icgc_ids(submittable.sample, dry_run)
+            try:
+                self.set_icgc_ids(submittable.sample, dry_run)
+            except Exception, err:
+                self.ctx.obj['LOGGER'].error("Failed processing '%s', can not get ICGC ID, error: %s." % (submittable.submission_dir, err))
+                return
 
         object_submission(self.ctx, submittable.sample, 'sample', dry_run)
         submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
@@ -28,7 +32,7 @@ class Submitter(object):
             try:
                 # readiness check before performing 'submit', this is helpful
                 # preventing from the situation experiment is submitted but run failed
-                if not dry_run and not (submittable.experiment.status == 'VALIDATED' and submittable.run.status == 'VALIDATED'):
+                if not dry_run and not (submittable.experiment.status in ('VALIDATED', 'SUBMITTED') and submittable.run.status == 'VALIDATED'):
                     raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Experiment object status '%s', run object status '%s'" \
                                                     % (submittable.submission_dir, submittable.experiment.status, submittable.run.status))
 
@@ -101,30 +105,24 @@ class Submitter(object):
 
 
     def set_icgc_ids(self, sample, dry_run=True):
-        sample.attributes.append(
-                Attribute(
-                    'icgc_sample_id',
-                    id_service(
-                        self.ctx, 'sample',
-                        self.ctx.obj['SETTINGS']['icgc_project_code'],
-                        sample.alias,
-                        True, # create param
-                        dry_run  # is_test param, eq to dry_run
-                    )
-                )
-            )
 
-        sample.attributes.append(
-                Attribute(
-                    'icgc_donor_id',
-                    id_service(
-                        self.ctx, 'donor',
-                        self.ctx.obj['SETTINGS']['icgc_project_code'],
-                        sample.subject_id,
-                        True,
-                        dry_run
-                    )
-                )
-            )
+        icgc_sample_id = id_service(
+            self.ctx, 'sample',
+            self.ctx.obj['SETTINGS']['icgc_project_code'],
+            sample.alias,
+            True, # create param
+            dry_run  # is_test param, eq to dry_run
+        )
+
+        sample.attributes.append(Attribute('icgc_sample_id', icgc_sample_id))
+
+        icgc_donor_id = id_service(
+            self.ctx, 'donor',
+            self.ctx.obj['SETTINGS']['icgc_project_code'],
+            sample.subject_id,
+            True,
+            dry_run
+        )
+        sample.attributes.append(Attribute('icgc_donor_id', icgc_donor_id))
 
         sample.attributes.append(Attribute('submitted_using', 'egasub %s' % ver))
