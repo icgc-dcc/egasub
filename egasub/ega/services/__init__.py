@@ -65,7 +65,7 @@ def logout(ctx):
         'Content-Type': 'application/json',
         'X-Token': ctx.obj['SUBMISSION']['sessionToken']
         }
-    r = requests.delete(url,headers=headers)
+    requests.delete(url,headers=headers)
     ctx.obj['SUBMISSION'].clear()
 
 
@@ -312,5 +312,4 @@ def submit_submission(ctx,submission):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
 
-    r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
-    r_data = json.loads(r.text)
+    requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)

@@ -3,7 +3,7 @@ import os
 import yaml
 import json
 from ..ega.entities import Dac, Policy, Contact, Study, Submission, SubmissionSubsetData
-from ..ega.services import login, logout, object_submission, query_by_type, prepare_submission
+from ..ega.services import login, object_submission, query_by_type, prepare_submission
 from ..exceptions import CredentialsError
 
 
@@ -11,7 +11,6 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
     ctx.obj['LOGGER'].info('Initalizing EGA submission workspace...')
     ctx.obj['LOGGER'].info('Note: information collected below will be stored in')
     ctx.obj['LOGGER'].info('      \'.egasub/config.yaml\' which can be edited later.')
-    
     projects = ["BLCA-CN","BOCA-FR","BOCA-UK","BRCA-EU","BRCA-FR","BRCA-KR","BRCA-UK","BTCA-JP","BTCA-SG","CLLE-ES","CMDI-UK",
             "COCA-CN","EOPC-DE","ESAD-UK","ESCA-CN","GACA-CN","LAML-CN","LAML-KR",
             "LIAD-FR","LICA-CN","LICA-FR","LIHM-FR","LINC-JP","LIRI-JP","LUSC-CN","LUSC-KR","MALY-DE","MELA-AU","ORCA-IN","OV-AU",
@@ -47,7 +46,6 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
 
     current_dir = ctx.obj['CURRENT_DIR']
     egasub_dir = os.path.join(current_dir,'.egasub')
-    script_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     
     if os.access(current_dir, os.W_OK):
         if not os.path.exists(egasub_dir):
@@ -171,7 +169,7 @@ def truncate_string(s, n):
 
 
 # EGA REST API based submission does not handle this properly yet,
-# we were advised to create dummy Dac and Policy object to get things started 
+# we were advised to create dummy Dac and Policy object to get things started
 def make_dummy_dac():
     return Dac(
             "ICGC DACO",

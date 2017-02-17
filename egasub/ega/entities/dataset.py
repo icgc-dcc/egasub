@@ -1,6 +1,5 @@
 
 class Dataset(object):
-    
     def __init__(self,alias,dataset_type_ids, policy_id, runs_references, analysis_references, title,
                  dataset_links, attributes, id_=None):
         self.alias = alias
