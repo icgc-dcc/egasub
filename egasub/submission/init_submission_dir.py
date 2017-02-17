@@ -1,6 +1,5 @@
 import os
 import re
-from click import echo
 from shutil import copyfile
 
 def init_submission_dir(ctx, submission_dirs):

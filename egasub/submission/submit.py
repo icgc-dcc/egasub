@@ -6,9 +6,9 @@ from click import echo, prompt
 from egasub import __version__ as ver
 from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset, Attribute
 from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
-                            prepare_submission, submit_submission
+                            prepare_submission
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
-from .submittable import Unaligned, Alignment, Variation
+from .submittable import Unaligned, Alignment
 from .submitter import Submitter
 
 

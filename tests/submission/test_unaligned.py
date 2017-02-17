@@ -4,8 +4,6 @@ from egasub.submission.submittable import Unaligned
 from egasub.ega.entities import Sample, \
                                 Experiment as EExperiment, \
                                 Run as ERun
-from egasub.exceptions import Md5sumFileError
-
 
 def test_unaligned():
     os.chdir('tests/data/workspace/unaligned.20170110/')

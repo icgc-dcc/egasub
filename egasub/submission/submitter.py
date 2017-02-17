@@ -1,5 +1,3 @@
-from click import echo
-
 from ..icgc.services import id_service
 from ..ega.services import object_submission, delete_obj
 from ..ega.entities import Attribute, SampleReference

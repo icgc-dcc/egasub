@@ -3,7 +3,7 @@ import os
 import yaml
 import json
 from ..ega.entities import Dac, Policy, Contact, Study, Submission, SubmissionSubsetData
-from ..ega.services import login, logout, object_submission, query_by_type, prepare_submission
+from ..ega.services import login, object_submission, query_by_type, prepare_submission
 from ..exceptions import CredentialsError
 
 
@@ -46,7 +46,6 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
 
     current_dir = ctx.obj['CURRENT_DIR']
     egasub_dir = os.path.join(current_dir,'.egasub')
-    script_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     
     if os.access(current_dir, os.W_OK):
         if not os.path.exists(egasub_dir):

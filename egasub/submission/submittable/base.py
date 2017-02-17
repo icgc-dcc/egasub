@@ -2,7 +2,6 @@ import os
 import re
 import yaml
 import time
-from click import echo
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 from egasub.exceptions import Md5sumFileError

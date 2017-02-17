@@ -1,4 +1,3 @@
-import yaml
 from file import File
 from sample_reference import SampleReference
 from attribute import Attribute
@@ -45,7 +44,7 @@ class Analysis(object):
 
     def to_xml(self):
         pass
-        
+
     @staticmethod
     def from_dict(analysis_dict):
         return Analysis(
