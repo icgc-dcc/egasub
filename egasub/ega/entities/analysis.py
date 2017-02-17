@@ -21,7 +21,7 @@ class Analysis(object):
         self.alias = alias
         self.status = status
         self.id = id_
-        
+
     def to_dict(self):
         return {
             'title' : self.title,
