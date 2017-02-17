@@ -28,7 +28,7 @@ def init_submission_dir(ctx, submission_dirs):
             ctx.obj['LOGGER'].warning("Skipping directory '%s'. Submission directory can not start with 'SA' or 'sa', this is reserved for ICGC DCC." % d)
             continue
 
-        if d.upper().startswith('EGA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
+        if d.upper().startswith('EGA'):
             ctx.obj['LOGGER'].warning("Skipping directory '%s'. Submission directory can not start with 'EGA' or 'ega', this is reserved for EGA." % d)
             continue
 

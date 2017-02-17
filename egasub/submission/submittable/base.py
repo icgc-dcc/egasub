@@ -36,7 +36,7 @@ class Submittable(object):
         if path.upper().startswith('SA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
             raise Exception("Submission directory '%s' can not start with 'SA' or 'sa', this is reserved for ICGC DCC." % path)
 
-        if path.upper().startswith('EGA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
+        if path.upper().startswith('EGA'):
             raise Exception("Submission directory '%s' can not start with 'EGA' or 'ega', this is reserved for EGA." % path)
 
         self._local_validation_errors = []
