@@ -7,7 +7,7 @@ def file_exists(host, username, password,file_path):
     file_size = None
     try:
         file_size = ftp.size(file_path)
-    except:
+    except Exception:
         pass  # do nothing
 
     ftp.quit()

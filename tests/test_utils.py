@@ -58,4 +58,4 @@ def test_find_workspace_root():
     workspace_root = "tests/data/workspace"
     assert find_workspace_root() == None
     assert find_workspace_root(workspace_root) == workspace_root
-    find_workspace_root(os.path.join(workspace_root,"test")) == workspace_root
+    assert find_workspace_root(os.path.join(workspace_root,"test")) == workspace_root

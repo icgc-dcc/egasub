@@ -152,7 +152,7 @@ class Submittable(object):
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
                         obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
-        except:
+        except Exception:
             pass  # do nothing on error
 
     def record_object_status(self, obj_type, dry_run, submission_session, log_file):

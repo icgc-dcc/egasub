@@ -66,9 +66,9 @@ def test_query_by_type(ctx, mock_server):
     assert result[0].get('id') == '12345'
     
 def test_obj_type_to_endpoint():
-    _obj_type_to_endpoint("dataset") == "datasets"
-    _obj_type_to_endpoint("sample") == "samples"
-    _obj_type_to_endpoint("policy") == "policies"
+    assert _obj_type_to_endpoint("dataset") == "datasets"
+    assert _obj_type_to_endpoint("sample") == "samples"
+    assert _obj_type_to_endpoint("policy") == "policies"
     
     with pytest.raises(Exception):
         _obj_type_to_endpoint("test")

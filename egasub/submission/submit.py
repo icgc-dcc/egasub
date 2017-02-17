@@ -6,7 +6,7 @@ from egasub import __version__ as ver
 from ..ega.entities import Submission, SubmissionSubsetData, Dataset, Attribute
 from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
                             prepare_submission
-from ..exceptions import EgaSubmissionError, EgaObjectExistsError, CredentialsError
+from ..exceptions import EgaSubmissionError, CredentialsError
 from .submittable import Alignment
 from .submitter import Submitter
 
@@ -183,6 +183,6 @@ def submittable_status(_file):
             for last in f:
                 pass
         return last.strip().split('\t')
-    except:
+    except Exception:
         return None
 
