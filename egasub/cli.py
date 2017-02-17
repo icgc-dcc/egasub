@@ -70,22 +70,22 @@ def dry_run(ctx, submission_dir):
     perform_submission(ctx, submission_dir, dry_run=True)
 
 
-'''
-@main.command()
-@click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
-@click.pass_context
-def status(ctx, submission_dir):
-    """
-    Report status of submission folder(s).
-    """
-    if '.' in submission_dir or '..' in submission_dir:
-        ctx.obj['LOGGER'].critical("Submission dir can not be '.' or '..'")
-        ctx.abort()
 
-    utils.initialize_app(ctx)
+#@main.command()
+#@click.argument('submission_dir', type=click.Path(exists=True), nargs=-1)
+#@click.pass_context
+#def status(ctx, submission_dir):
+#    """
+#    Report status of submission folder(s).
+#    """
+#    if '.' in submission_dir or '..' in submission_dir:
+#        ctx.obj['LOGGER'].critical("Submission dir can not be '.' or '..'")
+#        ctx.abort()
 
-    generate_report(ctx, submission_dir)
-'''
+#    utils.initialize_app(ctx)
+
+#    generate_report(ctx, submission_dir)
+
 
 @main.command()
 @click.option('--ega_submitter_account')
@@ -118,7 +118,6 @@ def new(ctx,submission_dir):
         ctx.abort()
 
     utils.initialize_app(ctx)
-    
     init_submission_dir(ctx, submission_dir)
     
 @main.command()

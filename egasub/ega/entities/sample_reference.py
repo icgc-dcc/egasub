@@ -1,5 +1,3 @@
-import yaml
-
 
 class SampleReference(object):
     def __init__(self,value,label):
