@@ -1,6 +1,5 @@
 from file import File
 from sample_reference import SampleReference
-from attribute import Attribute
 from chromosome_reference import ChromosomeReference
 
 class Analysis(object):
@@ -22,7 +21,7 @@ class Analysis(object):
         self.alias = alias
         self.status = status
         self.id = id_
-
+        
     def to_dict(self):
         return {
             'title' : self.title,

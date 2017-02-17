@@ -21,7 +21,6 @@ class Experiment(object):
         self.study_id = study_id
         self.id = _id
         self.status = status
-
         
     def to_dict(self):
         return {
