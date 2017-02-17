@@ -210,7 +210,7 @@ class Submittable(object):
             if not f or not f.file_name or not f.file_name.startswith(expected_file_path_start):
                 self._add_local_validation_error("file",None,"files.fileName","File path incorrect for '%s', expected file path starts with '%s'" % (f.file_name, expected_file_path_start))
 
-    # TODO: should move this to file check as part of local validation, will need to come up with a way 
+    # TODO: should move this to file check as part of local validation, will need to come up with a way
     #       to pass in credentials, currently 'submittable' object has no access to such information
     def ftp_files_remote_validate(self,host,username, password):
         for _file in self.files:

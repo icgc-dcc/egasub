@@ -9,6 +9,6 @@ class CustomTag(object):
             'tag' : self.tag,
             'value' : self.value
             }
-        
+
     def to_xml(self):
         pass

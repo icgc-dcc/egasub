@@ -7,6 +7,6 @@ def test_value():
 
 def test_label():
     assert 'a label' == reference.label
-    
+
 def test_to_dict():
     assert cmp({'value':'a value','label':'a label'}, reference.to_dict()) == 0 

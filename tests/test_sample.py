@@ -9,7 +9,7 @@ def test_title():
 
 def test_description():
     assert 'the description' == sample.description
-    
+
 def test_case_or_control_id():
     assert 123 == sample.case_or_control_id
     

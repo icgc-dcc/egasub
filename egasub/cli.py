@@ -119,7 +119,7 @@ def new(ctx,submission_dir):
 
     utils.initialize_app(ctx)
     init_submission_dir(ctx, submission_dir)
-    
+
 @main.command()
 @click.option('--submit', '-s', is_flag=True)
 @click.option('--dry_run', '-d', is_flag=True)

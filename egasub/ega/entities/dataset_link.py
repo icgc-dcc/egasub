@@ -9,7 +9,7 @@ class DatasetLink(object):
             'label' : self.label,
             'url' : self.url
             }
-        
+
     def to_xml(self):
         pass
     

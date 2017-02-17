@@ -8,7 +8,7 @@ def test_alignment(ctx):
     ctx.obj['CURRENT_DIR_TYPE'] = "alignment"
     with pytest.raises(IOError):
         init_submission_dir(ctx,submission_dirs)
-        
+
     submission_dirs = [""]
     init_submission_dir(ctx,submission_dirs)
 

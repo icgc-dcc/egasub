@@ -7,7 +7,7 @@ def test_file_id():
 
 def test_file_name():
     assert 'file name' == file_.file_name
-    
+
 def test_checksum():
     assert 'CheckSum' == file_.checksum
     

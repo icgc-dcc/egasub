@@ -18,6 +18,5 @@ class Policy(object):
             'url' : self.url
             }
 
-        
     def to_xml(self):
         pass

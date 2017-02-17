@@ -6,7 +6,7 @@ run = Run('an alias',3,2,5,files,22)
 
 def test_sample_id():
     assert 3 == run.sample_id
-    
+
 def test_run_file_type_id():
     assert 2 == run.run_file_type_id
     

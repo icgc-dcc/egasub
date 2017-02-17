@@ -14,7 +14,7 @@ from .submitter import Submitter
 
 def perform_submission(ctx, submission_dirs, dry_run=True):
     ctx.obj['LOGGER'].info("Login ...")
-    
+
     try:
         login(ctx)
     except CredentialsError as error:

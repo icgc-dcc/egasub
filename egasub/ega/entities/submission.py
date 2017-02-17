@@ -4,7 +4,7 @@ class Submission(object):
         self.title = title
         self.description = description
         self.submission_subset = submission_subset
-        
+
     def to_dict(self):
         return {
             "title" : self.title,

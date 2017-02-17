@@ -14,7 +14,6 @@ def test_get_md5Sum():
         f = open(file_path,"wb")
         f.write(m.hexdigest())
         f.close()
-        
         _get_md5sum(file_path)
         
 def test_alignment():

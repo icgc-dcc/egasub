@@ -7,7 +7,7 @@ def test_contact_name():
 
 def test_email():
     assert 'contact email' == contact.email
-    
+
 def test_organisation():
     assert 'Name of organisation' == contact.organisation
     

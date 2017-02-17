@@ -5,7 +5,7 @@ import pytest
 
 def test_init_submission_dir(ctx):
     ctx.obj['CURRENT_DIR_TYPE'] = None
-    
+
     with pytest.raises(TypeError):
         init_submission_dir(ctx,[])
         

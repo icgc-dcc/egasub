@@ -33,7 +33,7 @@ def test_unaligned():
                     'sampleDetail': None,
                     'status': None
                 }
-    
+
     reference_experiment = {
                     'libraryLayoutId': 1,
                     'pairedNominalLength': 420,

@@ -9,7 +9,7 @@ def test_title():
 
 def test_description():
     assert 'a description' == submission.description
-    
+
 def test_subsets():
     assert subset == submission.submission_subset
     

@@ -7,7 +7,7 @@ dac = Dac('a title',contacts)
 
 def test_title():
     assert 'a title' == dac.title
-    
+
 def test_contacts():
         assert cmp(
         {

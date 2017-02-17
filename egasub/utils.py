@@ -30,7 +30,7 @@ def initialize_app(ctx):
         ctx.abort()
 
     ctx.obj['EGA_ENUMS'] = EgaEnums()
-        
+
 def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
     logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s] %(message)s")

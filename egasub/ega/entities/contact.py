@@ -14,6 +14,6 @@ class Contact(object):
             'organisation' : self.organisation,
             'phoneNumber' : self.phone_number
             }
-        
+
     def to_xml(self):
         pass

@@ -34,7 +34,7 @@ def test_alignment():
         'anonymizedName': None,
         'sampleDetail': None
     }
-    
+
     reference_analysis = {
         'title': 'The title of the analysis',
         'description': 'description',
@@ -79,10 +79,10 @@ def test_alignment():
         alignment = Alignment('samplebad$2')
         
     # Check if the folder exists
-    with pytest.raises(Exception):    
+    with pytest.raises(Exception):
         alignment = Alignment('sample_bad_99')
         
-    # Missing analysis.yaml file    
+    # Missing analysis.yaml file
     with pytest.raises(Exception):    
         alignment = Alignment('sample_bad3')
             

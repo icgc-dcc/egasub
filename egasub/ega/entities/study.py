@@ -1,6 +1,6 @@
 
 class Study(object):
-    def __init__(self,alias,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags, id):
+    def __init__(self,alias,study_type_id, short_name, title, study_abstract, own_term, pub_med_ids,custom_tags, id_):
         self.alias = alias
         self.study_type_id = study_type_id
         self.short_name = short_name
@@ -9,9 +9,8 @@ class Study(object):
         self.own_term = own_term
         self.pub_med_ids = pub_med_ids
         self.custom_tags = custom_tags
-        self.id = id
+        self.id = id_
 
-        
     def to_dict(self):
         return {
             'alias' : self.alias,

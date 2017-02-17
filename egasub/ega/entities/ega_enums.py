@@ -6,7 +6,7 @@ import os
 class EgaEnums(object):
     def __init__(self):
         self._enums = self._load_enums()
-    
+
     def _load_enums(self):
         enums = {}
         full_path = os.path.dirname(os.path.abspath(__file__))+"/../data/enums/"

@@ -24,6 +24,5 @@ class Dataset(object):
             'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes)
         }
 
-        
     def to_xml(self):
         pass

@@ -18,7 +18,7 @@ def test_title():
 
 def test_description():
     assert 'a description' == analysis.description
-    
+
 def test_study_id():
     assert 3 == analysis.study_id
     

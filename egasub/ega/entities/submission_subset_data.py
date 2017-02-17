@@ -10,7 +10,7 @@ class SubmissionSubsetData(object):
         self.run_ids = run_ids
         self.sample_ids = sample_ids
         self.study_ids = study_ids
-        
+
     def to_dict(self):
         return {
             'analysisIds' : self.analysis_ids,

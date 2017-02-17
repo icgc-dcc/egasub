@@ -24,9 +24,6 @@ class test_ctx(object):
         self.obj['LOGGER'] = logger
         self.obj['LOGGER'].error=callcounted(logging.error)
         self.obj['LOGGER'].warning=callcounted(logging.warning)
-        
-    #def abort(self):
-    #    exit()
 
 test_ctx = test_ctx()
 

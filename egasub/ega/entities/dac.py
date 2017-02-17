@@ -5,7 +5,7 @@ class Dac(object):
         self.contacts = contacts
         self.alias = alias
         self.id = id_
-        
+
     def to_dict(self):
         return {
             'title' : self.title,

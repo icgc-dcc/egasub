@@ -7,7 +7,7 @@ def test_tag():
 
 def test_value():
     assert 'The value' == attribute.value
-    
+
 def test_unit():
     assert 'an unit' == attribute.unit
     
