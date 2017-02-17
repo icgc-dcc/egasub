@@ -375,7 +375,7 @@ class Analysis(Submittable):
             self._add_local_validation_error("analysis",self.analysis.alias,"genomeId","Invalid value '%s'" % self.analysis.genome_id)
 
         # experimentTypeId type validation
-        if not isinstance(self.analysis.experiment_type_id) == list:
+        if not isinstance(self.analysis.experiment_type_id, list):
             self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value: experimentTypeId must be a list.")
 
         for e_type in self.analysis.experiment_type_id:
