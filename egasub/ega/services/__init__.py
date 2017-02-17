@@ -312,4 +312,4 @@ def submit_submission(ctx,submission):
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
     }
 
-    r = requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
+    requests.put(url,data=json.dumps(submission.to_dict()), headers=headers)
