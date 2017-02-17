@@ -299,7 +299,7 @@ def delete_obj(ctx, obj_type, obj_id):
     if r_data['header']['code'] == "200":
         ctx.obj['LOGGER'].info("Deleted '%s' with ID '%s'" % (obj_type, obj_id))
     elif r_data['header']['code'] == "404":  # it is a bit odd to have 404 here, but it happened when we tried to delete an object we created earlier, it appears it got deleted earlier when it failed validation
-        ctx.obj['LOGGER'].info("Object '%s' with ID '%s' does not exist, no need to delete" % (obj_type, obj_id))
+        ctx.obj['LOGGER'].debug("Object '%s' with ID '%s' does not exist, no need to delete" % (obj_type, obj_id))
     else:
         ctx.obj['LOGGER'].warning("Failed deleting '%s' with ID '%s'" % (obj_type, obj_id))
 

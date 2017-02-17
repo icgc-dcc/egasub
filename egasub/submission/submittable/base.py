@@ -36,6 +36,9 @@ class Submittable(object):
         if path.upper().startswith('SA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
             raise Exception("Submission directory '%s' can not start with 'SA' or 'sa', this is reserved for ICGC DCC." % path)
 
+        if path.upper().startswith('EGA'):
+            raise Exception("Submission directory '%s' can not start with 'EGA' or 'ega', this is reserved for EGA." % path)
+
         self._local_validation_errors = []
         self._ftp_file_validation_errors = []
         self._path = path
@@ -182,9 +185,8 @@ class Submittable(object):
         # subjustId validation
         if not self.sample.subject_id:
             self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId must be set.")
-
         # subjustId validation: can not start with DO/do/Do/dO
-        if self.sample.subject_id.upper().startswith('DO'):
+        elif str(self.sample.subject_id).upper().startswith('DO'):
             self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId can not start with 'DO', this is reserved for ICGC DCC.")
 
         # Gender validation

@@ -1,5 +1,6 @@
 import requests
 import json
+import re
 
 ICGC_ID_SERVICE_URL_TEST = "http://hetl2-dcc.res.oicr.on.ca:9000" # dry run uses this
 ICGC_ID_SERVICE_URL_PROD = "https://id.icgc.org" # submit uses this
@@ -59,6 +60,7 @@ def id_service(ctx, type_, project_code, submitter_id, create=True, is_test=Fals
         raise Exception("Failed calling ICGC ID service with: %s" % full_url)
 
     if "error" in r.text:
-        raise Exception("Failed calling ICGC ID serivce with: %s. Server response: %s" % (full_url, r.text))
+        res = re.sub(r'"error_description":".*"', '"error_description":""', r.text) if 'invalid_token' in r.text else r.text
+        raise Exception("Failed calling ICGC ID serivce with: %s. Server response: %s" % (full_url, res))
 
     return r.text
