@@ -10,7 +10,7 @@ from egasub.exceptions import Md5sumFileError
 def test_variation():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/variation.20170119/')
-    variation = Variation('sample_1')
+    variation = Variation('test_x')
 
     assert isinstance(variation.sample, Sample)
     assert isinstance(variation.analysis, EAnalysis)
@@ -24,7 +24,7 @@ def test_variation():
         'region': None,
         'subjectId': 'donor 1',
         'organismPart': None,
-        'alias': 'sample_1',
+        'alias': 'test_x',
         'caseOrControlId': 0,
         'id': None,
         'phenotype': 'Breast cancer',
@@ -50,14 +50,14 @@ def test_variation():
             {
                 'unencryptedChecksum': '5e0024389829a7b131fed6476f7e71c4',
                 'checksum': '5e0024389829a7b131fed6476f7e71c4',
-                'fileName': 'variation.20170119/sample_1/somatic.snv.sample_1.vcf.gz.gpg',
+                'fileName': 'variation.20170119/test_x/somatic.snv.test_x.vcf.gz.gpg',
                 'checksumMethod': 'md5',
                 'fileId': None
             },
             {
                 'unencryptedChecksum': '5e0024389829a7b131fed6476f7e71c4',
                 'checksum': '5e0024389829a7b131fed6476f7e71c4',
-                'fileName': 'variation.20170119/sample_1/somatic.snv.sample_1.vcf.gz.tbi.gpg',
+                'fileName': 'variation.20170119/test_x/somatic.snv.test_x.vcf.gz.tbi.gpg',
                 'checksumMethod': 'md5',
                 'fileId': None
             }

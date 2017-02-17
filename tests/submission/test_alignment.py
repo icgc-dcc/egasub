@@ -10,7 +10,7 @@ from egasub.exceptions import Md5sumFileError
 def test_alignment():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/alignment.20170115/')
-    alignment = Alignment('sample_x')
+    alignment = Alignment('test_x')
 
     assert isinstance(alignment.sample, Sample)
     assert isinstance(alignment.analysis, EAnalysis)
@@ -25,7 +25,7 @@ def test_alignment():
         'region': None,
         'subjectId': None,
         'organismPart': None,
-        'alias': 'sample_x',
+        'alias': 'test_x',
         'caseOrControlId': 0,
         'id': None,
         'phenotype': 'Breast cancer',
@@ -50,7 +50,7 @@ def test_alignment():
             {
                 'unencryptedChecksum': '5e0024389829a7b131fed6476f7e71c4',
                 'checksum': '5e0024389829a7b131fed6476f7e71c4',
-                'fileName': 'alignment.20170115/sample_x/sequence_file.single_end.sample_x.bam.gpg',
+                'fileName': 'alignment.20170115/test_x/sequence_file.single_end.test_x.bam.gpg',
                 'checksumMethod': 'md5',
                 'fileId': None
             }
