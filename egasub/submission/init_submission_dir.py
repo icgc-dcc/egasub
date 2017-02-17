@@ -1,6 +1,5 @@
 import os
 import re
-from click import echo
 from shutil import copyfile
 
 def init_submission_dir(ctx, submission_dirs):
@@ -26,6 +25,10 @@ def init_submission_dir(ctx, submission_dirs):
 
         if d.upper().startswith('SA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
             ctx.obj['LOGGER'].warning("Skipping directory '%s'. Submission directory can not start with 'SA' or 'sa', this is reserved for ICGC DCC." % d)
+            continue
+
+        if d.upper().startswith('EGA'):
+            ctx.obj['LOGGER'].warning("Skipping directory '%s'. Submission directory can not start with 'EGA' or 'ega', this is reserved for EGA." % d)
             continue
 
         dest_file = os.path.join(d, file_name)

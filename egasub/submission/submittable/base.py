@@ -2,7 +2,6 @@ import os
 import re
 import yaml
 import time
-from click import echo
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 from egasub.exceptions import Md5sumFileError
@@ -35,6 +34,9 @@ class Submittable(object):
 
         if path.upper().startswith('SA'):  # we may want to make this configurable to allow it turned off for non-ICGC submitters
             raise Exception("Submission directory '%s' can not start with 'SA' or 'sa', this is reserved for ICGC DCC." % path)
+
+        if path.upper().startswith('EGA'):
+            raise Exception("Submission directory '%s' can not start with 'EGA' or 'ega', this is reserved for EGA." % path)
 
         self._local_validation_errors = []
         self._ftp_file_validation_errors = []
@@ -71,7 +73,7 @@ class Submittable(object):
     @property
     def local_validation_errors(self):
         return self._local_validation_errors
-    
+
     @property
     def ftp_file_validation_errors(self):
         return self._ftp_file_validation_errors
@@ -149,7 +151,7 @@ class Submittable(object):
                         pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
-                        # obj.status = status  # we shouldn't need to restore status either, should get it from the server
+                        obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
         except:
             pass  # do nothing on error
 
@@ -182,9 +184,8 @@ class Submittable(object):
         # subjustId validation
         if not self.sample.subject_id:
             self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId must be set.")
-
         # subjustId validation: can not start with DO/do/Do/dO
-        if self.sample.subject_id.upper().startswith('DO'):
+        elif str(self.sample.subject_id).upper().startswith('DO'):
             self._add_local_validation_error("sample",self.sample.alias,"subjectId","Invalid value, sample's subjectId can not start with 'DO', this is reserved for ICGC DCC.")
 
         # Gender validation
@@ -374,7 +375,7 @@ class Analysis(Submittable):
             self._add_local_validation_error("analysis",self.analysis.alias,"genomeId","Invalid value '%s'" % self.analysis.genome_id)
 
         # experimentTypeId type validation
-        if not type(self.analysis.experiment_type_id) == list:
+        if not isinstance(self.analysis.experiment_type_id) == list:
             self._add_local_validation_error("analysis",self.analysis.alias,"experimentTypes","Invalid value: experimentTypeId must be a list.")
 
         for e_type in self.analysis.experiment_type_id:

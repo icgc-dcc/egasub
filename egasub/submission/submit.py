@@ -3,11 +3,12 @@ import sys
 import re
 from click import echo, prompt
 
-from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset
+from egasub import __version__ as ver
+from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset, Attribute
 from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
-                            prepare_submission, submit_submission
+                            prepare_submission
 from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
-from .submittable import Unaligned, Alignment, Variation
+from .submittable import Unaligned, Alignment
 from .submitter import Submitter
 
 
@@ -152,22 +153,28 @@ def submit_dataset(ctx, dry_run=True):
                         [] if is_run else run_or_analysis_references, # analysis referenece
                         prompt("Enter dataset title"),
                         [],
-                        []
+                        [  # dataset attributes
+                            Attribute('submitted_using', 'egasub %s' % ver),
+                            Attribute('icgc_project_code', ctx.obj['SETTINGS']['icgc_project_code']),
+                            Attribute('icgc_project_url', 'https://dcc.icgc.org/projects/%s' % ctx.obj['SETTINGS']['icgc_project_code'])
+                        ]
                     )
+
     submission = Submission('Empty title', None, SubmissionSubsetData.create_empty())
     prepare_submission(ctx, submission)
 
     try:
         object_submission(ctx, dataset, 'dataset', dry_run)
         # clean up unneeded dataset
-        if dataset.id and not dataset.status == 'SUBMITTED':
+        if dry_run and dataset.id and not 'SUBMITTED' in dataset.status:
+            ctx.obj['LOGGER'].info("Clean up dataset created by dry_run")
             delete_obj(ctx, 'dataset', dataset.id)
     except Exception, err:
         ctx.obj['LOGGER'].error("Submitting dataset failed: %s" % err)
         logout(ctx)
         ctx.abort()
 
-    ctx.obj['LOGGER'].info("Logging out the session")    
+    ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
 
 

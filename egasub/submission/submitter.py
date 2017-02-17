@@ -1,8 +1,7 @@
-from click import echo
-
 from ..icgc.services import id_service
 from ..ega.services import object_submission, delete_obj
 from ..ega.entities import Attribute, SampleReference
+from egasub import __version__ as ver
 
 
 class Submitter(object):
@@ -12,13 +11,28 @@ class Submitter(object):
     def submit(self, submittable, dry_run=True):
         self.ctx.obj['LOGGER'].info("Processing '%s'" % submittable.submission_dir)
 
+        # sample readiness check, we can do submit sample when only when it's VALIDATED or SUBMITTED, in latter case, it will be just ignored but the submit process moves on
+        if not dry_run and not submittable.sample.status in ('VALIDATED', 'SUBMITTED'):
+            self.ctx.obj['LOGGER'].error("Failed processing '%s': sample object is not ready to 'submit', please try 'dry_run' first." % submittable.submission_dir)
+            return
+
+        if not dry_run:  # only to get ICGC ID when not dry_run
+            try:
+                self.set_icgc_ids(submittable.sample, dry_run)
+            except Exception, err:
+                self.ctx.obj['LOGGER'].error("Failed processing '%s', can not get ICGC ID, error: %s." % (submittable.submission_dir, err))
+                return
+
+        object_submission(self.ctx, submittable.sample, 'sample', dry_run)
+        submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             try:
-                if not dry_run:  # only to get ICGC ID when not dry_run
-                    self.set_icgc_ids(submittable.sample, dry_run)
-
-                object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-                submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+                # readiness check before performing 'submit', this is helpful
+                # preventing from the situation experiment is submitted but run failed
+                if not dry_run and not (submittable.experiment.status in ('VALIDATED', 'SUBMITTED') and submittable.run.status == 'VALIDATED'):
+                    raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Experiment object status '%s', run object status '%s'" \
+                                                    % (submittable.submission_dir, submittable.experiment.status, submittable.run.status))
 
                 submittable.experiment.sample_id = submittable.sample.id
                 submittable.experiment.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
@@ -33,7 +47,7 @@ class Submitter(object):
                 submittable.record_object_status('run', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
 
                 self.ctx.obj['LOGGER'].info("Finished processing '%s'" % submittable.submission_dir)
-            except Exception as error:
+            except Exception, error:
                 self.ctx.obj['LOGGER'].error("Failed processing '%s': %s" % (submittable.submission_dir, error))
             finally:
                 # we only clean up when it's dry_run, which will never turn something new into 'SUBMITTED'
@@ -56,11 +70,10 @@ class Submitter(object):
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] in ('alignment', 'variation'):
             try:
-                if not dry_run:  # only to get ICGC ID when not dry_run
-                    self.set_icgc_ids(submittable.sample, dry_run)
-
-                object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-                submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+                # readiness check before performing 'submit'
+                if not dry_run and not submittable.analysis.status == 'VALIDATED':
+                    raise Exception("Not ready to submit '%s' yet, please validate it using 'dry_run' instead. Analysis object status '%s'" \
+                                                    % (submittable.submission_dir, submittable.analysis.status))
 
                 submittable.analysis.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
                 submittable.analysis.sample_references = [
@@ -73,8 +86,8 @@ class Submitter(object):
                 submittable.record_object_status('analysis', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
 
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.submission_dir)
-            except Exception as error:
-                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, str(error)))
+            except Exception, error:
+                self.ctx.obj['LOGGER'].error('Failed processing %s: %s' % (submittable.submission_dir, error))
             finally:
                 # we only clean up when it's dry_run, which will never turn something new into 'SUBMITTED'
                 # objects created by dry_run that are not in 'SUBMITTED' status can be safely deleted
@@ -90,30 +103,24 @@ class Submitter(object):
 
 
     def set_icgc_ids(self, sample, dry_run=True):
-        sample.attributes.append(
-                Attribute(
-                    'icgc_sample_id',
-                    id_service(
-                        self.ctx, 'sample',
-                        self.ctx.obj['SETTINGS']['icgc_project_code'],
-                        sample.alias,
-                        True, # create param
-                        dry_run  # is_test param, eq to dry_run
-                    )
-                )
-            )
 
-        sample.attributes.append(
-                Attribute(
-                    'icgc_donor_id',
-                    id_service(
-                        self.ctx, 'donor',
-                        self.ctx.obj['SETTINGS']['icgc_project_code'],
-                        sample.subject_id,
-                        True,
-                        dry_run
-                    )
-                )
-            )
+        icgc_sample_id = id_service(
+            self.ctx, 'sample',
+            self.ctx.obj['SETTINGS']['icgc_project_code'],
+            sample.alias,
+            True, # create param
+            dry_run  # is_test param, eq to dry_run
+        )
 
-        sample.attributes.append(Attribute('submitted_using', 'egasub'))
+        sample.attributes.append(Attribute('icgc_sample_id', icgc_sample_id))
+
+        icgc_donor_id = id_service(
+            self.ctx, 'donor',
+            self.ctx.obj['SETTINGS']['icgc_project_code'],
+            sample.subject_id,
+            True,
+            dry_run
+        )
+        sample.attributes.append(Attribute('icgc_donor_id', icgc_donor_id))
+
+        sample.attributes.append(Attribute('submitted_using', 'egasub %s' % ver))
