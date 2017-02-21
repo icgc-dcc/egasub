@@ -64,6 +64,6 @@ class Sample(object):
                     sample_dict.get('bioSampleId'),
                     sample_dict.get('sampleAge'),
                     sample_dict.get('sampleDetail'),
-                    [] if not sample_dict.get('files') else [ Attribute.from_dict(attr_dict) for attr_dict in sample_dict.get('attributes')],
+                    [] if not sample_dict.get('attributes') else [ Attribute.from_dict(attr_dict) for attr_dict in sample_dict.get('attributes')],
                     None
         )

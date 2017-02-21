@@ -393,7 +393,7 @@ class Analysis(Submittable):
         # Chromosome references validation
         # for some reason EGA only excepts this for variant file submission, not alignment
         # but let's put it here, so it's required for both
-        if not type(self.analysis.chromosome_references) == list:
+        if not isinstance(self.analysis.chromosome_references) == list:
             self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value: chromosomeReferences must be a list.")
 
         for chr_ref in self.analysis.chromosome_references:
