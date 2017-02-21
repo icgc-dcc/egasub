@@ -57,7 +57,7 @@ class Analysis(object):
                 [] if not analysis_dict.get('files') else [ File.from_dict(file_dict) for file_dict in analysis_dict.get('files')],
                 [], # attribute
                 analysis_dict.get('genomeId'),
-                [] if not analysis_dict.get('chromosomeReferences') else map(lambda tag: ChromosomeReference(tag), analysis_dict.get('chromosomeReferences')),
+                [] if not analysis_dict.get('chromosomeReferences') else [ChromosomeReference(tag) for tag in analysis_dict.get('chromosomeReferences')],
                 analysis_dict.get('experimentTypeId'),
                 analysis_dict.get('platform')
             )

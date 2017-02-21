@@ -4,7 +4,7 @@ from click import echo, prompt
 
 from egasub import __version__ as ver
 from ..ega.entities import Submission, SubmissionSubsetData, Dataset, Attribute
-from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, prepare_submission
+from ..ega.services import login, logout, object_submission, delete_obj, prepare_submission
 from ..exceptions import CredentialsError
 from .submitter import Submitter
 
