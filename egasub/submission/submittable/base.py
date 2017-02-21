@@ -330,7 +330,7 @@ class Analysis(Submittable):
             self._analysis = EAnalysis.from_dict(self.metadata.get('analysis'))
             self.restore_latest_object_status('analysis')
 
-            self._analysis.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+            self._analysis.files = [EFile.from_dict(file_) for file_ in self.metadata.get('files')]
 
             # not sure for what reason, EGA validation expect to have at least one attribute
             self.analysis.attributes = [

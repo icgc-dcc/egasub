@@ -33,7 +33,7 @@ class Run(object):
                 run_dict.get('sampleId'),
                 run_dict.get('runFileTypeId'),
                 run_dict.get('experimentId'),
-                [] if not run_dict.get('files') else map(lambda file_dict: File.from_dict(file_dict), run_dict.get('files')),
+                [] if not run_dict.get('files') else [ File.from_dict(file_dict) for file_dict in run_dict.get('files') ],
                 None
             )
 

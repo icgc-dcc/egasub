@@ -57,7 +57,7 @@ def test_alignment():
         assert len(alignment.ftp_file_validation_errors) == 1
         assert alignment.ftp_file_validation_errors[0]['field'] == _field
         assert alignment.ftp_file_validation_errors[0]['error'] == _message
-        
+
 def test_unaligned():
     runner = CliRunner()
     with runner.isolated_filesystem():
