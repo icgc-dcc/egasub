@@ -159,7 +159,7 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     object_submission(ctx, policy, 'policy', dry_run=False)
 
     yaml_info['ega_policy_id'] = policy.id
-    
+
 def truncate_string(s, n):
     if len(s)>n: final_string = s[:n]+"..."
     else: final_string = s[:n]

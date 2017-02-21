@@ -82,7 +82,7 @@ def prepare_submission(ctx, submission):
     }
     r = requests.post(url,data=json.dumps(submission.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-    
+
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
 
 

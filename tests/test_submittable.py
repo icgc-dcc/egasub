@@ -44,7 +44,7 @@ def test_alignment():
         _alias = "alias"
         _field = "field"
         _message = "error message"
-        
+
         alignment._add_local_validation_error(_type,_alias,_field,_message)
         alignment._add_ftp_file_validation_error(_field,_message)
         

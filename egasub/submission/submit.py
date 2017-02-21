@@ -100,7 +100,7 @@ def submit_dataset(ctx, dry_run=True):
     values = [dataset['value'] for dataset in dataset_types]
 
     policy_id = ctx.obj['SETTINGS']['ega_policy_id']
-    
+
     run_or_analysis_references = []
     is_run = False
     not_submitted = []
