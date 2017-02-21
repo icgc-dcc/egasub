@@ -19,7 +19,7 @@ def test_login_function(ctx, mock_server):
         login(ctx)
 
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
-    
+
     login(ctx)
     assert not ctx.obj['SUBMISSION']['sessionToken'] == None
     assert ctx.obj['SUBMISSION']['sessionToken'] == "abcdefg"

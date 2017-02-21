@@ -15,7 +15,7 @@ def test_case_or_control_id():
 
 def test_gender_id():
     assert 2 == sample.gender_id
-    
+
 def test_organism_part():
     assert 'head' == sample.organism_part
     

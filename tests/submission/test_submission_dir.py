@@ -10,7 +10,7 @@ def test_init_submission_dir(ctx):
         init_submission_dir(ctx,[])
 
     ctx.obj['CURRENT_DIR_TYPE'] = "variation"
-    
+
     with pytest.raises(IOError):
         init_submission_dir(ctx,["ssample"])
         

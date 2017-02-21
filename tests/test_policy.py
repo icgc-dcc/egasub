@@ -10,7 +10,7 @@ def test_title():
 
 def test_policy_text():
     assert policy.policy_text == "Text about the policy"
-    
+
 def test_url():
     assert policy.url == "http://www.example.com"
     

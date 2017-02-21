@@ -12,7 +12,7 @@ def test_description():
 
 def test_subsets():
     assert subset == submission.submission_subset
-    
+
 def test_to_dict():
         assert cmp(
         {

@@ -45,7 +45,7 @@ def initialize_log(ctx, debug, info):
         logger.addHandler(ch)
         ctx.obj['LOGGER'] = logger
         return
-    
+
     log_directory = os.path.join(ctx.obj['WORKSPACE_PATH'],".log")
     log_file = "%s.log" % re.sub(r'[-:.]', '_', datetime.datetime.utcnow().isoformat())
     ctx.obj['log_file'] = log_file

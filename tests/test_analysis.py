@@ -33,7 +33,7 @@ def test_analysis_type_id():
 
 def test_genome_id():
     assert 4 == analysis.genome_id
-    
+
 def test_experiment_type_id():
     assert [3,5] == analysis.experiment_type_id
     

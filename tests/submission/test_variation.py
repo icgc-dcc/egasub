@@ -72,7 +72,7 @@ def test_variation():
             {'tag':'submitted_using','unit':None,'value':'egasub'}
         ]
     }
-    
+
     variation._add_local_validation_error("type", "alias", "field", "message")
 
     assert cmp(variation.sample.to_dict(),reference_sample) == 0

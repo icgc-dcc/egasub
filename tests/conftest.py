@@ -38,7 +38,7 @@ def mock_server(ctx):
     httpretty.register_uri(httpretty.POST,"%slogin" % (ctx.obj['SETTINGS']['apiUrl']),
                        body='{"header":{"code" : "200"},"response" : {"result" : [ { "session" : { "sessionToken":"abcdefg" }}]}}',
                        content_type="application/json")
-    
+
     httpretty.register_uri(httpretty.POST,"%ssubmissions" % (ctx.obj['SETTINGS']['apiUrl']),
                        body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
                        content_type="application/json")

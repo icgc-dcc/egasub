@@ -66,7 +66,7 @@ def test_alignment():
 
     assert cmp(alignment.sample.to_dict(),reference_sample) == 0
     assert cmp(alignment.analysis.to_dict(),reference_analysis)  == 0
-    
+
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         alignment = Alignment('sample_bad')

@@ -15,7 +15,7 @@ def test_title():
 
 def test_study_abstract():
     assert 'the abstract' == study.study_abstract
-    
+
 def test_own_term():
     assert 'own term' == study.own_term
     

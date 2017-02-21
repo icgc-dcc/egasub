@@ -10,7 +10,7 @@ def test_email():
 
 def test_organisation():
     assert 'Name of organisation' == contact.organisation
-    
+
 def test_phone_number():
     assert '000-0000' == contact.phone_number
 

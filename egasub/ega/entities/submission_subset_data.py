@@ -25,7 +25,7 @@ class SubmissionSubsetData(object):
 
     def to_xml(self):
         pass
-    
+
     @staticmethod
     def create_empty():
         return SubmissionSubsetData(None,None,None,None,None,None,None,None)

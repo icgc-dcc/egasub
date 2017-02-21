@@ -15,7 +15,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
             "LIAD-FR","LICA-CN","LICA-FR","LIHM-FR","LINC-JP","LIRI-JP","LUSC-CN","LUSC-KR","MALY-DE","MELA-AU","ORCA-IN","OV-AU",
             "PACA-AU","PACA-CA","PAEN-AU","PAEN-IT","PBCA-DE","PRAD-CA","PRAD-UK","RECA-CN","RECA-EU","SKCA-BR","THCA-SA",
         ]
-    
+
     #Ask user input for config.yaml
     if not ega_submitter_account:
         ega_submitter_account = prompt("Enter your EGA submitter account", default='')

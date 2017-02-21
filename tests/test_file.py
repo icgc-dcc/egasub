@@ -13,7 +13,7 @@ def test_checksum():
 
 def test_unencrypted_checksum():
     assert 'UnencryptedChecksum' == file_.unencrypted_checksum
-    
+
 def test_checksum_method():
     assert 'md5'.lower() == file_.checksum_method.lower()
     

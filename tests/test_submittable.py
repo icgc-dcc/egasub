@@ -21,7 +21,7 @@ def test_alignment():
     with runner.isolated_filesystem():
         submission_dir = "test"
         os.mkdir(submission_dir)
-        
+
         m = hashlib.md5()
         m.update("secret")
         
