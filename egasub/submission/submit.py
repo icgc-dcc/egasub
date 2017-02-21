@@ -141,7 +141,7 @@ def submit_dataset(ctx, dry_run=True):
 
     echo("Please choose one data type from the following list:")
     for i in xrange(0,len(value_dict)):
-    echo("["+str(i)+"]\t"+value_dict.get(str(i)))
+        echo("["+str(i)+"]\t"+value_dict.get(str(i)))
     echo("-----------")
     while True:
         dataset_type_id = prompt("Select the dataset type")
