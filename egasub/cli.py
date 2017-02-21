@@ -139,5 +139,5 @@ def dataset(ctx,submit,dry_run):
 
 
 if __name__ == '__main__':
-  main()
+  main(ctx)
 
