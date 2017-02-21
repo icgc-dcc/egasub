@@ -136,7 +136,7 @@ def register_obj(ctx, obj, obj_type):
                                         ctx.obj['SUBMISSION']['id'],
                                         _obj_type_to_endpoint(obj_type)
                                     )
-    
+
     headers = {
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
