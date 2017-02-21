@@ -33,7 +33,7 @@ class Analysis(object):
             'files' : map(lambda file: file.to_dict(), self.files),
             'attributes' : map(lambda att: att.to_dict(), self.attributes),
             'genomeId' : self.genome_id,
-            'chromosomeReferences' : map(lambda ref: ref.to_dict(), self.chromosome_references),
+            'chromosomeReferences' : [ ref.to_dict() for ref in self.chromosome_references],
             'experimentTypeId' : self.experiment_type_id,
             'platform' : self.platform,
             'alias' : self.alias,
