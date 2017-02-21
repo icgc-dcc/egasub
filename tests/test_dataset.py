@@ -25,7 +25,7 @@ def test_dataset_links():
 
 def test_attributes():
     assert attributes == dataset.attributes
-    
+
 def test_to_dict():
     assert cmp(
         {
@@ -38,6 +38,6 @@ def test_to_dict():
             'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
             'alias' : 'an alias'
         }, dataset.to_dict()) == 0
-        
+
 def test_alias():
     assert 'an alias' == dataset.alias

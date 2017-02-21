@@ -38,6 +38,6 @@ def test_to_dict():
             'alias' : 'an alias',
             'id': 'my_study'
         }, study.to_dict()) == 0
-        
+
 def test_alias():
     assert 'an alias' == study.alias

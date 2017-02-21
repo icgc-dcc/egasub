@@ -39,7 +39,7 @@ def test_alignment():
                       , outfile)
 
         alignment = Alignment(submission_dir)
-        
+
         _type = "type"
         _alias = "alias"
         _field = "field"

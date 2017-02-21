@@ -52,7 +52,7 @@ def test_get_settings():
     assert settings['icgc_id_service_token'] != 'fake-test'
     assert settings['ega_submitter_password'] != 'change-test'
     assert settings['icgc_project_code'] != 'PACA-TEST'
-    
+
 def test_find_workspace_root():
     workspace_root = "tests/data/workspace"
     assert find_workspace_root() == None

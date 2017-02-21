@@ -78,10 +78,10 @@ def test_alignment():
     # Check if the folder exists
     with pytest.raises(Exception):
         alignment = Alignment('sample_bad_99')
-        
+
     # Missing analysis.yaml file
     with pytest.raises(Exception):
         alignment = Alignment('sample_bad3')
-            
+
     os.chdir(initial_directory)
             

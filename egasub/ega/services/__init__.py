@@ -70,10 +70,10 @@ def logout(ctx):
 
 def prepare_submission(ctx, submission):
     """ This function checks if the submission has an ega id and requests one if not """
-    
+
     if 'id' in ctx.obj['SUBMISSION']:
         return
-    
+
     url = "%ssubmissions" % api_url(ctx)
 
     headers = {

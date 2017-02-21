@@ -92,5 +92,5 @@ def test_variation():
     # Check if the folder exists
     with pytest.raises(Exception):
         variation = Variation('sample_bad_99')
-            
+
     os.chdir(initial_directory)

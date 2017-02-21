@@ -117,7 +117,7 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     if not (study_alias and study_id):
         echo("Please enter the following to create a new EGS study.")
         study_alias = prompt("Study alias (required)")
-                
+
         study_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['study_types']['response']['result']
         ids = [dataset['tag'] for dataset in study_types]
         values = [dataset['value'] for dataset in study_types]
