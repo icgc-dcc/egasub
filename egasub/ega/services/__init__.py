@@ -59,7 +59,7 @@ def logout(ctx):
     """ Terminate the session token on EGA side and deleting the token on the client side. """
 
     url = "%slogout" % api_url(ctx)
-    
+
     headers = {
         'Content-Type': 'application/json',
         'X-Token': ctx.obj['SUBMISSION']['sessionToken']

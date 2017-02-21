@@ -24,7 +24,7 @@ def test_pub_med_ids():
 
 def test_tags():
     assert tags == study.custom_tags
-    
+
 def test_to_dict():
         assert cmp(
         {

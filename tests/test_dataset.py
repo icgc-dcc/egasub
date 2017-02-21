@@ -22,7 +22,7 @@ def test_analysis_references():
 
 def test_dataset_links():
     assert links == dataset.dataset_links
-    
+
 def test_attributes():
     assert attributes == dataset.attributes
     

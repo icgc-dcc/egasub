@@ -74,7 +74,7 @@ def test_alignment():
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         alignment = Alignment('samplebad$2')
-        
+
     # Check if the folder exists
     with pytest.raises(Exception):
         alignment = Alignment('sample_bad_99')

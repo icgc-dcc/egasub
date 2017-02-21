@@ -37,7 +37,7 @@ def test_alignment():
                 analysis = dict(title="a title"),
                 files=[dict(fileName="fileName", checksumMethod="md5")])
                       , outfile)
-        
+
         alignment = Alignment(submission_dir)
         
         _type = "type"

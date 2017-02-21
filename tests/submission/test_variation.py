@@ -88,7 +88,7 @@ def test_variation():
     # Missing experiment.yaml file
     with pytest.raises(Exception):
         variation = Variation('sample_bad3')
-        
+
     # Check if the folder exists
     with pytest.raises(Exception):
         variation = Variation('sample_bad_99')

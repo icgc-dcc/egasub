@@ -98,7 +98,7 @@ def submit_dataset(ctx, dry_run=True):
     dataset_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['dataset_types']['response']['result']
     ids = [dataset['tag'] for dataset in dataset_types]
     values = [dataset['value'] for dataset in dataset_types]
-    
+
     policy_id = ctx.obj['SETTINGS']['ega_policy_id']
     
     run_or_analysis_references = []

@@ -86,7 +86,7 @@ def test_unaligned():
     # Check if the folder exists
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad_99')
-        
+
     # Missing experiment.yaml file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')

@@ -45,19 +45,18 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
 
     current_dir = ctx.obj['CURRENT_DIR']
     egasub_dir = os.path.join(current_dir,'.egasub')
-    
+
     if os.access(current_dir, os.W_OK):
         if not os.path.exists(egasub_dir):
             ctx.obj['LOGGER'].info("Creation of .egasub directory")
             os.mkdir(egasub_dir)
-        
+
         with open(os.path.join(egasub_dir,'config.yaml'),'w') as outfile:
             yaml.safe_dump(yaml_info,outfile,default_flow_style=False)
-            
+
         ctx.obj['LOGGER'].info("Credentials added to .egasub/config.yaml file")
 
         ctx.obj['LOGGER'].info('EGA submission workspace initialized')
-        
     else:
         ctx.obj['LOGGER'].critical('Permission denied on directory '+current_dir)
 

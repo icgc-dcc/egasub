@@ -30,6 +30,6 @@ def test_to_dict():
             'id' : 22,
             'status': None
         }, run.to_dict()) == 0
-    
+
 def test_alias():
     assert 'an alias' == run.alias
