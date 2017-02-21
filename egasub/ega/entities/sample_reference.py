@@ -9,7 +9,7 @@ class SampleReference(object):
             'value' : self.value,
             'label' : self.label
             }
-        
+
     def to_xml(self):
         pass
 

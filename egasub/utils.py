@@ -53,7 +53,7 @@ def initialize_log(ctx, debug, info):
 
     if not os.path.isdir(log_directory):
         os.mkdir(log_directory)
-        
+
     fh = logging.FileHandler(log_file)
     fh.setLevel(logging.DEBUG)  # always set fh to debug
     fh.setFormatter(logFormatter)

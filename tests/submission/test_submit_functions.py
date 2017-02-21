@@ -1,12 +1,9 @@
-from egasub.ega.services import login,logout,prepare_submission, query_by_id, api_url, query_by_type, delete_obj, _obj_type_to_endpoint
+from egasub.ega.services import login,logout,prepare_submission, query_by_id, api_url, query_by_type, _obj_type_to_endpoint
 import pytest
 import requests
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 from egasub.ega.entities.submission import Submission
-from egasub.ega.entities.study import Study
 from egasub.exceptions import CredentialsError
-from egasub.ega.entities.sample import Sample
-from egasub.ega.entities.policy import Policy
 
 
 def test_login_function(ctx, mock_server):
@@ -26,7 +23,7 @@ def test_login_function(ctx, mock_server):
 
 def test_prepare_submission(ctx):
     requests.post("%ssubmissions" % (ctx.obj['SETTINGS']['apiUrl']))
-    
+
     subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11])
     submission = Submission('a title', 'a description', subset)
     

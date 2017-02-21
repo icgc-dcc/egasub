@@ -78,7 +78,7 @@ def test_unaligned():
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad')
-    
+
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad2$')

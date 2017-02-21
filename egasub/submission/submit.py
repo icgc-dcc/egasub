@@ -7,7 +7,6 @@ from ..ega.entities import Submission, SubmissionSubsetData, Dataset, Attribute
 from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
                             prepare_submission
 from ..exceptions import CredentialsError
-from .submittable import Alignment
 from .submitter import Submitter
 
 
@@ -86,7 +85,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
 def submit_dataset(ctx, dry_run=True):
     ctx.obj['LOGGER'].info("Login ...")
-    
+
     try:
         login(ctx)
     except CredentialsError, error:

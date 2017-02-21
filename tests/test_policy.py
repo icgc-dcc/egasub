@@ -13,7 +13,7 @@ def test_policy_text():
 
 def test_url():
     assert policy.url == "http://www.example.com"
-    
+
 def test_to_dict():
     assert cmp({'dacId':123,'title':'Title of DAC','policyText':'Text about the policy','url':'http://www.example.com','alias':'an alias'}, policy.to_dict()) == 0
     

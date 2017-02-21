@@ -18,7 +18,7 @@ def test_unaligned(ctx):
     ctx.obj['CURRENT_DIR_TYPE'] = "unaligned"
     with pytest.raises(IOError):
         init_submission_dir(ctx,submission_dirs)
-        
+
     submission_dirs = [""]
     init_submission_dir(ctx,submission_dirs)
     

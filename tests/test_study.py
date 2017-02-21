@@ -18,7 +18,7 @@ def test_study_abstract():
 
 def test_own_term():
     assert 'own term' == study.own_term
-    
+
 def test_pub_med_ids():
     assert [1,2,3] == study.pub_med_ids
     

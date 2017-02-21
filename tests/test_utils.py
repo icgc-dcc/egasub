@@ -8,7 +8,7 @@ def test_initialize_app(ctx):
         initialize_app(ctx)
 
 def test_get_current_dir_type(ctx):
-    
+
     with pytest.raises(KeyError):
         get_current_dir_type(ctx)
     

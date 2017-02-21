@@ -33,11 +33,11 @@ def login(ctx):
     #Check for the ega_submitter account
     if not ctx.obj['SETTINGS'].get('ega_submitter_account'):
         raise CredentialsError(Exception("Your 'ega_submitter_account' is missing."))
-    
+
     #Check for the ega submitter password
     if not ctx.obj['SETTINGS'].get('ega_submitter_password'):
         raise CredentialsError(Exception("Your 'ega_submitter_password' is missing."))
-    
+
     payload = {
         "username": ctx.obj['SETTINGS'].get('ega_submitter_account'),
         "password": ctx.obj['SETTINGS'].get('ega_submitter_password'),
@@ -46,7 +46,7 @@ def login(ctx):
 
     r = requests.post(url, data=payload)
     r_data = json.loads(r.text)
-    
+
     #Check if the credentials are accepted
     if r_data["header"]['code'] != '200':
         raise CredentialsError(Exception('Your credentials are invalid. Verify your EGA submitter username and password.'))

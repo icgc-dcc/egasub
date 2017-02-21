@@ -13,7 +13,7 @@ def test_init_submission_dir(ctx):
 
     with pytest.raises(IOError):
         init_submission_dir(ctx,["ssample"])
-        
+
     assert ctx.obj['LOGGER'].warning.counter == 3
     
     init_submission_dir(ctx,[""])

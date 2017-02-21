@@ -24,7 +24,7 @@ def test_alignment():
 
         m = hashlib.md5()
         m.update("secret")
-        
+
         md5_file = "fileName.md5"
         f = open(os.path.join(submission_dir,md5_file),"wb")
         f.write(m.hexdigest())

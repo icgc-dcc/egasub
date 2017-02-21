@@ -3,8 +3,6 @@ import os
 from egasub.submission.submittable import Variation
 from egasub.ega.entities import Sample, \
                                 Analysis as EAnalysis
-from egasub.exceptions import Md5sumFileError
-
 
 def test_variation():
     initial_directory = os.getcwd()
@@ -82,7 +80,7 @@ def test_variation():
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         variation = Variation('sample_bad')
-        
+
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         variation = Variation('sample_bad2$')

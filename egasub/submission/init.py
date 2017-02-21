@@ -31,7 +31,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
             else:
                 echo("Please enter a project from the following list:")
                 echo(', '.join(projects))
-        
+
     yaml_info = {
         'ega_submitter_account': ega_submitter_account,
         'ega_submitter_password': ega_submitter_password,

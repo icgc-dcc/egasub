@@ -36,7 +36,7 @@ def test_genome_id():
 
 def test_experiment_type_id():
     assert [3,5] == analysis.experiment_type_id
-    
+
 def test_platform():
     assert 'a platform' == analysis.platform
 

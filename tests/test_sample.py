@@ -18,37 +18,37 @@ def test_gender_id():
 
 def test_organism_part():
     assert 'head' == sample.organism_part
-    
+
 def test_cell_line():
     assert 'test line' == sample.cell_line
-    
+
 def test_region():
     assert 'test region' == sample.region
-    
+
 def test_phenotype():
     assert 'a phenotype' == sample.phenotype
-    
+
 def test_subject_id():
     assert 33 == sample.subject_id
-    
+
 def test_anonymized_name():
     assert 'anonymized name' == sample.anonymized_name
-    
+
 def test_bio_sample_id():
     assert 22 == sample.bio_sample_id
-    
+
 def test_sample_age():
     assert 10 == sample.sample_age
-    
+
 def test_sample_detail():
     assert 'some details' == sample.sample_detail
-    
+
 def test_attributes():
     assert attributes == sample.attributes
-    
+
 def test_alias():
     assert 'an alias' == sample.alias
-    
+
 def test_id():
     assert 33 == sample.id
 
