@@ -26,7 +26,7 @@ def test_prepare_submission(ctx):
 
     subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11])
     submission = Submission('a title', 'a description', subset)
-    
+
     prepare_submission(ctx,submission)
     assert ctx.obj['SUBMISSION']['id'] == "12345"
     

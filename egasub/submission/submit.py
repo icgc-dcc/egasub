@@ -94,7 +94,7 @@ def submit_dataset(ctx, dry_run=True):
     except Exception, error:
         ctx.obj['LOGGER'].critical(str(error))
         ctx.abort()
-        
+
     dataset_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['dataset_types']['response']['result']
     ids = [dataset['tag'] for dataset in dataset_types]
     values = [dataset['value'] for dataset in dataset_types]

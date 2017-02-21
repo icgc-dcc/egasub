@@ -38,7 +38,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
         'icgc_id_service_token': icgc_id_service_token,
         'icgc_project_code': icgc_project_code.upper()
         }
-    
+
     ctx.obj['LOGGER'].info("EGA and ICGC credentials collected")
 
     initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submitter_password)

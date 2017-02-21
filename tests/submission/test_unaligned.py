@@ -82,7 +82,7 @@ def test_unaligned():
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad2$')
-        
+
     # Check if the folder exists
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad_99')

@@ -19,7 +19,7 @@ def test_runs_references():
 
 def test_analysis_references():
     assert [8,21,4] == dataset.analysis_references
-    
+
 def test_dataset_links():
     assert links == dataset.dataset_links
     

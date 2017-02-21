@@ -29,7 +29,7 @@ def test_alignment():
         f = open(os.path.join(submission_dir,md5_file),"wb")
         f.write(m.hexdigest())
         f.close()
-        
+
         file_path = "analysis.yaml"
         with open(os.path.join(submission_dir,file_path),"w") as outfile:
             yaml.dump(dict(

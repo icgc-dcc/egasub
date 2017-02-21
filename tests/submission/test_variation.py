@@ -84,7 +84,7 @@ def test_variation():
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         variation = Variation('sample_bad2$')
-        
+
     # Missing experiment.yaml file
     with pytest.raises(Exception):
         variation = Variation('sample_bad3')

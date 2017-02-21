@@ -21,7 +21,7 @@ def test_own_term():
 
 def test_pub_med_ids():
     assert [1,2,3] == study.pub_med_ids
-    
+
 def test_tags():
     assert tags == study.custom_tags
     

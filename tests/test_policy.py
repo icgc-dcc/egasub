@@ -16,6 +16,6 @@ def test_url():
 
 def test_to_dict():
     assert cmp({'dacId':123,'title':'Title of DAC','policyText':'Text about the policy','url':'http://www.example.com','alias':'an alias'}, policy.to_dict()) == 0
-    
+
 def test_alias():
     assert 'an alias' == policy.alias

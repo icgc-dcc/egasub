@@ -67,7 +67,7 @@ def initialize_log(ctx, debug, info):
 
     logger.addHandler(fh)
     logger.addHandler(ch)
-    
+
     ctx.obj['LOGGER'] = logger
 
 def find_workspace_root(cwd=os.getcwd()):

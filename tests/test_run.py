@@ -18,7 +18,7 @@ def test_files():
 
 def test_id():
     assert 22 == run.id
-    
+
 def test_to_dict():
         assert cmp(
         {

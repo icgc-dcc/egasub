@@ -21,7 +21,7 @@ def test_unaligned(ctx):
 
     submission_dirs = [""]
     init_submission_dir(ctx,submission_dirs)
-    
+
 def test_variation(ctx):
     submission_dirs = ['test_1','test_2']
     ctx.obj['CURRENT_DIR_TYPE'] = "variati"
