@@ -63,7 +63,7 @@ def test_alignment():
             {'tag':'submitted_using','unit':None,'value':'egasub'}
         ]
     }
-    
+
     assert cmp(alignment.sample.to_dict(),reference_sample) == 0
     assert cmp(alignment.analysis.to_dict(),reference_analysis)  == 0
     
@@ -80,7 +80,7 @@ def test_alignment():
         alignment = Alignment('sample_bad_99')
         
     # Missing analysis.yaml file
-    with pytest.raises(Exception):    
+    with pytest.raises(Exception):
         alignment = Alignment('sample_bad3')
             
     os.chdir(initial_directory)

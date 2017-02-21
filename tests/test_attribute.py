@@ -10,6 +10,6 @@ def test_value():
 
 def test_unit():
     assert 'an unit' == attribute.unit
-    
+
 def test_to_dict():
     assert cmp({'tag':'The tag','value':'The value','unit':'an unit'}, attribute.to_dict()) == 0

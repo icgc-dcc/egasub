@@ -17,7 +17,7 @@ def test_login_function(ctx, mock_server):
 
     with pytest.raises(CredentialsError):
         login(ctx)
-        
+
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
     
     login(ctx)

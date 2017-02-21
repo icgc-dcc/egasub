@@ -15,7 +15,7 @@ class File(object):
             'unencryptedChecksum' : self.unencrypted_checksum,
             'checksumMethod' : self.checksum_method
         }
-    
+
     def to_xml(self):
         pass
 

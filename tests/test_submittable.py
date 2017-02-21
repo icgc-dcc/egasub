@@ -15,7 +15,7 @@ def test_get_md5Sum():
         f.write(m.hexdigest())
         f.close()
         _get_md5sum(file_path)
-        
+
 def test_alignment():
     runner = CliRunner()
     with runner.isolated_filesystem():

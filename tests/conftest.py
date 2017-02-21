@@ -34,7 +34,7 @@ def ctx():
 @pytest.fixture(scope="session")
 def mock_server(ctx):
     httpretty.enable()
-    
+
     httpretty.register_uri(httpretty.POST,"%slogin" % (ctx.obj['SETTINGS']['apiUrl']),
                        body='{"header":{"code" : "200"},"response" : {"result" : [ { "session" : { "sessionToken":"abcdefg" }}]}}',
                        content_type="application/json")

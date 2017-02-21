@@ -11,5 +11,5 @@ def file_exists(host, username, password,file_path):
         pass  # do nothing
 
     ftp.quit()
-    
+
     return file_size is not None

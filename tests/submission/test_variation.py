@@ -33,7 +33,7 @@ def test_variation():
         'status': None,
         'sampleDetail': None
     }
-    
+
     reference_analysis = {
         'title': 'The title of the analysis',
         'description': 'description',
@@ -87,7 +87,7 @@ def test_variation():
     with pytest.raises(Exception):
         variation = Variation('sample_bad2$')
         
-    #Missing experiment.yaml file   
+    # Missing experiment.yaml file
     with pytest.raises(Exception):
         variation = Variation('sample_bad3')
         

@@ -12,7 +12,7 @@ def test_short_name():
 
 def test_title():
     assert 'the title' == study.title
-    
+
 def test_study_abstract():
     assert 'the abstract' == study.study_abstract
     

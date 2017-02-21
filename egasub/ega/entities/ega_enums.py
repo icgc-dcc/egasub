@@ -15,6 +15,6 @@ class EgaEnums(object):
                 with open(file_path) as data_file:
                     enums[os.path.splitext(file)[0]] = json.load(data_file)
         return enums
-    
+
     def lookup(self, field):
         return self._enums[field]['response']['result']

@@ -32,7 +32,7 @@ def initialize_app(ctx):
 def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
     logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s] %(message)s")
-    
+
     logger.setLevel(logging.DEBUG)
 
     if ctx.obj['WORKSPACE_PATH'] == None:

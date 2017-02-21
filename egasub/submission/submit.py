@@ -82,7 +82,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
-    
+
     
 def submit_dataset(ctx, dry_run=True):
     ctx.obj['LOGGER'].info("Login ...")

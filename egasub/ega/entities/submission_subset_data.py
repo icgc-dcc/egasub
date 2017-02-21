@@ -22,7 +22,7 @@ class SubmissionSubsetData(object):
             'sampleIds' : self.sample_ids,
             'studyIds' : self.study_ids
             }
-        
+
     def to_xml(self):
         pass
     

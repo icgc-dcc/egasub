@@ -128,7 +128,7 @@ def dataset(ctx,submit,dry_run):
     Submit or test a dataset submission.
     """
     utils.initialize_app(ctx)
-    
+
     if submit:
         submit_dataset(ctx, dry_run=False)
     elif dry_run:

@@ -28,7 +28,6 @@ def login(ctx):
     """
     Documentation: https://ega-archive.org/submission/programmatic_submissions/how-to-use-the-api#Login
     """
-        
     url = "%slogin" % api_url(ctx)
     
     #Check for the ega_submitter account

@@ -10,7 +10,7 @@ def test_file_name():
 
 def test_checksum():
     assert 'CheckSum' == file_.checksum
-    
+
 def test_unencrypted_checksum():
     assert 'UnencryptedChecksum' == file_.unencrypted_checksum
     

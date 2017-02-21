@@ -7,7 +7,7 @@ def test_dac_id():
 
 def test_title():
     assert policy.title == "Title of DAC"
-    
+
 def test_policy_text():
     assert policy.policy_text == "Text about the policy"
     

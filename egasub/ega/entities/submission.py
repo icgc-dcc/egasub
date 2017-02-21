@@ -11,6 +11,6 @@ class Submission(object):
             "description" : self.description,
             "submissionSubset" : self.submission_subset.to_dict()
             }
-        
+
     def to_xml(self):
         pass

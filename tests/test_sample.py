@@ -12,7 +12,7 @@ def test_description():
 
 def test_case_or_control_id():
     assert 123 == sample.case_or_control_id
-    
+
 def test_gender_id():
     assert 2 == sample.gender_id
     

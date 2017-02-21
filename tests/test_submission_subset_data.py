@@ -10,22 +10,22 @@ def test_dac_ids():
 
 def test_dataset_ids():
     assert [4,3] == subset_data.dataset_ids
-    
+
 def test_experiment_ids():
     assert [5,1] == subset_data.experiment_ids
-    
+
 def test_policy_ids():
     assert [88,7] == subset_data.policy_ids
-    
+
 def test_run_ids():
     assert [11,3] == subset_data.run_ids
-    
+
 def test_sample_ids():
     assert [44,11] == subset_data.sample_ids
-    
+
 def test_study_ids():
     assert [66,11] == subset_data.study_ids
-    
+
 def test_to_dict():
         assert cmp(
         {

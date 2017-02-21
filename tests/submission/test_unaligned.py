@@ -52,7 +52,7 @@ def test_unaligned():
                     'alias': None,
                     'status': None
                 }
-    
+
     reference_run = {
                     'files': [
                         {

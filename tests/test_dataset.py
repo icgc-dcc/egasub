@@ -10,7 +10,7 @@ dataset = Dataset('an alias',[3,4,5],3,[6,1,4],[8,21,4],'a title',links,attribut
 
 def test_dataset_type_ids():
     assert [3,4,5] == dataset.dataset_type_ids
-    
+
 def test_policy_id():
     assert 3 == dataset.policy_id
     
