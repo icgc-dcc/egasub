@@ -305,7 +305,7 @@ def delete_obj(ctx, obj_type, obj_id):
 
 def submit_submission(ctx,submission):
     url = "%ssubmissions/%s?action=SUBMIT" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
-    
+
     headers = {
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']

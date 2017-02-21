@@ -4,8 +4,7 @@ from click import echo, prompt
 
 from egasub import __version__ as ver
 from ..ega.entities import Submission, SubmissionSubsetData, Dataset, Attribute
-from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
-                            prepare_submission
+from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, prepare_submission
 from ..exceptions import CredentialsError
 from .submitter import Submitter
 
@@ -126,7 +125,7 @@ def submit_dataset(ctx, dry_run=True):
     value_dict = dict(zip(ids,values))
     for i in xrange(0,len(value_dict)):
         print "["+str(i)+"]\t"+value_dict.get(str(i))
-    
+
     echo("-----------")
     while True:
         dataset_type_id = prompt("Select the dataset type")

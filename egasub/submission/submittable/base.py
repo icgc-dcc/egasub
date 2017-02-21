@@ -96,7 +96,7 @@ class Submittable(object):
         yaml_file = os.path.join(self.path, '.'.join([self.type, 'yaml']))
         try:
             with open(yaml_file, 'r') as yaml_stream:
-                self._metadata = yaml.load(yaml_stream)
+                self._metadata = yaml.safe_load(yaml_stream)
 
             # some basic validation of the YAML
             if self.type == 'experiment':
@@ -239,7 +239,7 @@ class Experiment(Submittable):
             self._run = ERun.from_dict(self.metadata.get('run'))
             self.restore_latest_object_status('run')
 
-            self.run.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+            self.run.files = [EFile.from_dict(file_) for file_ in self.metadata.get('files')]
         except Exception, err:
             raise Exception("Can not create submission from this directory: %s. Please verify it's content. Error: %s" % (self._path, err))
 
