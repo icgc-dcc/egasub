@@ -137,7 +137,3 @@ def dataset(ctx,submit,dry_run):
         ctx.obj['LOGGER'].error("You must choose one of the options: --submit or --dry_run")
         ctx.abort()
 
-
-if __name__ == '__main__':
-  main(ctx)
-
