@@ -12,7 +12,6 @@ class Dataset(object):
         self.attributes = attributes
         self.id = id_
 
-        
     def to_dict(self):
         return {
             'alias' : self.alias,
@@ -25,6 +24,5 @@ class Dataset(object):
             'attributes' : map(lambda attribute: attribute.to_dict(), self.attributes)
         }
 
-        
     def to_xml(self):
         pass

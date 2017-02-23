@@ -13,7 +13,7 @@ def test_unaligned():
     assert isinstance(unaligned.sample, Sample)
     assert isinstance(unaligned.experiment, EExperiment)
     assert isinstance(unaligned.run, ERun)
-    
+
     reference_sample = {
                     'genderId': 1,
                     'cellLine': None,
@@ -33,7 +33,7 @@ def test_unaligned():
                     'sampleDetail': None,
                     'status': None
                 }
-    
+
     reference_experiment = {
                     'libraryLayoutId': 1,
                     'pairedNominalLength': 420,
@@ -52,7 +52,7 @@ def test_unaligned():
                     'alias': None,
                     'status': None
                 }
-    
+
     reference_run = {
                     'files': [
                         {
@@ -74,21 +74,21 @@ def test_unaligned():
     assert cmp(unaligned.sample.to_dict(),reference_sample) == 0
     assert cmp(unaligned.experiment.to_dict(),reference_experiment)  == 0
     assert cmp(unaligned.run.to_dict(),reference_run)  == 0
-    
+
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad')
-    
+
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad2$')
-        
+
     # Check if the folder exists
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad_99')
-        
-    # Missing experiment.yaml file    
-    with pytest.raises(Exception):    
+
+    # Missing experiment.yaml file
+    with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')
 
     os.chdir(initial_directory)

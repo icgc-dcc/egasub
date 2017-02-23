@@ -1,7 +1,6 @@
 from click import echo, prompt
 import os
 import yaml
-import json
 from ..ega.entities import Dac, Policy, Contact, Study, Submission, SubmissionSubsetData
 from ..ega.services import login, object_submission, query_by_type, prepare_submission
 from ..exceptions import CredentialsError
@@ -16,7 +15,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
             "LIAD-FR","LICA-CN","LICA-FR","LIHM-FR","LINC-JP","LIRI-JP","LUSC-CN","LUSC-KR","MALY-DE","MELA-AU","ORCA-IN","OV-AU",
             "PACA-AU","PACA-CA","PAEN-AU","PAEN-IT","PBCA-DE","PRAD-CA","PRAD-UK","RECA-CN","RECA-EU","SKCA-BR","THCA-SA",
         ]
-    
+
     #Ask user input for config.yaml
     if not ega_submitter_account:
         ega_submitter_account = prompt("Enter your EGA submitter account", default='')
@@ -32,33 +31,32 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
             else:
                 echo("Please enter a project from the following list:")
                 echo(', '.join(projects))
-        
+
     yaml_info = {
         'ega_submitter_account': ega_submitter_account,
         'ega_submitter_password': ega_submitter_password,
         'icgc_id_service_token': icgc_id_service_token,
         'icgc_project_code': icgc_project_code.upper()
         }
-    
+
     ctx.obj['LOGGER'].info("EGA and ICGC credentials collected")
 
     initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submitter_password)
 
     current_dir = ctx.obj['CURRENT_DIR']
     egasub_dir = os.path.join(current_dir,'.egasub')
-    
+
     if os.access(current_dir, os.W_OK):
         if not os.path.exists(egasub_dir):
             ctx.obj['LOGGER'].info("Creation of .egasub directory")
             os.mkdir(egasub_dir)
-        
+
         with open(os.path.join(egasub_dir,'config.yaml'),'w') as outfile:
             yaml.safe_dump(yaml_info,outfile,default_flow_style=False)
-            
+
         ctx.obj['LOGGER'].info("Credentials added to .egasub/config.yaml file")
 
         ctx.obj['LOGGER'].info('EGA submission workspace initialized')
-        
     else:
         ctx.obj['LOGGER'].critical('Permission denied on directory '+current_dir)
 
@@ -66,7 +64,7 @@ def init_workspace(ctx,ega_submitter_account=None,ega_submitter_password=None,ic
 def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submitter_password):
     """
     Function to create dummy Dac and Policy, and associate existing EGA study with
-    the EGA submission workspace to be initialized. Will create new EGA study if none exists 
+    the EGA submission workspace to be initialized. Will create new EGA study if none exists
     """
     if not ctx.obj.get('SETTINGS'):
         ctx.obj['SETTINGS'] = {}
@@ -119,7 +117,7 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     if not (study_alias and study_id):
         echo("Please enter the following to create a new EGS study.")
         study_alias = prompt("Study alias (required)")
-                
+
         study_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['study_types']['response']['result']
         ids = [dataset['tag'] for dataset in study_types]
         values = [dataset['value'] for dataset in study_types]
@@ -161,7 +159,7 @@ def initialize_dac_policy_study(ctx, yaml_info, ega_submitter_account, ega_submi
     object_submission(ctx, policy, 'policy', dry_run=False)
 
     yaml_info['ega_policy_id'] = policy.id
-    
+
 def truncate_string(s, n):
     if len(s)>n: final_string = s[:n]+"..."
     else: final_string = s[:n]

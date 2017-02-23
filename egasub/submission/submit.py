@@ -1,20 +1,17 @@
 import os
-import sys
 import re
 from click import echo, prompt
 
 from egasub import __version__ as ver
-from ..ega.entities import Study, Submission, SubmissionSubsetData, Dataset, Attribute
-from ..ega.services import login, logout, object_submission, query_by_id, delete_obj, \
-                            prepare_submission
-from ..exceptions import ImproperlyConfigured, EgaSubmissionError, EgaObjectExistsError, CredentialsError
-from .submittable import Unaligned, Alignment
+from ..ega.entities import Submission, SubmissionSubsetData, Dataset, Attribute
+from ..ega.services import login, logout, object_submission, delete_obj, prepare_submission
+from ..exceptions import CredentialsError
 from .submitter import Submitter
 
 
 def perform_submission(ctx, submission_dirs, dry_run=True):
     ctx.obj['LOGGER'].info("Login ...")
-    
+
     try:
         login(ctx)
     except CredentialsError as error:
@@ -83,11 +80,11 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     ctx.obj['LOGGER'].info("Logging out the session")
     logout(ctx)
-    
-    
+
+
 def submit_dataset(ctx, dry_run=True):
     ctx.obj['LOGGER'].info("Login ...")
-    
+
     try:
         login(ctx)
     except CredentialsError, error:
@@ -96,13 +93,13 @@ def submit_dataset(ctx, dry_run=True):
     except Exception, error:
         ctx.obj['LOGGER'].critical(str(error))
         ctx.abort()
-        
+
     dataset_types = ctx.obj['EGA_ENUMS'].__dict__['_enums']['dataset_types']['response']['result']
     ids = [dataset['tag'] for dataset in dataset_types]
     values = [dataset['value'] for dataset in dataset_types]
-    
+
     policy_id = ctx.obj['SETTINGS']['ega_policy_id']
-    
+
     run_or_analysis_references = []
     is_run = False
     not_submitted = []
@@ -127,7 +124,7 @@ def submit_dataset(ctx, dry_run=True):
             to_be_submitted.append(sub_folder)
         else:
             not_submitted.append(sub_folder)
-        
+
     if not_submitted:
         ctx.obj['LOGGER'].error("Error: all submission directories must be in 'SUBMITTED' status before a dataset can be created. The following submission directories have not been submitted: \n%s" % '\n'.join(not_submitted))
         logout(ctx)
@@ -145,7 +142,6 @@ def submit_dataset(ctx, dry_run=True):
     echo("Please choose one data type from the following list:")
     for i in xrange(0,len(value_dict)):
         echo("["+str(i)+"]\t"+value_dict.get(str(i)))
-    
     echo("-----------")
     while True:
         dataset_type_id = prompt("Select the dataset type")
@@ -201,6 +197,6 @@ def submittable_status(_file):
             for last in f:
                 pass
         return last.strip().split('\t')
-    except:
+    except Exception:
         return None
 

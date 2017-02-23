@@ -2,10 +2,7 @@ import pytest
 import os
 from egasub.submission.submittable import Alignment
 from egasub.ega.entities import Sample, \
-                                Experiment as EExperiment, \
                                 Analysis as EAnalysis
-from egasub.exceptions import Md5sumFileError
-
 
 def test_alignment():
     initial_directory = os.getcwd()
@@ -14,7 +11,7 @@ def test_alignment():
 
     assert isinstance(alignment.sample, Sample)
     assert isinstance(alignment.analysis, EAnalysis)
-    
+
     reference_sample = {
         'genderId': 1,
         'status': None,
@@ -34,7 +31,7 @@ def test_alignment():
         'anonymizedName': None,
         'sampleDetail': None
     }
-    
+
     reference_analysis = {
         'title': 'The title of the analysis',
         'description': 'description',
@@ -66,25 +63,25 @@ def test_alignment():
             {'tag':'submitted_using','unit':None,'value':'egasub'}
         ]
     }
-    
+
     assert cmp(alignment.sample.to_dict(),reference_sample) == 0
     assert cmp(alignment.analysis.to_dict(),reference_analysis)  == 0
-    
+
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         alignment = Alignment('sample_bad')
-        
+
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         alignment = Alignment('samplebad$2')
-        
+
     # Check if the folder exists
-    with pytest.raises(Exception):    
+    with pytest.raises(Exception):
         alignment = Alignment('sample_bad_99')
-        
-    # Missing analysis.yaml file    
-    with pytest.raises(Exception):    
+
+    # Missing analysis.yaml file
+    with pytest.raises(Exception):
         alignment = Alignment('sample_bad3')
-            
+
     os.chdir(initial_directory)
             

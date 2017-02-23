@@ -1,10 +1,8 @@
 import os
 import re
 import yaml
-import glob
 import ftplib
 from click import echo
-from egasub.ega.entities.file import File
 import logging
 import datetime
 from egasub.ega.entities import EgaEnums
@@ -28,13 +26,13 @@ def initialize_app(ctx):
     if not ctx.obj['CURRENT_DIR_TYPE']:
         ctx.obj['LOGGER'].critical("You must run this command directly under a 'submission batch' directory named with this pattern: (unaligned|alignment|variation)\.([a-zA-Z0-9_\-]+). You can create 'submission batch' directories under the current workspace: %s" % ctx.obj['WORKSPACE_PATH'])
         ctx.abort()
-        
+
     ctx.obj['EGA_ENUMS'] = EgaEnums()
-        
+
 def initialize_log(ctx, debug, info):
     logger = logging.getLogger('ega_submission')
     logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s] %(message)s")
-    
+
     logger.setLevel(logging.DEBUG)
 
     if ctx.obj['WORKSPACE_PATH'] == None:
@@ -47,7 +45,7 @@ def initialize_log(ctx, debug, info):
         logger.addHandler(ch)
         ctx.obj['LOGGER'] = logger
         return
-    
+
     log_directory = os.path.join(ctx.obj['WORKSPACE_PATH'],".log")
     log_file = "%s.log" % re.sub(r'[-:.]', '_', datetime.datetime.utcnow().isoformat())
     ctx.obj['log_file'] = log_file
@@ -55,7 +53,7 @@ def initialize_log(ctx, debug, info):
 
     if not os.path.isdir(log_directory):
         os.mkdir(log_directory)
-        
+
     fh = logging.FileHandler(log_file)
     fh.setLevel(logging.DEBUG)  # always set fh to debug
     fh.setFormatter(logFormatter)
@@ -69,7 +67,7 @@ def initialize_log(ctx, debug, info):
 
     logger.addHandler(fh)
     logger.addHandler(ch)
-    
+
     ctx.obj['LOGGER'] = logger
 
 def find_workspace_root(cwd=os.getcwd()):
@@ -103,7 +101,7 @@ def get_settings(wspath):
         return None
 
     with open(config_file, 'r') as f:
-        settings = yaml.load(f)
+        settings = yaml.safe_load(f)
 
     return settings
 
@@ -127,19 +125,4 @@ def file_pattern_exist(dirname, pattern):
 
     return False
 
-
-def ftp_files(path, ctx):
-    host = ctx.obj['SETTINGS']['ftp_server']
-    _, user, passwd = ctx.obj['AUTH'].split('%20') if len(ctx.obj['AUTH'].split('%20')) == 3 else ('', '', '')
-
-    ftp = ftplib.FTP(host, user, passwd)
-
-    files = []
-    try:
-        files = ftp.nlst(path)
-    except ftplib.error_perm, resp:
-        echo('Error: unable to connect to FTP server.', err=True)
-        ctx.abort()
-
-    return files
 

@@ -9,7 +9,6 @@ class Policy(object):
         self.url = url
         self.id = id_
 
-
     def to_dict(self):
         return {
             'alias' : self.alias,
@@ -19,6 +18,5 @@ class Policy(object):
             'url' : self.url
             }
 
-        
     def to_xml(self):
         pass

@@ -1,6 +1,4 @@
 from file import File
-from sample_reference import SampleReference
-from attribute import Attribute
 from chromosome_reference import ChromosomeReference
 
 class Analysis(object):
@@ -35,7 +33,7 @@ class Analysis(object):
             'files' : map(lambda file: file.to_dict(), self.files),
             'attributes' : map(lambda att: att.to_dict(), self.attributes),
             'genomeId' : self.genome_id,
-            'chromosomeReferences' : map(lambda ref: ref.to_dict(), self.chromosome_references),
+            'chromosomeReferences' : [ ref.to_dict() for ref in self.chromosome_references],
             'experimentTypeId' : self.experiment_type_id,
             'platform' : self.platform,
             'alias' : self.alias,
@@ -56,10 +54,10 @@ class Analysis(object):
                 analysis_dict.get('analysisCenter'),
                 analysis_dict.get('analysisDate'),
                 analysis_dict.get('analysisTypeId'),
-                [] if not analysis_dict.get('files') else map(lambda file_dict: File.from_dict(file_dict), analysis_dict.get('files')),
+                [] if not analysis_dict.get('files') else [ File.from_dict(file_dict) for file_dict in analysis_dict.get('files')],
                 [], # attribute
                 analysis_dict.get('genomeId'),
-                [] if not analysis_dict.get('chromosomeReferences') else map(lambda tag: ChromosomeReference(tag), analysis_dict.get('chromosomeReferences')),
+                [] if not analysis_dict.get('chromosomeReferences') else [ChromosomeReference(tag) for tag in analysis_dict.get('chromosomeReferences')],
                 analysis_dict.get('experimentTypeId'),
                 analysis_dict.get('platform')
             )

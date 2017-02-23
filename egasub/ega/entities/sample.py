@@ -4,7 +4,7 @@ from .attribute import Attribute
 class Sample(object):
     def __init__(self,alias,title,description,case_or_control_id,gender_id,organism_part,
                  cell_line,region,phenotype, subject_id, anonymized_name, bio_sample_id,
-                 sample_age, sample_detail, attributes,id, status=None):
+                 sample_age, sample_detail, attributes,id_,status=None):
         self.alias = alias
         self.title = title
         self.description  = description
@@ -20,9 +20,8 @@ class Sample(object):
         self.sample_age = sample_age
         self.sample_detail = sample_detail
         self.attributes = attributes
-        self.id = id
+        self.id = id_
         self.status = status
-
 
     def to_dict(self):
         return {
@@ -45,10 +44,8 @@ class Sample(object):
             'status': self.status
             }
 
-
     def to_xml(self):
         pass
-
 
     @staticmethod
     def from_dict(sample_dict):
@@ -67,6 +64,6 @@ class Sample(object):
                     sample_dict.get('bioSampleId'),
                     sample_dict.get('sampleAge'),
                     sample_dict.get('sampleDetail'),
-                    [] if not sample_dict.get('attributes') else map(lambda attr_dict: Attribute.from_dict(attr_dict), sample_dict.get('attributes')),
+                    [] if not sample_dict.get('attributes') else [ Attribute.from_dict(attr_dict) for attr_dict in sample_dict.get('attributes')],
                     None
         )

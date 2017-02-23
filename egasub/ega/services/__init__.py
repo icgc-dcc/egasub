@@ -28,17 +28,16 @@ def login(ctx):
     """
     Documentation: https://ega-archive.org/submission/programmatic_submissions/how-to-use-the-api#Login
     """
-        
     url = "%slogin" % api_url(ctx)
-    
+
     #Check for the ega_submitter account
     if not ctx.obj['SETTINGS'].get('ega_submitter_account'):
         raise CredentialsError(Exception("Your 'ega_submitter_account' is missing."))
-    
+
     #Check for the ega submitter password
     if not ctx.obj['SETTINGS'].get('ega_submitter_password'):
         raise CredentialsError(Exception("Your 'ega_submitter_password' is missing."))
-    
+
     payload = {
         "username": ctx.obj['SETTINGS'].get('ega_submitter_account'),
         "password": ctx.obj['SETTINGS'].get('ega_submitter_password'),
@@ -47,7 +46,7 @@ def login(ctx):
 
     r = requests.post(url, data=payload)
     r_data = json.loads(r.text)
-    
+
     #Check if the credentials are accepted
     if r_data["header"]['code'] != '200':
         raise CredentialsError(Exception('Your credentials are invalid. Verify your EGA submitter username and password.'))
@@ -58,9 +57,9 @@ def login(ctx):
 
 def logout(ctx):
     """ Terminate the session token on EGA side and deleting the token on the client side. """
-        
+
     url = "%slogout" % api_url(ctx)
-    
+
     headers = {
         'Content-Type': 'application/json',
         'X-Token': ctx.obj['SUBMISSION']['sessionToken']
@@ -71,10 +70,10 @@ def logout(ctx):
 
 def prepare_submission(ctx, submission):
     """ This function checks if the submission has an ega id and requests one if not """
-    
+
     if 'id' in ctx.obj['SUBMISSION']:
         return
-    
+
     url = "%ssubmissions" % api_url(ctx)
 
     headers = {
@@ -83,7 +82,7 @@ def prepare_submission(ctx, submission):
     }
     r = requests.post(url,data=json.dumps(submission.to_dict()), headers=headers)
     r_data = json.loads(r.text)
-    
+
     ctx.obj['SUBMISSION']['id'] = r_data['response']['result'][0]['id']
 
 
@@ -137,7 +136,7 @@ def register_obj(ctx, obj, obj_type):
                                         ctx.obj['SUBMISSION']['id'],
                                         _obj_type_to_endpoint(obj_type)
                                     )
-    
+
     headers = {
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']
@@ -306,7 +305,7 @@ def delete_obj(ctx, obj_type, obj_id):
 
 def submit_submission(ctx,submission):
     url = "%ssubmissions/%s?action=SUBMIT" % (EGA_SUB_URL_PROD,ctx.obj['SUBMISSION']['id'])
-    
+
     headers = {
         'Content-Type': 'application/json',
         'X-Token' : ctx.obj['SUBMISSION']['sessionToken']

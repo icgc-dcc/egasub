@@ -6,13 +6,13 @@ submission = Submission('a title', 'a description', subset)
 
 def test_title():
     assert 'a title' == submission.title
-    
+
 def test_description():
     assert 'a description' == submission.description
-    
+
 def test_subsets():
     assert subset == submission.submission_subset
-    
+
 def test_to_dict():
         assert cmp(
         {

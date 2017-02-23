@@ -2,10 +2,7 @@ import pytest
 import os
 from egasub.submission.submittable import Variation
 from egasub.ega.entities import Sample, \
-                                Experiment as EExperiment, \
                                 Analysis as EAnalysis
-from egasub.exceptions import Md5sumFileError
-
 
 def test_variation():
     initial_directory = os.getcwd()
@@ -14,7 +11,7 @@ def test_variation():
 
     assert isinstance(variation.sample, Sample)
     assert isinstance(variation.analysis, EAnalysis)
-    
+
     reference_sample = {
         'genderId': 1,
         'cellLine' : None,
@@ -34,7 +31,7 @@ def test_variation():
         'status': None,
         'sampleDetail': None
     }
-    
+
     reference_analysis = {
         'title': 'The title of the analysis',
         'description': 'description',
@@ -73,27 +70,27 @@ def test_variation():
             {'tag':'submitted_using','unit':None,'value':'egasub'}
         ]
     }
-    
+
     variation._add_local_validation_error("type", "alias", "field", "message")
 
     assert cmp(variation.sample.to_dict(),reference_sample) == 0
     assert cmp(variation.analysis.to_dict(),reference_analysis)  == 0
-    assert variation.local_validation_errors[0] == {'object_alias':'alias','field':'field','object_type':'type','error':'message'}    
+    assert variation.local_validation_errors[0] == {'object_alias':'alias','field':'field','object_type':'type','error':'message'}
 
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         variation = Variation('sample_bad')
-        
+
     # Check if the folder name is malformed
     with pytest.raises(Exception):
         variation = Variation('sample_bad2$')
-        
-    # Missing experiment.yaml file    
-    with pytest.raises(Exception):    
+
+    # Missing experiment.yaml file
+    with pytest.raises(Exception):
         variation = Variation('sample_bad3')
-        
+
     # Check if the folder exists
-    with pytest.raises(Exception):    
+    with pytest.raises(Exception):
         variation = Variation('sample_bad_99')
-            
+
     os.chdir(initial_directory)

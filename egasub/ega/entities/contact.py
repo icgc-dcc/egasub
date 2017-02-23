@@ -6,7 +6,7 @@ class Contact(object):
         self.email = email
         self.organisation = organisation
         self.phone_number = phone_number
-        
+
     def to_dict(self):
         return {
             'contactName' : self.contact_name,
@@ -14,6 +14,6 @@ class Contact(object):
             'organisation' : self.organisation,
             'phoneNumber' : self.phone_number
             }
-        
+
     def to_xml(self):
         pass

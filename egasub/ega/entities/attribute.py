@@ -1,4 +1,3 @@
-import yaml
 
 class Attribute(object):
     def __init__(self, tag, value="", unit=None):
@@ -21,7 +20,6 @@ class Attribute(object):
             xml_string += "<UNIT>%s</UNIT>\n" % (self.unit)
         return xml_string
 
-    
     @staticmethod
     def from_dict(attr_dict):
         return Attribute(attr_dict.get('tag'),attr_dict.get('value'),attr_dict.get('unit'))

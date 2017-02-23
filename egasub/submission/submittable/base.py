@@ -2,7 +2,7 @@ import os
 import re
 import yaml
 import time
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractproperty
 
 from egasub.exceptions import Md5sumFileError
 from egasub.ega.entities import Sample, Attribute, \
@@ -85,7 +85,7 @@ class Submittable(object):
                 "field": field,
                 "error": message
             })
-        
+
     def _add_ftp_file_validation_error(self,field,message):
         self._ftp_file_validation_errors.append({
                 "field": field,
@@ -96,7 +96,7 @@ class Submittable(object):
         yaml_file = os.path.join(self.path, '.'.join([self.type, 'yaml']))
         try:
             with open(yaml_file, 'r') as yaml_stream:
-                self._metadata = yaml.load(yaml_stream)
+                self._metadata = yaml.safe_load(yaml_stream)
 
             # some basic validation of the YAML
             if self.type == 'experiment':
@@ -152,8 +152,8 @@ class Submittable(object):
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
                         obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
-        except:
-            pass  # do nothing on error
+        except Exception:
+            pass
 
     def record_object_status(self, obj_type, dry_run, submission_session, log_file):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
@@ -210,12 +210,12 @@ class Submittable(object):
             if not f or not f.file_name or not f.file_name.startswith(expected_file_path_start):
                 self._add_local_validation_error("file",None,"files.fileName","File path incorrect for '%s', expected file path starts with '%s'" % (f.file_name, expected_file_path_start))
 
-    # TODO: should move this to file check as part of local validation, will need to come up with a way 
+    # TODO: should move this to file check as part of local validation, will need to come up with a way
     #       to pass in credentials, currently 'submittable' object has no access to such information
     def ftp_files_remote_validate(self,host,username, password):
         for _file in self.files:
             if not file_exists(host,username,password,_file.file_name):
-                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s" % _file.file_name)
+                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s. Make sure your egasub workspace is properly configured with correct EGA submission account credentials." % _file.file_name)
 
 
 class Experiment(Submittable):
@@ -239,7 +239,7 @@ class Experiment(Submittable):
             self._run = ERun.from_dict(self.metadata.get('run'))
             self.restore_latest_object_status('run')
 
-            self.run.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+            self.run.files = [EFile.from_dict(file_) for file_ in self.metadata.get('files')]
         except Exception, err:
             raise Exception("Can not create submission from this directory: %s. Please verify it's content. Error: %s" % (self._path, err))
 
@@ -330,7 +330,7 @@ class Analysis(Submittable):
             self._analysis = EAnalysis.from_dict(self.metadata.get('analysis'))
             self.restore_latest_object_status('analysis')
 
-            self._analysis.files = map(lambda file_: EFile.from_dict(file_), self.metadata.get('files'))
+            self._analysis.files = [EFile.from_dict(file_) for file_ in self.metadata.get('files')]
 
             # not sure for what reason, EGA validation expect to have at least one attribute
             self.analysis.attributes = [
@@ -393,7 +393,7 @@ class Analysis(Submittable):
         # Chromosome references validation
         # for some reason EGA only excepts this for variant file submission, not alignment
         # but let's put it here, so it's required for both
-        if not type(self.analysis.chromosome_references) == list:
+        if not isinstance(self.analysis.chromosome_references, list):
             self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value: chromosomeReferences must be a list.")
 
         for chr_ref in self.analysis.chromosome_references:

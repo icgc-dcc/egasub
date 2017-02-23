@@ -15,46 +15,46 @@ analysis = Analysis('an alias','a title','a description',3,sample_references,'an
 
 def test_title():
     assert 'a title' == analysis.title
-    
+
 def test_description():
     assert 'a description' == analysis.description
-    
+
 def test_study_id():
     assert 3 == analysis.study_id
-    
+
 def test_analysis_center():
     assert 'analysis center' == analysis.analysis_center
-    
+
 def test_analysis_date():
     assert 'analysis date' == analysis.analysis_date
-    
+
 def test_analysis_type_id():
     assert 3 == analysis.analysis_type_id
-    
+
 def test_genome_id():
     assert 4 == analysis.genome_id
-    
+
 def test_experiment_type_id():
     assert [3,5] == analysis.experiment_type_id
-    
+
 def test_platform():
     assert 'a platform' == analysis.platform
-    
+
 def test_files():
     assert files == analysis.files
-    
+
 def test_attributes():
     assert attributes == analysis.attributes
-    
+
 def test_chromosome_references():
     assert chromosome_references == analysis.chromosome_references
-    
+
 def test_sample_references():
     assert sample_references == analysis.sample_references
-    
+
 def test_alias():
     assert 'an alias' == analysis.alias
-    
+
 def test_to_dict():
     assert cmp(
     {
