@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a9585b9e495a4e27b3598e027f58f1ca)](https://www.codacy.com/app/junjun-zhang/egasub?utm_source=github.com&utm_medium=referral&utm_content=icgc-dcc/egasub&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/icgc-dcc/egasub.svg)](https://travis-ci.org/icgc-dcc/egasub)
 
 #EGASUB - ICGC EGA Submission CLI
