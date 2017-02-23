@@ -126,18 +126,3 @@ def file_pattern_exist(dirname, pattern):
     return False
 
 
-def ftp_files(path, ctx):
-    host = ctx.obj['SETTINGS']['ftp_server']
-    _, user, passwd = ctx.obj['AUTH'].split('%20') if len(ctx.obj['AUTH'].split('%20')) == 3 else ('', '', '')
-
-    ftp = ftplib.FTP(host, user, passwd)
-
-    files = []
-    try:
-        files = ftp.nlst(path)
-    except ftplib.error_perm:
-        echo('Error: unable to connect to FTP server.', err=True)
-        ctx.abort()
-
-    return files
-

@@ -152,8 +152,8 @@ class Submittable(object):
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
                         obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
-        except Exception, err:
-            print err
+        except Exception:
+            pass
 
     def record_object_status(self, obj_type, dry_run, submission_session, log_file):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
@@ -215,7 +215,7 @@ class Submittable(object):
     def ftp_files_remote_validate(self,host,username, password):
         for _file in self.files:
             if not file_exists(host,username,password,_file.file_name):
-                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s" % _file.file_name)
+                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s. Make sure your egasub workspace is properly configured with correct EGA submission account credentials." % _file.file_name)
 
 
 class Experiment(Submittable):
@@ -393,7 +393,7 @@ class Analysis(Submittable):
         # Chromosome references validation
         # for some reason EGA only excepts this for variant file submission, not alignment
         # but let's put it here, so it's required for both
-        if not isinstance(self.analysis.chromosome_references) == list:
+        if not isinstance(self.analysis.chromosome_references, list):
             self._add_local_validation_error("analysis",self.analysis.alias,"chromosomeReferences","Invalid value: chromosomeReferences must be a list.")
 
         for chr_ref in self.analysis.chromosome_references:
