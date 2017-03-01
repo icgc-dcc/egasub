@@ -6,6 +6,7 @@ from egasub import __version__ as ver
 from ..ega.entities import Submission, SubmissionSubsetData, Dataset, Attribute
 from ..ega.services import login, logout, object_submission, delete_obj, prepare_submission
 from ..exceptions import CredentialsError
+from .submittable import Unaligned, Alignment, Variation
 from .submitter import Submitter
 
 

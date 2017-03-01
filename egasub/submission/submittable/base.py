@@ -213,9 +213,9 @@ class Submittable(object):
     # TODO: should move this to file check as part of local validation, will need to come up with a way
     #       to pass in credentials, currently 'submittable' object has no access to such information
     def ftp_files_remote_validate(self,host,username, password):
-        for _file in self.files:
-            if not file_exists(host,username,password,_file.file_name):
-                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s. Make sure your egasub workspace is properly configured with correct EGA submission account credentials." % _file.file_name)
+        for file_ in self.files:
+            if not file_exists(host,username,password,file_.file_name):
+                self._add_ftp_file_validation_error("fileName","File missing on FTP ega server: %s. Make sure this file has been uploaded to EGA FTP server" % file_.file_name)
 
 
 class Experiment(Submittable):

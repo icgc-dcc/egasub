@@ -54,17 +54,17 @@ class Submitter(object):
                 # objects created by dry_run that are not in 'SUBMITTED' status can be safely deleted
                 if dry_run:
                     self.ctx.obj['LOGGER'].info('Clean up unneeded objects created by dry_run ...')
-                    if not 'SUBMITTED' in submittable.sample.status and \
+                    if not 'SUBMITTED' in str(submittable.sample.status) and \
                             submittable.sample.id:
                         delete_obj(self.ctx, 'sample', submittable.sample.id)
 
                     # additional condition for run: can not delete run when the associated experiment is in SUBMITTED status
-                    if not 'SUBMITTED' in submittable.experiment.status and \
-                            not 'SUBMITTED' in submittable.run.status and \
+                    if not 'SUBMITTED' in str(submittable.experiment.status) and \
+                            not 'SUBMITTED' in str(submittable.run.status) and \
                             submittable.run.id:  # need to delete run before experiment
                         delete_obj(self.ctx, 'run', submittable.run.id)
 
-                    if not 'SUBMITTED' in submittable.experiment.status and \
+                    if not 'SUBMITTED' in str(submittable.experiment.status) and \
                             submittable.experiment.id:
                         delete_obj(self.ctx, 'experiment', submittable.experiment.id)
 
@@ -93,11 +93,11 @@ class Submitter(object):
                 # objects created by dry_run that are not in 'SUBMITTED' status can be safely deleted
                 if dry_run:
                     self.ctx.obj['LOGGER'].info('Clean up unneeded objects created by dry_run ...')
-                    if not 'SUBMITTED' in submittable.sample.status and \
+                    if not 'SUBMITTED' in str(submittable.sample.status) and \
                             submittable.sample.id:
                         delete_obj(self.ctx, 'sample', submittable.sample.id)
 
-                    if not 'SUBMITTED' in submittable.analysis.status and \
+                    if not 'SUBMITTED' in str(submittable.analysis.status) and \
                             submittable.analysis.id:
                         delete_obj(self.ctx, 'analysis', submittable.analysis.id)
 
