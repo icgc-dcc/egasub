@@ -31,7 +31,8 @@ def test_unaligned():
                     'bioSampleId': None,
                     'anonymizedName': None,
                     'sampleDetail': None,
-                    'status': None
+                    'status': None,
+                    'egaAccessionId': None
                 }
 
     reference_experiment = {
@@ -50,7 +51,8 @@ def test_unaligned():
                     'studyId': None,
                     'libraryStrategyId': 5,
                     'alias': None,
-                    'status': None
+                    'status': None,
+                    'egaAccessionId': None
                 }
 
     reference_run = {
@@ -68,7 +70,8 @@ def test_unaligned():
                     'runFileTypeId': 0,
                     'alias': None,
                     'id': None,
-                    'status': None
+                    'status': None,
+                    'egaAccessionId': None
                 }
 
     assert cmp(unaligned.sample.to_dict(),reference_sample) == 0

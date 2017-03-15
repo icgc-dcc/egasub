@@ -29,7 +29,8 @@ def test_variation():
         'bioSampleId': None,
         'anonymizedName': None,
         'status': None,
-        'sampleDetail': None
+        'sampleDetail': None,
+        'egaAccessionId': None
     }
 
     reference_analysis = {
@@ -43,6 +44,7 @@ def test_variation():
         'analysisTypeId': 1,
         'experimentTypeId' : [0],
         'status': None,
+        'egaAccessionId': None,
         'files': [
             {
                 'unencryptedChecksum': '5e0024389829a7b131fed6476f7e71c4',

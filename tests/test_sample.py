@@ -71,7 +71,8 @@ def test_to_dict():
             'sampleDetail' : 'some details',
             'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
             'id' : 33,
-            'status': None
+            'status': None,
+            'egaAccessionId':None
         }, sample.to_dict()) == 0
 
         

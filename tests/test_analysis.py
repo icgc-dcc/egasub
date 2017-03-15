@@ -72,6 +72,7 @@ def test_to_dict():
         'attributes' : map(lambda attribute: attribute.to_dict(), attributes),
         'chromosomeReferences' : map(lambda ref: ref.to_dict(), chromosome_references),
         'alias' : 'an alias',
-        'status': None
+        'status': None,
+        'egaAccessionId': None
     }, analysis.to_dict()) == 0
 
