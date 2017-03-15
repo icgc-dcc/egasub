@@ -146,12 +146,13 @@ class Submittable(object):
                 if lines:
                     line = lines[-1]
                     status_values = line.split('\t')
-                    id_, alias, status, timestamp = status_values[0:4]
+                    id_, alias, status, timestamp, ega_id = status_values[0:5]
                     if obj.alias and not obj.alias == alias:
                         pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
                         obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
+                        obj.ega_accession_id = ega_id
         except Exception:
             pass
 
