@@ -155,7 +155,7 @@ class Submittable(object):
         except Exception:
             pass
 
-    def record_object_status(self, obj_type, dry_run, submission_session, log_file):
+    def record_object_status(self, obj_type, dry_run, submission_session, log_file, ega_accession_id=None):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
             return
 
@@ -169,8 +169,13 @@ class Submittable(object):
         obj = getattr(self, obj_type)
 
         op_type = 'dry_run' if dry_run else 'submit'
+
+        ega_accession = ""
+        if not ega_accession_id == None:
+            ega_accession = ega_accession_id
+
         with open(status_file, 'a') as f:
-            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file]))
+            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file, ega_accession]))
 
     def local_validate(self, ega_enums):
         # Alias validation

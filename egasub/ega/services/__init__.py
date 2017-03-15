@@ -206,6 +206,7 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
         ctx.obj['LOGGER'].error("Validation exception (note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
+    obj.ega_accession_id = r_data.get('response').get('result')[0].get('egaAccessionId')
 
     ctx.obj['LOGGER'].info("%s '%s' completed." % (op_type.capitalize(), obj_type))
 

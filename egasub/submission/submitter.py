@@ -24,7 +24,7 @@ class Submitter(object):
                 return
 
         object_submission(self.ctx, submittable.sample, 'sample', dry_run)
-        submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+        submittable.record_object_status('sample', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'], submittable.sample.ega_accession_id)
 
         if self.ctx.obj['CURRENT_DIR_TYPE'] == 'unaligned':
             try:
@@ -38,13 +38,13 @@ class Submitter(object):
                 submittable.experiment.study_id = self.ctx.obj['SETTINGS']['ega_study_id']
 
                 object_submission(self.ctx, submittable.experiment, 'experiment', dry_run)
-                submittable.record_object_status('experiment', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+                submittable.record_object_status('experiment', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'], submittable.experiment.ega_accession_id)
 
                 submittable.run.sample_id = submittable.sample.id
                 submittable.run.experiment_id = submittable.experiment.id
 
                 object_submission(self.ctx, submittable.run, 'run', dry_run)
-                submittable.record_object_status('run', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+                submittable.record_object_status('run', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'], submittable.run.ega_accession_id)
 
                 self.ctx.obj['LOGGER'].info("Finished processing '%s'" % submittable.submission_dir)
             except Exception, error:
@@ -83,7 +83,7 @@ class Submitter(object):
                                                                 )
                                                             ]
                 object_submission(self.ctx, submittable.analysis, 'analysis', dry_run)
-                submittable.record_object_status('analysis', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'])
+                submittable.record_object_status('analysis', dry_run, self.ctx.obj['SUBMISSION']['id'], self.ctx.obj['log_file'], submittable.analysis.ega_accession_id)
 
                 self.ctx.obj['LOGGER'].info('Finished processing %s' % submittable.submission_dir)
             except Exception, error:
