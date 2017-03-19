@@ -144,15 +144,16 @@ class Submittable(object):
             with open(status_file, 'r') as f:
                 lines = f.readlines()
                 if lines:
-                    line = lines[-1]
+                    line = lines[-1].rstrip('\n')
                     status_values = line.split('\t')
-                    id_, alias, status, timestamp, ega_id = status_values[0:5]
+                    id_, alias, status, timestamp, op_type, session_id, log_file, ega_accession_id = \
+                        (lambda a,b,c,d=None,e=None,f=None,g=None,h=None: (a,b,c,d,e,f,g,h))(*status_values[0:8]) # this is mostly for backward compatibility, earlier versions may have fewer columns
                     if obj.alias and not obj.alias == alias:
                         pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
                         obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
-                        obj.ega_accession_id = ega_id
+                        obj.ega_accession_id = ega_accession_id
         except Exception:
             pass
 
@@ -171,12 +172,10 @@ class Submittable(object):
 
         op_type = 'dry_run' if dry_run else 'submit'
 
-        ega_accession = ""
-        if not ega_accession_id == None:
-            ega_accession = ega_accession_id
+        if ega_accession_id == None: ega_accession_id = ""
 
         with open(status_file, 'a') as f:
-            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file, ega_accession]))
+            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file, ega_accession_id]))
 
     def local_validate(self, ega_enums):
         # Alias validation

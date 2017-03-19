@@ -98,6 +98,7 @@ def object_submission(ctx, obj, obj_type, dry_run=True):
             # PARTIALLY_SUBMITTED, SUBMITTED, SUBMITTED_DRAFT, SUBMITTED_VALIDATED and SUBMITTED_VALIDATED_WITH_ERRORS
             if 'SUBMITTED' in o.get('status'):
                 obj.status = o.get('status')
+                obj.ega_accession_id = o.get('egaAccessionId')
                 ctx.obj['LOGGER'].info("%s with alias '%s' already exists in '%s' status, not submitting." \
                                          % (obj_type, obj.alias, o.get('status')))
 
@@ -206,7 +207,11 @@ def _validate_submit_obj(ctx, obj, obj_type, op_type):
         ctx.obj['LOGGER'].error("Validation exception (note that 'Sample not found' or 'Unknown sample' error, if any, will disappear when perform 'submit' instead of 'dry_run'; 'File not found' error, if any, will disappear if you make sure file is indeed uploaded and give it a bit more time (could be a few hours) for EGA systems to synchronize file information): \n%s" % '\n'.join(errors))
 
     obj.status = r_data.get('response').get('result')[0].get('status')
-    obj.ega_accession_id = r_data.get('response').get('result')[0].get('egaAccessionId')
+    ega_accession_id = r_data.get('response').get('result')[0].get('egaAccessionId')
+    if ega_accession_id:
+        obj.ega_accession_id = str(ega_accession_id)
+    elif r_data.get('response').get('result')[0].get('egaAccessionIds'):  # for same reason experiment object has a single element of egaAccessionIds
+        obj.ega_accession_id = str(r_data.get('response').get('result')[0].get('egaAccessionIds')[0])
 
     ctx.obj['LOGGER'].info("%s '%s' completed." % (op_type.capitalize(), obj_type))
 
