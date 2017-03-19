@@ -1,7 +1,7 @@
 from file import File
 
 class Run(object):
-    def __init__(self,alias,sample_id,run_file_type_id,experiment_id,files,_id, status=None):
+    def __init__(self,alias,sample_id,run_file_type_id,experiment_id,files,_id, status=None, ega_accession_id=None):
         self.alias = alias
         self.sample_id = sample_id
         self.run_file_type_id = run_file_type_id
@@ -9,6 +9,7 @@ class Run(object):
         self.files = files
         self.id = _id
         self.status = status
+        self.ega_accession_id = ega_accession_id
 
     def to_dict(self):
         return {
@@ -18,7 +19,8 @@ class Run(object):
             'experimentId' : self.experiment_id,
             'files' : map(lambda file: file.to_dict(), self.files),
             'id' : self.id,
-            'status': self.status
+            'status': self.status,
+            'egaAccessionId': self.ega_accession_id
             }
 
 

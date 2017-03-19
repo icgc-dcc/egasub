@@ -17,7 +17,8 @@ experiment_to_dict = {
         'studyId' : 3000,
         'alias' : 'an alias',
         'id' : 22,
-        'status': None
+        'status': None,
+        'egaAccessionId': None
     }
 
 def test_title():

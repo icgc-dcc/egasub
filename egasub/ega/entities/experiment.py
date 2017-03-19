@@ -3,7 +3,7 @@ class Experiment(object):
     def __init__(self, alias, title, instrument_model_id, library_source_id, library_selection_id,
                  library_strategy_id, design_description, library_name, library_construction_protocol,
                  library_layout_id, paired_nomial_length, paired_nominal_sdev,
-                 sample_id, study_id,_id, status=None):
+                 sample_id, study_id,_id, status=None, ega_accession_id=None):
         self.alias = alias
         self.title = title
         self.instrument_model_id = instrument_model_id
@@ -20,6 +20,7 @@ class Experiment(object):
         self.study_id = study_id
         self.id = _id
         self.status = status
+        self.ega_accession_id = ega_accession_id
 
     def to_dict(self):
         return {
@@ -38,7 +39,8 @@ class Experiment(object):
             'sampleId' : self.sample_id,
             'studyId' : self.study_id,
             'id' : self.id,
-            'status': self.status
+            'status': self.status,
+            'egaAccessionId': self.ega_accession_id
             }
 
 

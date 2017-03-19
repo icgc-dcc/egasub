@@ -144,18 +144,20 @@ class Submittable(object):
             with open(status_file, 'r') as f:
                 lines = f.readlines()
                 if lines:
-                    line = lines[-1]
+                    line = lines[-1].rstrip('\n')
                     status_values = line.split('\t')
-                    id_, alias, status, timestamp = status_values[0:4]
+                    id_, alias, status, timestamp, op_type, session_id, log_file, ega_accession_id = \
+                        (lambda a,b,c,d=None,e=None,f=None,g=None,h=None: (a,b,c,d,e,f,g,h))(*status_values[0:8]) # this is mostly for backward compatibility, earlier versions may have fewer columns
                     if obj.alias and not obj.alias == alias:
                         pass # alias has changed, this should never happen, if it does, we simply ignore and do not restore the status
                     else:  # never restore object id, which should always be taken from the server side
                         obj.alias = alias
                         obj.status = status  # we need to get status at last operation with EGA, it will be used to decide whether it's ready for performing submission
+                        obj.ega_accession_id = ega_accession_id
         except Exception:
             pass
 
-    def record_object_status(self, obj_type, dry_run, submission_session, log_file):
+    def record_object_status(self, obj_type, dry_run, submission_session, log_file, ega_accession_id=None):
         if not obj_type in ('sample', 'analysis', 'experiment', 'run'):
             return
 
@@ -169,13 +171,20 @@ class Submittable(object):
         obj = getattr(self, obj_type)
 
         op_type = 'dry_run' if dry_run else 'submit'
+
+        if ega_accession_id == None: ega_accession_id = ""
+
         with open(status_file, 'a') as f:
-            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file]))
+            f.write("%s\n" % '\t'.join([str(obj.id), str(obj.alias), str(obj.status), str(int(time.time())), op_type, submission_session, log_file, ega_accession_id]))
 
     def local_validate(self, ega_enums):
         # Alias validation
         sample_alias_in_sub_dir = self.submission_dir.split('.')[0]  # first portion is sample alias
-        if not self.sample.alias == sample_alias_in_sub_dir:
+        if not self.sample.alias:
+            self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample alias must be set" % (self.sample.alias))
+            return  # no need to move on
+
+        if self.sample.alias != sample_alias_in_sub_dir:
             self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample alias must be set and match the 'alias' portion in the submission directory '%s'." % (self.sample.alias, sample_alias_in_sub_dir))
 
         if not re.match(r'^[a-zA-Z0-9_\-]+$', self.sample.alias):  # validate sample alias pattern
