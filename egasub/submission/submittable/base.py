@@ -180,7 +180,11 @@ class Submittable(object):
     def local_validate(self, ega_enums):
         # Alias validation
         sample_alias_in_sub_dir = self.submission_dir.split('.')[0]  # first portion is sample alias
-        if not self.sample.alias == sample_alias_in_sub_dir:
+        if not self.sample.alias:
+            self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample alias must be set" % (self.sample.alias))
+            return  # no need to move on
+
+        if self.sample.alias != sample_alias_in_sub_dir:
             self._add_local_validation_error("sample",self.sample.alias,"alias","Invalid value '%s'. Sample alias must be set and match the 'alias' portion in the submission directory '%s'." % (self.sample.alias, sample_alias_in_sub_dir))
 
         if not re.match(r'^[a-zA-Z0-9_\-]+$', self.sample.alias):  # validate sample alias pattern
