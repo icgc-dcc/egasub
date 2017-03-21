@@ -60,14 +60,13 @@ def test_alignment():
             {'value':25,'label':None},
             {'value':26,'label':None}
         ],
-        'platform': 'Illumina HiSeq 2000',
-        'attributes': [
-            {'tag':'submitted_using','unit':None,'value':'egasub'}
-        ]
+        'platform': 'Illumina HiSeq 2000'
     }
 
     assert cmp(alignment.sample.to_dict(),reference_sample) == 0
-    assert cmp(alignment.analysis.to_dict(),reference_analysis)  == 0
+    analysis = alignment.analysis.to_dict()
+    analysis.pop('attributes')
+    assert cmp(analysis, reference_analysis)  == 0
 
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):

@@ -23,7 +23,7 @@ def test_init_submission_dir(ctx):
     assert ctx.obj['LOGGER'].warning.counter == 5
 
     with pytest.raises(IOError):
-        init_submission_dir(ctx,["test_x"])
+        init_submission_dir(ctx,["test_x.lane"])
 
     init_submission_dir(ctx,["sample"])
     assert ctx.obj['LOGGER'].warning.counter == 6

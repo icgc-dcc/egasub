@@ -112,7 +112,7 @@ class Submitter(object):
             dry_run  # is_test param, eq to dry_run
         )
 
-        sample.attributes.append(Attribute('icgc_sample_id', icgc_sample_id))
+        sample.attributes.append(Attribute('_icgc_sample_id', icgc_sample_id))
 
         icgc_donor_id = id_service(
             self.ctx, 'donor',
@@ -121,6 +121,6 @@ class Submitter(object):
             True,
             dry_run
         )
-        sample.attributes.append(Attribute('icgc_donor_id', icgc_donor_id))
+        sample.attributes.append(Attribute('_icgc_donor_id', icgc_donor_id))
 
-        sample.attributes.append(Attribute('submitted_using', 'egasub %s' % ver))
+        sample.attributes.append(Attribute('_submitted_using', 'egasub %s' % ver))

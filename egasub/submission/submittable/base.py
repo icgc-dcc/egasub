@@ -11,6 +11,7 @@ from egasub.ega.entities import Sample, Attribute, \
                                 Analysis as EAnalysis, \
                                 Experiment as EExperiment
 from egasub.ega.services.ftp import file_exists
+from egasub import __version__ as ver
 
 
 def _get_md5sum(md5sum_file):
@@ -327,9 +328,6 @@ class Analysis(Submittable):
     def __init__(self, path):
         super(Analysis, self).__init__(path)
 
-        if not re.match(r'^[a-zA-Z0-9_\-]+$', self.submission_dir):
-            raise Exception("Submission directory should be named as <sample alias>, sample alias may only contain letter, digit, underscore (_) or dash (-)")
-
         try:
             self._parse_meta()
 
@@ -343,7 +341,7 @@ class Analysis(Submittable):
 
             # not sure for what reason, EGA validation expect to have at least one attribute
             self.analysis.attributes = [
-                Attribute('submitted_using', 'egasub')
+                Attribute('_submitted_using', 'egasub %s' % ver)
             ]
         except Exception, err:
             raise Exception("Can not create submission from this directory: %s. Please verify it's content. Error: %s" % (self._path, err))
@@ -374,10 +372,6 @@ class Analysis(Submittable):
 
     def local_validate(self, ega_enums):
         super(Analysis, self).local_validate(ega_enums)
-
-        # submission_dir validate
-        if '.' in  self.submission_dir:
-            self._add_local_validation_error("submission_dir",self.submission_dir,"submission_dir","Submission directory for EGA Analysis must not contain '.': %s" % self.submission_dir)
 
         # Reference genomes type validation
         if not any(cc['tag'] == str(self.analysis.genome_id) for cc in ega_enums.lookup("reference_genomes")):

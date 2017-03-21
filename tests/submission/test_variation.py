@@ -67,16 +67,15 @@ def test_variation():
             {'value':25,'label':None},
             {'value':26,'label':None}
         ],
-        'platform': 'Illumina HiSeq 2000',
-        'attributes': [
-            {'tag':'submitted_using','unit':None,'value':'egasub'}
-        ]
+        'platform': 'Illumina HiSeq 2000'
     }
 
     variation._add_local_validation_error("type", "alias", "field", "message")
 
     assert cmp(variation.sample.to_dict(),reference_sample) == 0
-    assert cmp(variation.analysis.to_dict(),reference_analysis)  == 0
+    analysis = variation.analysis.to_dict()
+    analysis.pop('attributes')
+    assert cmp(analysis,reference_analysis)  == 0
     assert variation.local_validation_errors[0] == {'object_alias':'alias','field':'field','object_type':'type','error':'message'}
 
     # Check if the md5 checksum is missing in the file
