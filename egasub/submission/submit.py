@@ -168,9 +168,9 @@ def submit_dataset(ctx, dry_run=True):
                         prompt("Enter dataset title"),
                         [],
                         [  # dataset attributes
-                            Attribute('submitted_using', 'egasub %s' % ver),
-                            Attribute('icgc_project_code', ctx.obj['SETTINGS']['icgc_project_code']),
-                            Attribute('icgc_project_url', 'https://dcc.icgc.org/projects/%s' % ctx.obj['SETTINGS']['icgc_project_code'])
+                            Attribute('_submitted_using', 'egasub %s' % ver),
+                            Attribute('_icgc_project_code', ctx.obj['SETTINGS']['icgc_project_code']),
+                            Attribute('_icgc_project_url', 'https://dcc.icgc.org/projects/%s' % ctx.obj['SETTINGS']['icgc_project_code'])
                         ]
                     )
 

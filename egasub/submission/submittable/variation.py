@@ -1,6 +1,14 @@
+import re
 from .base import Analysis
 
 class Variation(Analysis):
+    def __init__(self, path):
+        super(Variation, self).__init__(path)
+
+        if not re.match(r'^[a-zA-Z0-9_\-]+$', self.submission_dir):
+            raise Exception("Submission directory should be named as <sample alias>, sample alias may only contain letter, digit, underscore (_) or dash (-)")
+
+
     def local_validate(self, ega_enums):
         super(Variation, self).local_validate(ega_enums)
         # Analysis type validation, 1 - Sequence variation (VCF)

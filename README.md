@@ -2,12 +2,12 @@
 [![Build Status](https://travis-ci.org/icgc-dcc/egasub.svg)](https://travis-ci.org/icgc-dcc/egasub)
 [![Coverage Status](https://coveralls.io/repos/github/icgc-dcc/egasub/badge.svg?branch=master)](https://coveralls.io/github/icgc-dcc/egasub?branch=master)
 
-#EGASUB - ICGC EGA Submission CLI
+# EGASUB - ICGC EGA Submission CLI
 
 EGASUB is a command line tool assists ICGC members submitting their NGS sequence data to EGA repository.
 
 
-##Installation
+## Installation
 
 Install pipsi first (if not installed yet)
 ```
@@ -23,9 +23,9 @@ Install latest `egasub` release
 pipsi install egasub
 ```
 
-Note: to install a specific version of `egasub`, e.g., `0.1.0rc3` do this:
+Note: to install a specific version of `egasub`, e.g., `0.1.0rc11` do this:
 ```
-pipsi install egasub==0.1.0rc3
+pipsi install egasub==0.1.0rc11
 ```
 
 Upgrade to latest release from an old one
