@@ -3,6 +3,8 @@ import os
 from egasub.submission.submittable import Variation
 from egasub.ega.entities import Sample, \
                                 Analysis as EAnalysis
+from egasub import __version__ as ver
+
 
 def test_variation():
     initial_directory = os.getcwd()
@@ -67,15 +69,16 @@ def test_variation():
             {'value':25,'label':None},
             {'value':26,'label':None}
         ],
-        'platform': 'Illumina HiSeq 2000'
+        'platform': 'Illumina HiSeq 2000',
+        'attributes': [
+            {'tag':'_submitted_using','unit':None,'value':'egasub %s' % ver}
+        ]
     }
 
     variation._add_local_validation_error("type", "alias", "field", "message")
 
     assert cmp(variation.sample.to_dict(),reference_sample) == 0
-    analysis = variation.analysis.to_dict()
-    analysis.pop('attributes')
-    assert cmp(analysis,reference_analysis)  == 0
+    assert cmp(variation.analysis.to_dict(), reference_analysis)  == 0
     assert variation.local_validation_errors[0] == {'object_alias':'alias','field':'field','object_type':'type','error':'message'}
 
     # Check if the md5 checksum is missing in the file

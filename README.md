@@ -23,9 +23,9 @@ Install latest `egasub` release
 pipsi install egasub
 ```
 
-Note: to install a specific version of `egasub`, e.g., `0.1.0rc3` do this:
+Note: to install a specific version of `egasub`, e.g., `0.1.0rc11` do this:
 ```
-pipsi install egasub==0.1.0rc3
+pipsi install egasub==0.1.0rc11
 ```
 
 Upgrade to latest release from an old one
