@@ -2,7 +2,7 @@ from egasub.ega.entities.study import Study
 from egasub.ega.entities.custom_tag import CustomTag
 
 tags = [CustomTag('tag1','value1'),CustomTag('tag2','value2')]
-study = Study('an alias',33,'Short name','the title','the abstract','own term',[1,2,3],tags,'my_study')
+study = Study('an alias',33,'name','the title','the abstract','own term',[1,2,3],tags,'my_study')
 
 def test_study_type_id():
     assert 33 == study.study_type_id
@@ -29,7 +29,7 @@ def test_to_dict():
         assert cmp(
         {
             'studyTypeId' : 33,
-            'shortName':'Short name',
+            'shortName':'name',
             'title':'the title',
             'studyAbstract' : 'the abstract',
             'ownTerm' : 'own term',
