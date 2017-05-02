@@ -8,7 +8,7 @@ def test_study_type_id():
     assert 33 == study.study_type_id
 
 def test_short_name():
-    assert 'Short name' == study.short_name
+    assert 'name' == study.short_name
 
 def test_title():
     assert 'the title' == study.title
