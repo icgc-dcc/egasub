@@ -1,5 +1,4 @@
 from click.testing import CliRunner
-import pytest
 from egasub.submission.init import truncate_string
 
 def test_init_function(ctx):
