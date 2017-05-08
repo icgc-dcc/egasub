@@ -1,4 +1,6 @@
 from click.testing import CliRunner
+import pytest
+from egasub.submission.init import truncate_string
 
 def test_init_function(ctx):
     runner = CliRunner()
@@ -18,3 +20,8 @@ def test_init_function(ctx):
         #assert yaml_config['ega_submitter_password'] == "test_password"
         #assert yaml_config['icgc_id_service_token'] == "test_token"
         #assert yaml_config['icgc_project_code'] == "PACA-CA"
+
+
+def test_truncate_string():
+    assert truncate_string("12345", 4) == "1234..."
+    assert truncate_string("12345", 5) == "12345"
