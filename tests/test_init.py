@@ -1,5 +1,6 @@
 from click.testing import CliRunner
-from egasub.submission.init import truncate_string
+from egasub.submission.init import truncate_string, make_dummy_dac, make_dummy_policy
+from egasub.ega.entities import Dac, Policy
 
 def test_init_function(ctx):
     runner = CliRunner()
@@ -24,3 +25,9 @@ def test_init_function(ctx):
 def test_truncate_string():
     assert truncate_string("12345", 4) == "1234..."
     assert truncate_string("12345", 5) == "12345"
+
+def test_make_dummy_dac():
+    assert isinstance(make_dummy_dac(), Dac)
+
+def test_make_dummy_policy():
+    assert isinstance(make_dummy_policy(make_dummy_dac()), Policy)

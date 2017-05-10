@@ -97,6 +97,10 @@ def test_variation():
     with pytest.raises(Exception):
         variation = Variation('sample_bad_99')
 
+
+    with pytest.raises(Exception):
+        variation = Variation('ggg')
+
     assert variation.status == 'NEW'
 
     assert variation.files == variation.analysis.files

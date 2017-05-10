@@ -95,6 +95,10 @@ def test_unaligned():
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')
 
+    # Name error
+    with pytest.raises(Exception):
+        unaligned = Unaligned('^*#')
+
     assert unaligned.status == 'NEW'
 
     assert unaligned.files == unaligned.run.files
