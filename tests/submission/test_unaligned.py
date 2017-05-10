@@ -1,7 +1,7 @@
 import pytest
 import os
 from egasub.submission.submittable import Unaligned
-from egasub.ega.entities import Sample, \
+from egasub.ega.entities import Sample, EgaEnums, \
                                 Experiment as EExperiment, \
                                 Run as ERun
 
@@ -78,6 +78,7 @@ def test_unaligned():
     assert cmp(unaligned.experiment.to_dict(),reference_experiment)  == 0
     assert cmp(unaligned.run.to_dict(),reference_run)  == 0
 
+
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad')
@@ -93,5 +94,11 @@ def test_unaligned():
     # Missing experiment.yaml file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')
+
+    assert unaligned.status == 'NEW'
+
+    assert unaligned.files == unaligned.run.files
+
+    assert unaligned.local_validate(EgaEnums()) == None
 
     os.chdir(initial_directory)

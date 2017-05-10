@@ -1,7 +1,7 @@
 import pytest
 import os
 from egasub.submission.submittable import Variation
-from egasub.ega.entities import Sample, \
+from egasub.ega.entities import Sample, EgaEnums, \
                                 Analysis as EAnalysis
 from egasub import __version__ as ver
 
@@ -97,4 +97,12 @@ def test_variation():
     with pytest.raises(Exception):
         variation = Variation('sample_bad_99')
 
+    assert variation.status == 'NEW'
+
+    assert variation.files == variation.analysis.files
+
+    #change assert
+    assert variation.local_validate(EgaEnums()) == None
+
     os.chdir(initial_directory)
+
