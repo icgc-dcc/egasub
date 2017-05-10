@@ -98,8 +98,9 @@ def test_variation():
         variation = Variation('sample_bad_99')
 
 
+    # No /
     with pytest.raises(Exception):
-        variation = Variation('ggg')
+        variation = Variation('///')
 
     assert variation.status == 'NEW'
 

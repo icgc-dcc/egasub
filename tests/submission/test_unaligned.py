@@ -95,6 +95,9 @@ def test_unaligned():
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')
 
+    # Cannot create submission error
+    with pytest.raises(Exception):
+        unaligned = Unaligned('tests')
     # Name error
     with pytest.raises(Exception):
         unaligned = Unaligned('^*#')
