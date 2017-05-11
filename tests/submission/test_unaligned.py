@@ -111,7 +111,7 @@ def test_unaligned():
 
     assert unaligned.restore_latest_object_status(unaligned) is None
 
-    assert unaligned.restore_latest_object_status(Sample) is None
+    assert unaligned.restore_latest_object_status('sample') is None
 
 
 
