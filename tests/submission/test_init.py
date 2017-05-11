@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from egasub.submission.init import truncate_string, make_dummy_dac, make_dummy_policy
+from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy
 from egasub.ega.entities import Dac, Policy
 
 def test_init_function(ctx):

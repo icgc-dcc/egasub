@@ -9,6 +9,7 @@ def test_unaligned():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')
     unaligned = Unaligned('ssample_y')
+    #unaligned2 = Unaligned('sample_x')
 
     assert isinstance(unaligned.sample, Sample)
     assert isinstance(unaligned.experiment, EExperiment)
@@ -106,6 +107,8 @@ def test_unaligned():
 
     assert unaligned.files == unaligned.run.files
 
-    assert unaligned.local_validate(EgaEnums()) == None
+    assert unaligned.local_validate(EgaEnums()) is None
+
+
 
     os.chdir(initial_directory)
