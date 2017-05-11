@@ -1,5 +1,6 @@
 import pytest
 import os
+import shutil
 from egasub.submission.submittable import Unaligned
 from egasub.ega.entities import Sample, EgaEnums, \
                                 Experiment as EExperiment, \
@@ -113,6 +114,8 @@ def test_unaligned():
 
     assert unaligned.restore_latest_object_status('sample') is None
 
+    assert unaligned.record_object_status('sample', True, "test", "test") is None
 
+    shutil.rmtree(os.path.join(os.getcwd(), 'ssample_y/.status'))
 
     os.chdir(initial_directory)
