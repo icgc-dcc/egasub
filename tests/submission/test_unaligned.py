@@ -109,6 +109,10 @@ def test_unaligned():
 
     assert unaligned.local_validate(EgaEnums()) is None
 
+    assert unaligned.restore_latest_object_status(unaligned) is None
+
+    assert unaligned.restore_latest_object_status(Sample) is None
+
 
 
     os.chdir(initial_directory)
