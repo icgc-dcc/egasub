@@ -1,5 +1,6 @@
 from egasub.submission.submitter import Submitter
 import os
+import pytest
 from egasub.submission.submittable import Unaligned
 from egasub.ega.entities.sample import Sample
 from egasub.ega.entities.attribute import Attribute
@@ -18,6 +19,7 @@ def test_submitter(ctx, mock_server):
 
     attributes = [Attribute('tag1', 'value1'), Attribute('tag2', 'value2')]
     sample = Sample('an alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,33)
-    #assert submitter.set_icgc_ids(sample, True) is None
+    with pytest.raises(Exception):
+        submitter.set_icgc_ids(sample, True)
 
 
