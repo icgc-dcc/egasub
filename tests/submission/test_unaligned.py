@@ -110,11 +110,21 @@ def test_unaligned():
 
     assert unaligned.local_validate(EgaEnums()) is None
 
-    assert unaligned.restore_latest_object_status(unaligned) is None
+    unaligned.record_object_status('none', True, "test", "test")
 
-    assert unaligned.record_object_status('sample', True, "test", "test") is None
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
 
-    assert unaligned.restore_latest_object_status('sample') is None
+    unaligned.restore_latest_object_status('none')
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+
+    unaligned.record_object_status('sample', True, "test", "test")
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status/sample.log')) == True
+
+    unaligned.restore_latest_object_status('sample')
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
 
     shutil.rmtree(os.path.join(os.getcwd(), 'ssample_y/.status'))
 
