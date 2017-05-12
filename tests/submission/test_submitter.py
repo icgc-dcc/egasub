@@ -8,7 +8,7 @@ from egasub.ega.entities.attribute import Attribute
 def test_submitter(ctx, mock_server):
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')
-    unaligned = Unaligned('ssample_y')
+    #unaligned = Unaligned('ssample_y')
     os.chdir(initial_directory)
 
     submitter = Submitter(ctx)
