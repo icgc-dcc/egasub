@@ -1,7 +1,8 @@
 import pytest
 import os
+import shutil
 from egasub.submission.submittable import Unaligned
-from egasub.ega.entities import Sample, \
+from egasub.ega.entities import Sample, EgaEnums, \
                                 Experiment as EExperiment, \
                                 Run as ERun
 
@@ -9,6 +10,7 @@ def test_unaligned():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')
     unaligned = Unaligned('ssample_y')
+    #unaligned2 = Unaligned('sample_x')
 
     assert isinstance(unaligned.sample, Sample)
     assert isinstance(unaligned.experiment, EExperiment)
@@ -78,6 +80,7 @@ def test_unaligned():
     assert cmp(unaligned.experiment.to_dict(),reference_experiment)  == 0
     assert cmp(unaligned.run.to_dict(),reference_run)  == 0
 
+
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad')
@@ -93,5 +96,36 @@ def test_unaligned():
     # Missing experiment.yaml file
     with pytest.raises(Exception):
         unaligned = Unaligned('sample_bad3')
+
+    # Cannot create submission error
+    with pytest.raises(Exception):
+        unaligned = Unaligned('tests')
+    # Name error
+    with pytest.raises(Exception):
+        unaligned = Unaligned('^*#')
+
+    assert unaligned.status == 'NEW'
+
+    assert unaligned.files == unaligned.run.files
+
+    assert unaligned.local_validate(EgaEnums()) is None
+
+    unaligned.record_object_status('none', True, "test", "test")
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+
+    unaligned.restore_latest_object_status('none')
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+
+    unaligned.record_object_status('sample', True, "test", "test")
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status/sample.log')) == True
+
+    unaligned.restore_latest_object_status('sample')
+
+    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+
+    shutil.rmtree(os.path.join(os.getcwd(), 'ssample_y/.status'))
 
     os.chdir(initial_directory)
