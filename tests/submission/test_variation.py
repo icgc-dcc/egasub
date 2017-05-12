@@ -106,8 +106,7 @@ def test_variation():
 
     assert variation.files == variation.analysis.files
 
-    #change assert
-    assert variation.local_validate(EgaEnums()) == None
+    variation.local_validate(EgaEnums())
 
     os.chdir(initial_directory)
 

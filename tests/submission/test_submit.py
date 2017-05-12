@@ -11,7 +11,7 @@ def test_submit_dataset(ctx, mock_server):
 
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
-    #['_enums']['dataset_types']['response']['result']
+
 
     #submit_dataset(ctx)
 
