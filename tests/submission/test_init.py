@@ -1,6 +1,7 @@
 from click.testing import CliRunner
 from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy
-from egasub.ega.entities import Dac, Policy
+from egasub.ega.entities import Dac, Policy, EgaEnums
+import pytest
 
 def test_init_function(ctx):
     runner = CliRunner()
@@ -31,3 +32,17 @@ def test_make_dummy_dac():
 
 def test_make_dummy_policy():
     assert isinstance(make_dummy_policy(make_dummy_dac()), Policy)
+
+def test_init_workspace(ctx, mock_server):
+    ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
+    ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
+    ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
+
+    with pytest.raises(KeyError):
+        init_workspace(ctx, 'test_ac', 'test_pass', 'test_token', 'test_code')
+
+
+    ctx.obj['SETTINGS']['ega_submitter_account'] = None
+    ctx.obj['SETTINGS']['ega_submitter_password'] = None
+    ctx.obj['SETTINGS']['ega_policy_id'] = None
