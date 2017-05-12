@@ -104,6 +104,8 @@ def test_unaligned():
     with pytest.raises(Exception):
         unaligned = Unaligned('^*#')
 
+    cwd = os.getcwd()
+
     assert unaligned.status == 'NEW'
 
     assert unaligned.files == unaligned.run.files
@@ -112,20 +114,20 @@ def test_unaligned():
 
     unaligned.record_object_status('none', True, "test", "test")
 
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
 
     unaligned.restore_latest_object_status('none')
 
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
 
     unaligned.record_object_status('sample', True, "test", "test")
 
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status/sample.log')) == True
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status/sample.log')) == True
 
     unaligned.restore_latest_object_status('sample')
 
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
 
-    shutil.rmtree(os.path.join(os.getcwd(), 'ssample_y/.status'))
+    shutil.rmtree(os.path.join(cwd, 'ssample_y/.status'))
 
     os.chdir(initial_directory)

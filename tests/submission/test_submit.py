@@ -16,7 +16,6 @@ def test_submit_dataset(ctx, mock_server):
     ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
     ctx.obj['CURRENT_DIR'] = os.path.join(os.getcwd(), 'tests/data/workspace/variation.20170119')
     ctx.obj['EGA_ENUMS'] = EgaEnums()
-    #ctx.obj['EGA_ENUMS']['_enums'] = ''
     with pytest.raises(AttributeError):
         submit_dataset(ctx)
 

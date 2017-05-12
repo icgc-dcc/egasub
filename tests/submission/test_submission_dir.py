@@ -1,5 +1,3 @@
-
-
 from egasub.submission import init_submission_dir
 import pytest
 
