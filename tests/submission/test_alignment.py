@@ -1,7 +1,7 @@
 import pytest
 import os
 from egasub.submission.submittable import Alignment
-from egasub.ega.entities import Sample, \
+from egasub.ega.entities import EgaEnums,Sample, \
                                 Analysis as EAnalysis
 from egasub import __version__ as ver
 
@@ -86,6 +86,8 @@ def test_alignment():
     # Missing analysis.yaml file
     with pytest.raises(Exception):
         alignment = Alignment('sample_bad3')
+
+    alignment.local_validate(EgaEnums())
 
     os.chdir(initial_directory)
             

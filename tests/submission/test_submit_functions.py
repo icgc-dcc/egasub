@@ -1,4 +1,4 @@
-from egasub.ega.services import login,logout,prepare_submission, query_by_id, api_url, query_by_type, _obj_type_to_endpoint
+from egasub.ega.services import login,logout,prepare_submission, query_by_id, api_url, query_by_type, _obj_type_to_endpoint, object_submission, register_obj,validate_obj, _validate_submit_obj, update_obj, delete_obj
 import pytest
 import requests
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
@@ -77,3 +77,15 @@ def test_logout_function(ctx):
         logout(ctx)
 
     assert not 'sessionToken' in ctx.obj['SUBMISSION']
+
+def test_object_submission(ctx):
+    #can cover using test submit_dataset()
+    pass
+
+def test_register_obj():
+    #can cover using object submission
+    pass
+
+def test_validate_obj():
+    #cover using object submission
+    pass
