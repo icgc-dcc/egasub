@@ -72,6 +72,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     if not submittables:
         ctx.obj['LOGGER'].warning('Nothing to submit.')
+        raise Exception
     else:
         submitter = Submitter(ctx)
         for submittable in submittables:

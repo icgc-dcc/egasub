@@ -3,14 +3,17 @@ from egasub.utils import initialize_app, initialize_log, get_current_dir_type, g
 import pytest
 import os
 
-def test_initialize_app(ctx):
+def test_initialize_app(ctx, mock_server):
     with pytest.raises(KeyError):
         initialize_app(ctx)
 
-    ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/variation.20170119/test_x"
+    ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/"
+    #ctx.obj['CURRENT_DIR'] = 'tests/data/workspace/'
     #ctx.obj['WORKSPACE_PATH']['SETTINGS'] =
+    #with pytest.raises(AttributeError):
+    #    initialize_app(ctx)
 
-    #initialize_app(ctx)
+    #ctx.obj['CURRENT_DIR'] = None
 
 def test_initialize_log(ctx):
     initialize_log(ctx, True, "info")
