@@ -23,8 +23,8 @@ def test_perform_submission(ctx, mock_server):
     #perform_submission(ctx, '///')
 
     initial_directory = os.getcwd()
-    os.chdir('tests/data/workspace/Unaligned.20170110/')
-                                        
+    os.chdir('tests/data/workspace/unaligned.20170110/')
+
     unaligned = Unaligned('ssample_y')
 
     unaligned.record_object_status('sample', True, "test", "test")
