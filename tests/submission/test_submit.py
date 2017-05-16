@@ -11,6 +11,12 @@ def test_submittable_status():
 
 def test_submit(ctx, mock_server):
 
+    with pytest.raises(Exception):
+        perform_submission(ctx, '///')
+
+    with pytest.raises(AttributeError):
+        submit_dataset(ctx)
+
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
     ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
@@ -18,11 +24,8 @@ def test_submit(ctx, mock_server):
     ctx.obj['CURRENT_DIR_TYPE'] = "unaligned"
     ctx.obj['EGA_ENUMS'] = EgaEnums()
     ctx.obj['log_file'] = 'tests/data/workspace/unaligned.20170110/ssample_y/.status'
-    
-    perform_submission(ctx, '///')
 
-    with pytest.raises(AttributeError):
-        submit_dataset(ctx)
+    perform_submission(ctx, '///')
 
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')

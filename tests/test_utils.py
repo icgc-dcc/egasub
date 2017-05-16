@@ -1,11 +1,19 @@
 
-from egasub.utils import initialize_app, get_current_dir_type, get_settings, find_workspace_root
+from egasub.utils import initialize_app, initialize_log, get_current_dir_type, get_settings, find_workspace_root
 import pytest
 import os
 
 def test_initialize_app(ctx):
     with pytest.raises(KeyError):
         initialize_app(ctx)
+
+    ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/variation.20170119/test_x"
+    #ctx.obj['WORKSPACE_PATH']['SETTINGS'] =
+
+    #initialize_app(ctx)
+
+def test_initialize_log(ctx):
+    initialize_log(ctx, True, "info")
 
 def test_get_current_dir_type(ctx):
 

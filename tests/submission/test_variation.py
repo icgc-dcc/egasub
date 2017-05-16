@@ -4,6 +4,7 @@ from egasub.submission.submittable import Variation
 from egasub.ega.entities import Sample, EgaEnums, \
                                 Analysis as EAnalysis
 from egasub import __version__ as ver
+#from egasub.exceptions import Md5sumFileError
 
 
 def test_variation():
@@ -97,10 +98,9 @@ def test_variation():
     with pytest.raises(Exception):
         variation = Variation('sample_bad_99')
 
-
-    # No /
+    # Cannot contain '/'
     with pytest.raises(Exception):
-        variation = Variation('///')
+        variation = Variation('sdf/df/ff/')
 
     assert variation.status == 'NEW'
 
@@ -109,4 +109,10 @@ def test_variation():
     variation.local_validate(EgaEnums())
 
     os.chdir(initial_directory)
+    os.chdir('tests/data/workspace/alignment.20170115/')
 
+    variation = Variation('test_x')
+
+    variation.local_validate(EgaEnums())
+
+    os.chdir(initial_directory)
