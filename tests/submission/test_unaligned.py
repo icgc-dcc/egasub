@@ -62,7 +62,7 @@ def test_unaligned():
                         {
                             'unencryptedChecksum': '66819a95fed1aaf5445a0792c328e124',
                             'checksum': '62c5105b86de105f56aafde8588ffbe5',
-                            'fileName': 'unaligned.20170110/sample_y/sequence_file.paired_end.sample_y.fq.gz.gpg',
+                            'fileName': 'unaligned.20170110/ssample_y/sequence_file.paired_end.sample_y.fq.gz.gpg',
                             'checksumMethod': 'md5',
                             'fileId': None
                         }

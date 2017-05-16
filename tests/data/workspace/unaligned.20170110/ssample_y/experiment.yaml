@@ -28,4 +28,4 @@ sample:
 run:
   runFileTypeId: 0 # 0=BAM, 1=Complete Genomics, 2=CRAM, 3=Fasta, 4=One Fastq file (Single), 5=Two Fastq files (Paired),6=PacBio HDF5,7=SFF,8=SRF
 files:
-  - fileName: unaligned.20170110/sample_y/sequence_file.paired_end.sample_y.fq.gz.gpg
+  - fileName: unaligned.20170110/ssample_y/sequence_file.paired_end.sample_y.fq.gz.gpg
