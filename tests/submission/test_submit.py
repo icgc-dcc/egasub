@@ -37,7 +37,6 @@ def test_submit(ctx, mock_server):
     with pytest.raises(Exception):
         perform_submission(ctx, ['ssample_y'])
 
-
     with pytest.raises(AttributeError):
         submit_dataset(ctx)
 

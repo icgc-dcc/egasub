@@ -93,3 +93,8 @@ def mock_server(ctx):
     httpretty.register_uri(httpretty.DELETE, "%ssamples?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
                             body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
                    content_type="application/json")
+
+    httpretty.register_uri(httpretty.GET,
+                           "%ssamples/ssample_y?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                           content_type="application/json")

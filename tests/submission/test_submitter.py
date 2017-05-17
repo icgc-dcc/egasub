@@ -17,7 +17,7 @@ def test_submitter(ctx, mock_server):
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
 
     #do not uncomment
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         submitter.submit(unaligned, True)
 
     attributes = [Attribute('tag1', 'value1'), Attribute('tag2', 'value2')]

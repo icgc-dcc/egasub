@@ -102,6 +102,9 @@ def test_variation():
     with pytest.raises(Exception):
         variation = Variation('sdf/df/ff/')
 
+    with pytest.raises(Exception):
+        variation = Variation('test_@')
+
     assert variation.status == 'NEW'
 
     assert variation.files == variation.analysis.files

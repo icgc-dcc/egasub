@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy
+from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy, initialize_dac_policy_study
 from egasub.ega.entities import Dac, Policy, EgaEnums
 import pytest
 
@@ -46,3 +46,7 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['SETTINGS']['ega_submitter_account'] = None
     ctx.obj['SETTINGS']['ega_submitter_password'] = None
     ctx.obj['SETTINGS']['ega_policy_id'] = None
+
+def test_initialize_dac_policy_study(ctx):
+    #initialize_dac_policy_study(ctx, )
+    pass
