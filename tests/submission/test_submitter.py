@@ -7,7 +7,7 @@ from egasub.ega.entities.attribute import Attribute
 
 def test_submitter(ctx, mock_server):
     initial_directory = os.getcwd()
-    os.chdir('tests/data/workspace/unaligned.20170110/')
+    os.chdir('tests/data/workspace/submittable/')
     unaligned = Unaligned('ssample_y')
     os.chdir(initial_directory)
 
@@ -17,7 +17,8 @@ def test_submitter(ctx, mock_server):
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
 
     #do not uncomment
-    #submitter.submit(unaligned, True)
+    with pytest.raises(ValueError):
+        submitter.submit(unaligned, True)
 
     attributes = [Attribute('tag1', 'value1'), Attribute('tag2', 'value2')]
     sample = Sample('an alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,33)

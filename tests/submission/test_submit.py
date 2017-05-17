@@ -25,7 +25,7 @@ def test_submit(ctx, mock_server):
     ctx.obj['EGA_ENUMS'] = EgaEnums()
     ctx.obj['log_file'] = 'tests/data/workspace/submittable/ssample_y/.status'
 
-    #perform_submission(ctx, '///')
+    perform_submission(ctx, '///')
 
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/submittable/')

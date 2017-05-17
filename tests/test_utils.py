@@ -19,7 +19,8 @@ def test_initialize_log(ctx):
     initialize_log(ctx, True, "info")
 
 def test_get_current_dir_type(ctx):
-
+    #ctx.obj['CURRENT_DIR'] = os.getcwd()
+    #ctx.obj['WORKSPACE_PATH'] = None
     with pytest.raises(KeyError):
         get_current_dir_type(ctx)
 
