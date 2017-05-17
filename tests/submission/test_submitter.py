@@ -16,7 +16,7 @@ def test_submitter(ctx, mock_server):
     ctx.obj['SUBMISSION']['sessionToken'] = 'X-Token'
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
 
-    #do not uncomment
+
     with pytest.raises(ValueError):
         submitter.submit(unaligned, True)
 

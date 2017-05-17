@@ -75,7 +75,7 @@ def mock_server(ctx):
                    content_type="application/json")
 
     httpretty.register_uri(httpretty.GET, "%sstudies?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
-                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"123456", "alias": "study", "studyType": "type", "title": "title", "studyAbstract": "abstract", "studyTypeId": "Id", "shortName": "short"}]}}',
                    content_type="application/json")
 
     httpretty.register_uri(httpretty.GET, "%sstudies?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
@@ -92,15 +92,13 @@ def mock_server(ctx):
 
     httpretty.register_uri(httpretty.DELETE, "%ssamples?status=SUBMITTED&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
                             body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345" }]}}',
-                   content_type="application/json")
+                    content_type="application/json")
 
     #for test_submitter/object_submission
-    httpretty.register_uri(httpretty.GET,
-                           "%ssamples/ssample_y?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
-                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["sf", "fs"]}]}}',
-                           content_type="application/json")
+    httpretty.register_uri(httpretty.GET, "%ssamples/ssample_y?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]}]}}',
+                    content_type="application/json")
     #for object_submission/update_obj
-    httpretty.register_uri(httpretty.GET,
-                           "%ssamples/12345?action=EDIT" % (ctx.obj['SETTINGS']['apiUrl']),
-                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["sf", "fs"]}]}}',
-                           content_type="application/json")
+    httpretty.register_uri(httpretty.GET, "%ssamples/12345?action=EDIT" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]]}]}}',
+                    content_type="application/json")

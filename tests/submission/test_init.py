@@ -39,7 +39,7 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['EGA_ENUMS'] = EgaEnums()
     ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
 
-    with pytest.raises(KeyError):
+    with pytest.raises(IOError):
         init_workspace(ctx, 'test_ac', 'test_pass', 'test_token', 'test_code')
 
 
@@ -48,5 +48,8 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['SETTINGS']['ega_policy_id'] = None
 
 def test_initialize_dac_policy_study(ctx):
+    ctx.obj['SETTINGS']['ega_submitter_account'] = None
+    ctx.obj['SETTINGS']['ega_submitter_password'] = None
+    ctx.obj['SETTINGS']['ega_policy_id'] = None
     #initialize_dac_policy_study(ctx, )
     pass
