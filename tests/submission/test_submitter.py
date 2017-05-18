@@ -15,10 +15,10 @@ def test_submitter(ctx, mock_server):
 
     ctx.obj['SUBMISSION']['sessionToken'] = 'X-Token'
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
-
-
-    with pytest.raises(ValueError):
-        submitter.submit(unaligned, True)
+    ctx.obj['SUBMISSION']['id'] = "55"
+    #this one
+    #with pytest.raises(ValueError):
+    submitter.submit(unaligned, True)
 
     attributes = [Attribute('tag1', 'value1'), Attribute('tag2', 'value2')]
     sample = Sample('an alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,33)

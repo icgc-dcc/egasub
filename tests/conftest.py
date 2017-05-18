@@ -96,9 +96,14 @@ def mock_server(ctx):
 
     #for test_submitter/object_submission
     httpretty.register_uri(httpretty.GET, "%ssamples/ssample_y?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
-                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]}]}}',
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED"]}]}}',
                     content_type="application/json")
     #for object_submission/update_obj
     httpretty.register_uri(httpretty.GET, "%ssamples/12345?action=EDIT" % (ctx.obj['SETTINGS']['apiUrl']),
                             body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]]}]}}',
+                    content_type="application/json")
+
+    #for submitter
+    httpretty.register_uri(httpretty.PUT, "URL",
+                           Body='"username="", password="", hostname="example.com", port="80", path="/samples/12345"',
                     content_type="application/json")
