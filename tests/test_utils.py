@@ -8,20 +8,23 @@ def test_initialize_app(ctx, mock_server):
     with pytest.raises(KeyError):
         initialize_app(ctx)
 
-    ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/"
+    #ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/"
     #ctx.obj['CURRENT_DIR'] = 'tests/data/workspace/'
     #ctx.obj['WORKSPACE_PATH']['SETTINGS'] =
 
     #with pytest.raises(Exception):
     #    initialize_app(ctx)
 
-    #ctx.obj['CURRENT_DIR'] = None
+    #ctx.obj['CURRENT_DIR'] = ""
 
 def test_initialize_log(ctx):
+    ctx.obj['WORKSPACE_PATH'] = None
+    initialize_log(ctx, True, "info")
+    ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/"
     initialize_log(ctx, True, "info")
 
 def test_get_current_dir_type(ctx):
-    #ctx.obj['CURRENT_DIR'] = os.getcwd()
+    #ctx.obj['CURRENT_DIR'] = None
     #ctx.obj['WORKSPACE_PATH'] = None
     with pytest.raises(KeyError):
         get_current_dir_type(ctx)

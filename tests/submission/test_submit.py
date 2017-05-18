@@ -4,11 +4,13 @@ import pytest
 import os
 import shutil
 from egasub.submission.submittable import Unaligned, Variation, Alignment
-
+from mock import patch, Mock
+import ftplib
 
 def test_submittable_status():
     assert submittable_status("fail") == None
     assert submittable_status("tests/submission/test_submit.py") == ['']
+
 
 def test_submit(ctx, mock_server):
 
@@ -40,6 +42,7 @@ def test_submit(ctx, mock_server):
     alignment.record_object_status('sample', True, "test", "test")
 
     with pytest.raises(Exception):
+    #mock_ftp = Mock()
         perform_submission(ctx, ['test_u', 'test_a', 'test_v'])
 
     with pytest.raises(AttributeError):
