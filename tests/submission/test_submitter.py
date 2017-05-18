@@ -11,6 +11,9 @@ def test_submitter(ctx, mock_server):
     unaligned = Unaligned('ssample_y')
     alignment = Alignment('test_a')
     os.chdir(initial_directory)
+    os.chdir('tests/data/workspace/unaligned.20170110/')
+    unaligned2 = Unaligned('ssample_y')
+    os.chdir(initial_directory)
 
     submitter = Submitter(ctx)
 
@@ -20,6 +23,8 @@ def test_submitter(ctx, mock_server):
     ctx.obj['SUBMISSION']['sessionToken'] = 'X-Token'
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
     ctx.obj['SUBMISSION']['id'] = "55"
+
+    submitter.submit(unaligned2,True)
 
     submitter.submit(unaligned, True)
 
