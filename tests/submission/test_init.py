@@ -34,8 +34,6 @@ def test_make_dummy_dac():
 def test_make_dummy_policy():
     assert isinstance(make_dummy_policy(make_dummy_dac()), Policy)
 
-#@click.command()
-#@click.option('1', prompt = True)
 def test_init_workspace(ctx, mock_server):
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
@@ -44,6 +42,7 @@ def test_init_workspace(ctx, mock_server):
 
 
     with pytest.raises(IOError):
+    #init_workspace.input = lambda: '1'
         init_workspace(ctx, 'test_ac', 'test_pass', 'test_token', 'test_code')
 
 

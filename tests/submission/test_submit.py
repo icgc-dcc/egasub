@@ -3,7 +3,8 @@ from egasub.ega.entities.ega_enums import EgaEnums
 import pytest
 import os
 import shutil
-from egasub.submission.submittable import Unaligned
+from egasub.submission.submittable import Unaligned, Variation, Alignment
+
 
 def test_submittable_status():
     assert submittable_status("fail") == None
@@ -31,11 +32,15 @@ def test_submit(ctx, mock_server):
     os.chdir('tests/data/workspace/submittable/')
 
     unaligned = Unaligned('test_u')
+    variation = Variation('test_v')
+    alignment = Alignment('test_a')
 
     unaligned.record_object_status('sample', True, "test", "test")
+    variation.record_object_status('sample', True, "test", "test")
+    alignment.record_object_status('sample', True, "test", "test")
 
     with pytest.raises(Exception):
-        perform_submission(ctx, ['test_u'])
+        perform_submission(ctx, ['test_u', 'test_a', 'test_v'])
 
     with pytest.raises(AttributeError):
         submit_dataset(ctx)
@@ -47,6 +52,8 @@ def test_submit(ctx, mock_server):
     ctx.obj['EGA_ENUMS'] = None
 
     shutil.rmtree(os.path.join(os.getcwd(), 'test_u/.status'))
+    shutil.rmtree(os.path.join(os.getcwd(), 'test_a/.status'))
+    shutil.rmtree(os.path.join(os.getcwd(), 'test_v/.status'))
     os.chdir(initial_directory)
 
 

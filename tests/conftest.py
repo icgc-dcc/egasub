@@ -120,6 +120,8 @@ def mock_server(ctx):
 
 
     #for submitter
-    httpretty.register_uri(httpretty.PUT, "URL",
+    httpretty.register_uri(httpretty.PUT, "%ssamples/test_u?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
                            Body='"username="", password="", hostname="example.com", port="80", path="/samples/12345"',
                     content_type="application/json")
+
+    httpretty.register_uri(httpretty.GET, 'ftp.ega.ebi.ac.uk')
