@@ -23,19 +23,19 @@ def test_submit(ctx, mock_server):
     ctx.obj['CURRENT_DIR'] = os.path.join(os.getcwd(),'tests/data/workspace/submittable/')
     ctx.obj['CURRENT_DIR_TYPE'] = "unaligned"
     ctx.obj['EGA_ENUMS'] = EgaEnums()
-    ctx.obj['log_file'] = 'tests/data/workspace/submittable/ssample_y/.status'
+    ctx.obj['log_file'] = 'tests/data/workspace/submittable/test_u/.status'
 
     perform_submission(ctx, '///')
 
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/submittable/')
 
-    unaligned = Unaligned('ssample_y')
+    unaligned = Unaligned('test_u')
 
     unaligned.record_object_status('sample', True, "test", "test")
 
     with pytest.raises(Exception):
-        perform_submission(ctx, ['ssample_y'])
+        perform_submission(ctx, ['test_u'])
 
     with pytest.raises(AttributeError):
         submit_dataset(ctx)
@@ -46,7 +46,7 @@ def test_submit(ctx, mock_server):
     ctx.obj['CURRENT_DIR'] = None
     ctx.obj['EGA_ENUMS'] = None
 
-    shutil.rmtree(os.path.join(os.getcwd(), 'ssample_y/.status'))
+    shutil.rmtree(os.path.join(os.getcwd(), 'test_u/.status'))
     os.chdir(initial_directory)
 
 
