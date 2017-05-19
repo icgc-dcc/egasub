@@ -20,8 +20,10 @@ def test_initialize_app(ctx, mock_server):
 def test_initialize_log(ctx):
     ctx.obj['WORKSPACE_PATH'] = None
     initialize_log(ctx, True, "info")
+    #assert os.path.isdir("%s/.log" %(str(ctx.obj['LOGGER'])))
     ctx.obj['WORKSPACE_PATH'] = "tests/data/workspace/"
     initialize_log(ctx, True, "info")
+    assert os.path.isdir("tests/data/workspace/.log")
 
 def test_get_current_dir_type(ctx):
     #ctx.obj['CURRENT_DIR'] = None

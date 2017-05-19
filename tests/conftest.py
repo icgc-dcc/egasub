@@ -119,9 +119,9 @@ def mock_server(ctx):
 
 
 
-    #for submitter
-    httpretty.register_uri(httpretty.PUT, "%ssamples/test_u?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
-                           Body='"username="", password="", hostname="example.com", port="80", path="/samples/12345"',
+    #for submitter PUT
+    httpretty.register_uri(httpretty.PUT, "%ssamples/12345?action=EDIT" % (ctx.obj['SETTINGS']['apiUrl']),
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": ["SUBMITTED_DRAFT"]}]}}',
                     content_type="application/json")
 
-    httpretty.register_uri(httpretty.GET, 'ftp.ega.ebi.ac.uk')
+    #httpretty.register_uri(httpretty.GET, 'ftp.ega.ebi.ac.uk')

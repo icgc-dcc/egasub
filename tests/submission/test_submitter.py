@@ -24,7 +24,8 @@ def test_submitter(ctx, mock_server):
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
     ctx.obj['SUBMISSION']['id'] = "55"
 
-    with pytest.raises(ValueError):
+    #fix the put fixture
+    with pytest.raises(Exception):
         submitter.submit(unaligned2,True)
 
     submitter.submit(unaligned, True)
