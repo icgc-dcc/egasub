@@ -114,14 +114,19 @@ def mock_server(ctx):
 
     #for object_submission/update_obj
     httpretty.register_uri(httpretty.GET, "%ssamples/12345?action=EDIT" % (ctx.obj['SETTINGS']['apiUrl']),
-                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]]}]}}',
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]}]}}',
                     content_type="application/json")
 
 
 
     #for submitter PUT
     httpretty.register_uri(httpretty.PUT, "%ssamples/12345?action=EDIT" % (ctx.obj['SETTINGS']['apiUrl']),
-                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": ["SUBMITTED_DRAFT"]}]}}',
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
                     content_type="application/json")
+
+    # for submitter PUT
+    httpretty.register_uri(httpretty.DELETE, "https://ega.crg.eu/submitterportal/v1/samples/12345",
+                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
+                           content_type="application/json")
 
     #httpretty.register_uri(httpretty.GET, 'ftp.ega.ebi.ac.uk')

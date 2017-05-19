@@ -25,8 +25,8 @@ def test_submitter(ctx, mock_server):
     ctx.obj['SUBMISSION']['id'] = "55"
 
     #fix the put fixture
-    with pytest.raises(Exception):
-        submitter.submit(unaligned2,True)
+    #with pytest.raises(Exception):
+    submitter.submit(unaligned2,True)
 
     submitter.submit(unaligned, True)
 
