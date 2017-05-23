@@ -3,7 +3,7 @@ import click
 from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy, initialize_dac_policy_study
 from egasub.ega.entities import Dac, Policy, EgaEnums
 import pytest
-from fabric.api import run, settings, prompt
+#from fabric.api import run, settings, prompt
 
 
 def test_init_function(ctx):
