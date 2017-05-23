@@ -12,6 +12,7 @@ def test_submitter(ctx, mock_server):
     alignment = Alignment('test_a')
     os.chdir(initial_directory)
     os.chdir('tests/data/workspace/unaligned.20170110/')
+    ctx.obj['CURRENT_DIR_TYPE'] = 'unaligned'
     unaligned2 = Unaligned('ssample_y')
     os.chdir(initial_directory)
 
