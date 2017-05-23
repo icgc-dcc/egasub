@@ -82,6 +82,7 @@ def test_unaligned():
     assert cmp(unaligned.experiment.to_dict(),reference_experiment)  == 0
     assert cmp(unaligned.run.to_dict(),reference_run)  == 0
 
+    localval.local_validate(EgaEnums())
 
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
