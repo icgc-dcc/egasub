@@ -13,7 +13,7 @@ analysis:
   platform: Illumina HiSeq 2000
 sample:
   alias: bad @lias
-  caseOrControlId: 0
+  caseOrControlId: 17
   genderId: 5
   organismPart: 
   cellLine: 

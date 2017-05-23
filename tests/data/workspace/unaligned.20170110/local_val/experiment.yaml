@@ -1,13 +1,13 @@
 experiment:
   title:
-  instrumentModelId: 90  # should change these IDs to values
-  librarySourceId: 4
-  librarySelectionId: 3
-  libraryStrategyId: 5
-  designDescription: 'Description of the design'
-  libraryName: 'Library name'
+  instrumentModelId: 9000  # should change these IDs to values
+  librarySourceId: 7000s
+  librarySelectionId: 3000f
+  libraryStrategyId: 5000g
+  designDescription:
+  libraryName:
   libraryConstructionProtocol: 'Library construction protocol'
-  libraryLayoutId: 1 # 0=paired, 1=single
+  libraryLayoutId: 1r # 0=paired, 1=single
   pairedNominalLength: 420
   pairedNominalSdev: 36
   sampleId: 
@@ -26,6 +26,6 @@ sample:
   sampleAge: 
   sampleDetail: 
 run:
-  runFileTypeId: 0 # 0=BAM, 1=Complete Genomics, 2=CRAM, 3=Fasta, 4=One Fastq file (Single), 5=Two Fastq files (Paired),6=PacBio HDF5,7=SFF,8=SRF
+  runFileTypeId: 7000 # 0=BAM, 1=Complete Genomics, 2=CRAM, 3=Fasta, 4=One Fastq file (Single), 5=Two Fastq files (Paired),6=PacBio HDF5,7=SFF,8=SRF
 files:
   - fileName: unaligned.20170110/ssample_y/sequence_file.paired_end.sample_y.fq.gz.gpg
