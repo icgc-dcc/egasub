@@ -59,6 +59,35 @@ def test_submit(ctx, mock_server):
     shutil.rmtree(os.path.join(os.getcwd(), 'test_v/.status'))
     os.chdir(initial_directory)
 
+def test_submit_dataset(ctx):
+    ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
+    ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
+    ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
+    ctx.obj['CURRENT_DIR'] = os.path.join(os.getcwd(), 'tests/data/workspace/submitted/')
+    ctx.obj['CURRENT_DIR_TYPE'] = "unaligned"
+    ctx.obj['EGA_ENUMS'] = EgaEnums()
+    ctx.obj['log_file'] = 'tests/data/workspace/submitted/test_u/.status'
+
+    initial_directory = os.getcwd()
+    os.chdir('tests/data/workspace/submitted/')
+
+    #unaligned = Unaligned('test_u')
+    #variation = Variation('test_v')
+    #alignment = Alignment('test_a')
+
+    with pytest.raises(AttributeError):
+        submit_dataset(ctx)
+
+    ctx.obj['SETTINGS']['ega_submitter_account'] = None
+    ctx.obj['SETTINGS']['ega_submitter_password'] = None
+    ctx.obj['SETTINGS']['ega_policy_id'] = None
+    ctx.obj['CURRENT_DIR'] = None
+    ctx.obj['CURRENT_DIR_TYPE'] = None
+    ctx.obj['EGA_ENUMS'] = None
+    os.chdir(initial_directory)
+
+    pass
+
 
 
 

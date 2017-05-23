@@ -11,6 +11,7 @@ def test_variation():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/variation.20170119/')
     variation = Variation('test_x')
+    varfail = Variation('local_val')
 
     assert isinstance(variation.sample, Sample)
     assert isinstance(variation.analysis, EAnalysis)
@@ -110,6 +111,8 @@ def test_variation():
     assert variation.files == variation.analysis.files
 
     variation.local_validate(EgaEnums())
+
+    varfail.local_validate(EgaEnums())
 
     os.chdir(initial_directory)
     os.chdir('tests/data/workspace/alignment.20170115/')

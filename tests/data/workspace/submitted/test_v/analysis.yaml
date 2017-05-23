@@ -27,5 +27,5 @@ sample:
 files:
   - fileName: submitted/test_v/somatic.snv.test_x.vcf.gz.gpg
     checksumMethod: md5
-  - fileName: submitted/test_/somatic.snv.test_x.vcf.gz.tbi.gpg
+  - fileName: submitted/test_v/somatic.snv.test_x.vcf.gz.tbi.gpg
     checksumMethod: md5

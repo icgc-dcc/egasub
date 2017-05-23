@@ -78,14 +78,5 @@ def test_logout_function(ctx):
 
     assert not 'sessionToken' in ctx.obj['SUBMISSION']
 
-def test_object_submission(ctx):
-    #can cover using test submit_dataset()
-    pass
-
 def test_register_obj():
-    #can cover using object submission
-    pass
-
-def test_validate_obj():
-    #cover using object submission
     pass

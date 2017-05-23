@@ -12,20 +12,20 @@ analysis:
   experimentTypeId: [0]  # whole genome sequencing
   platform: Illumina HiSeq 2000
 sample:
-  alias: test_x
+  alias: bad @lias
   caseOrControlId: 0
-  genderId: 1
+  genderId: 5
   organismPart: 
   cellLine: 
   region:
-  phenotype: Breast cancer
+  phenotype:
   subjectId: "donor 1"
   anonymizedName: 
   bioSampleId: 
   sampleAge: 
   sampleDetail: 
 files:
-  - fileName: submitted/test_v/somatic.snv.test_x.vcf.gz.gpg
+  - fileName: variation.20170119/local_val/somatic.snv.test_x.vcf.gz.gpg
     checksumMethod: md5
-  - fileName: submitted/test_/somatic.snv.test_x.vcf.gz.tbi.gpg
+  - fileName: variation.20170119/local_val/somatic.snv.test_x.vcf.gz.tbi.gpg
     checksumMethod: md5
