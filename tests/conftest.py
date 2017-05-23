@@ -96,7 +96,7 @@ def mock_server(ctx):
 
     #for test_submitter/object_submission unaligned
     httpretty.register_uri(httpretty.GET, "%ssamples/test_u?idType=ALIAS&skip=0&limit=0" % (ctx.obj['SETTINGS']['apiUrl']),
-                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED"]}]}}',
+                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": "SUBMITTED"}]}}',
                     content_type="application/json")
 
     # for test_submitter/object_submission unaligned

@@ -3,6 +3,8 @@ import click
 from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy, initialize_dac_policy_study
 from egasub.ega.entities import Dac, Policy, EgaEnums
 import pytest
+from fabric.api import run, settings, prompt
+
 
 def test_init_function(ctx):
     runner = CliRunner()
@@ -43,7 +45,11 @@ def test_init_workspace(ctx, mock_server):
 
     with pytest.raises(IOError):
     #init_workspace.input = lambda: '1'
+    #with settings(prompts = {'Select an existing study by entering the line number or enter 0 to create a new study: ': '1'}):
+        #run('apt-get update')
+        #   run('apt-get upgrade')
         init_workspace(ctx, 'test_ac', 'test_pass', 'test_token', 'test_code')
+
 
 
     ctx.obj['SETTINGS']['ega_submitter_account'] = None

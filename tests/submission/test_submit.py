@@ -75,7 +75,7 @@ def test_submit_dataset(ctx):
     #variation = Variation('test_v')
     #alignment = Alignment('test_a')
 
-    with pytest.raises(AttributeError):
+    with pytest.raises(IOError):
         submit_dataset(ctx)
 
     ctx.obj['SETTINGS']['ega_submitter_account'] = None
