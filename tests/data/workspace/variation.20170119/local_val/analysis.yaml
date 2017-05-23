@@ -3,13 +3,13 @@ analysis:
   description:
   analysisCenter: analysis_center
   #analysisDate: "2017-02-09"
-  analysisTypeId: 1  # Sequence variation (VCF)
+  analysisTypeId: 80  # Sequence variation (VCF)
   genomeId: 453  # GRCh38
   chromosomeReferences:
     - 24
     - 25
     - 26
-  experimentTypeId: 700  # whole genome sequencing
+  experimentTypeId: [700]  # whole genome sequencing
   platform: Illumina HiSeq 2000
 sample:
   alias: bad @lias

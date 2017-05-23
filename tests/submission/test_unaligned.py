@@ -2,6 +2,7 @@ import pytest
 import os
 import shutil
 from egasub.submission.submittable import Unaligned
+from egasub.submission.submittable.base import Experiment
 from egasub.ega.entities import Sample, EgaEnums, \
                                 Experiment as EExperiment, \
                                 Run as ERun
@@ -10,6 +11,7 @@ def test_unaligned():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')
     unaligned = Unaligned('ssample_y')
+    localval = Unaligned('local_val')
     #unaligned2 = Unaligned('sample_x')
 
     assert isinstance(unaligned.sample, Sample)
