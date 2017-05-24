@@ -80,8 +80,13 @@ def test_logout_function(ctx):
 
     assert not 'sessionToken' in ctx.obj['SUBMISSION']
 
-def test_register_obj():
-    pass
+def test_register_obj(ctx):
+    current = os.getcwd()
+    os.chdir(os.path.join(current, 'tests/data/workspace/submittable'))
+    ctx.obj['SUBMISSION']['id'] = "12345"
+    ctx.obj['SUBMISSION']['sessionToken'] = "sdfsd"
+    register_obj(ctx, Unaligned('test_u').sample, 'sample')
+    os.chdir(current)
 
 def test_submit_submission(ctx):
     current = os.getcwd()

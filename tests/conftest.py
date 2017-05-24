@@ -133,4 +133,7 @@ def mock_server(ctx):
                     body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
                     content_type="application/json",
                     X_Token= "sdfsd")
-    #httpretty.register_uri(httpretty.GET, 'ftp.ega.ebi.ac.uk')
+
+    httpretty.register_uri(httpretty.POST, "%ssubmissions/12345/samples" % (ctx.obj['SETTINGS']['apiUrl']),
+                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
+                           content_type="application/json")
