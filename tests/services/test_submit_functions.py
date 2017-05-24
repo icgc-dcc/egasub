@@ -88,6 +88,6 @@ def test_submit_submission(ctx):
     os.chdir(os.path.join(current,'tests/data/workspace/submittable'))
     ctx.obj['SUBMISSION']['id'] = "12345"
     ctx.obj['SUBMISSION']['sessionToken'] = "sdfsd"
-    submit_submission(ctx, Unaligned('test_U').sample)
+    submit_submission(ctx, Unaligned('test_u').sample)
     #ctx.obj['SUBMISSION']['id'] = None
     os.chdir(current)
