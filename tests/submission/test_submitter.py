@@ -23,6 +23,7 @@ def test_submitter(ctx, mock_server):
 
     ctx.obj['SUBMISSION']['sessionToken'] = 'X-Token'
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
+    #ctx.obj['SETTINGS']['ega_study_id'] = "abjdh"
     ctx.obj['SUBMISSION']['id'] = "55"
 
     #fix the put fixture
