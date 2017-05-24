@@ -129,4 +129,8 @@ def mock_server(ctx):
                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
                            content_type="application/json")
 
+    httpretty.register_uri(httpretty.PUT, "https://ega.crg.eu/submitterportal/v1/submissions/12345?action=SUBMIT",
+                    body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
+                    content_type="application/json",
+                    X_Token= "sdfsd")
     #httpretty.register_uri(httpretty.GET, 'ftp.ega.ebi.ac.uk')

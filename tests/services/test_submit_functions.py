@@ -1,9 +1,11 @@
-from egasub.ega.services import login,logout,prepare_submission, query_by_id, api_url, query_by_type, _obj_type_to_endpoint, object_submission, register_obj,validate_obj, _validate_submit_obj, update_obj, delete_obj
+from egasub.ega.services import login,logout,prepare_submission, query_by_id, api_url, query_by_type, _obj_type_to_endpoint, object_submission, register_obj,validate_obj, _validate_submit_obj, update_obj, delete_obj, submit_submission
 import pytest
 import requests
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 from egasub.ega.entities.submission import Submission
 from egasub.exceptions import CredentialsError
+from egasub.submission.submittable.unaligned import Unaligned
+import os
 
 
 def test_login_function(ctx, mock_server):
@@ -80,3 +82,12 @@ def test_logout_function(ctx):
 
 def test_register_obj():
     pass
+
+def test_submit_submission(ctx):
+    current = os.getcwd()
+    os.chdir(os.path.join(current,'tests/data/workspace/submittable'))
+    ctx.obj['SUBMISSION']['id'] = "12345"
+    ctx.obj['SUBMISSION']['sessionToken'] = "sdfsd"
+    submit_submission(ctx, Unaligned('test_U').sample)
+    #ctx.obj['SUBMISSION']['id'] = None
+    os.chdir(current)
