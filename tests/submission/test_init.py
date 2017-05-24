@@ -38,6 +38,7 @@ def test_make_dummy_dac():
 def test_make_dummy_policy():
     assert isinstance(make_dummy_policy(make_dummy_dac()), Policy)
 
+#@patch('test_init.prompt', return_value='yes')
 def test_init_workspace(ctx, mock_server):
     runner = CliRunner()
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
@@ -46,14 +47,12 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
 
 
-    #with pytest.raises(IOError):
+    with pytest.raises(IOError):
     #init_workspace.input = lambda: '1'
     #with settings(prompts = {'Select an existing study by entering the line number or enter 0 to create a new study: ': '1'}):
         #run('apt-get update')
         #   run('apt-get upgrade')
-
-    runner.invoke(init_workspace,['study_key', '1'])
-
+        init_workspace(ctx, 'test_ac', 'test_pass', 'test_token', 'test_code')
 
 
     ctx.obj['SETTINGS']['ega_submitter_account'] = None
@@ -64,5 +63,13 @@ def test_initialize_dac_policy_study(ctx):
     ctx.obj['SETTINGS']['ega_submitter_account'] = None
     ctx.obj['SETTINGS']['ega_submitter_password'] = None
     ctx.obj['SETTINGS']['ega_policy_id'] = None
-    #initialize_dac_policy_study(ctx, )
+
+    origin_raw_input = click.prompt
+
+    click.prompt = lambda x: "yes"
+    #initialize_dac_policy_study(ctx, "", 'sdfs', 'sdf')
+
+
+    click.prompt = origin_raw_input
+
     pass
