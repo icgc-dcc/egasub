@@ -27,9 +27,20 @@ class test_ctx(object):
 
 test_ctx = test_ctx()
 
+class mkclick(object):
+    def __init__(self):
+        pass
+
+    def prompt(self):
+        pass
+
 @pytest.fixture(scope="session")
 def ctx():
     return test_ctx
+
+#@pytest.fixture(scope="session")
+#def mock_click():
+#    return mkclick
 
 @pytest.fixture(scope="session")
 def mock_server(ctx):
@@ -137,3 +148,13 @@ def mock_server(ctx):
     httpretty.register_uri(httpretty.POST, "%ssubmissions/12345/samples" % (ctx.obj['SETTINGS']['apiUrl']),
                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
                            content_type="application/json")
+
+    httpretty.register_uri(httpretty.GET, "http://hetl2-dcc.res.oicr.on.ca:9000/sample/id?submittedProjectId=abjdh&submittedSampleId=alias&create=true",
+                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]}]}}',
+                           content_type="application/json",
+                           Authorization= 'Bearer True')
+
+    httpretty.register_uri(httpretty.GET, "http://hetl2-dcc.res.oicr.on.ca:9000/donor/id?submittedProjectId=abjdh&submittedDonorId=3&create=true",
+                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]}]}}',
+                           content_type="application/json",
+                           Authorization= 'Bearer True')

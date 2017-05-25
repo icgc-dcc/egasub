@@ -3,7 +3,7 @@ import click
 from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy, initialize_dac_policy_study
 from egasub.ega.entities import Dac, Policy, EgaEnums
 import pytest
-import mock
+from mock import patch
 import __builtin__
 #from fabric.api import run, settings, prompt
 
@@ -38,7 +38,7 @@ def test_make_dummy_dac():
 def test_make_dummy_policy():
     assert isinstance(make_dummy_policy(make_dummy_dac()), Policy)
 
-#@patch('test_init.prompt', return_value='yes')
+#@patch('click.prompt', return_value = '1')
 def test_init_workspace(ctx, mock_server):
     runner = CliRunner()
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
@@ -46,7 +46,7 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['EGA_ENUMS'] = EgaEnums()
     ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
 
-
+    #mock_prompt.return_value = '1'
     with pytest.raises(IOError):
     #init_workspace.input = lambda: '1'
     #with settings(prompts = {'Select an existing study by entering the line number or enter 0 to create a new study: ': '1'}):

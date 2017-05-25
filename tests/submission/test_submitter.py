@@ -38,14 +38,16 @@ def test_submitter(ctx, mock_server):
 
 
     attributes = [Attribute('tag1', 'value1'), Attribute('tag2', 'value2')]
-    sample = Sample('an alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,33)
-    with pytest.raises(Exception):
-        submitter.set_icgc_ids(sample, True)
+    sample = Sample('alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,33)
+    #with pytest.raises(Exception):
+    submitter.set_icgc_ids(sample, True)
 
     ctx.obj['SETTINGS']['_icgc_sample_id'] = "abjdhf"
 
-    with pytest.raises(Exception):
-        submitter.set_icgc_ids(sample, True)
+    #with pytest.raises(Exception):
+    ctx.obj['SETTINGS']['icgc_id_service_token'] = True
+    submitter.set_icgc_ids(sample, True)
+    ctx.obj['SETTINGS']['icgc_id_service_token'] = None
 
 
 
