@@ -16,29 +16,43 @@ def test_submitter(ctx, mock_server):
     unaligned2 = Unaligned('ssample_y')
     os.chdir(initial_directory)
 
+
     submitter = Submitter(ctx)
 
-    #with pytest.raises(ValueError):
-    #submitter.submit(unaligned, True)
 
     ctx.obj['SUBMISSION']['sessionToken'] = 'X-Token'
     ctx.obj['SETTINGS']['icgc_project_code'] = "abjdh"
     #ctx.obj['SETTINGS']['ega_study_id'] = "abjdh"
     ctx.obj['SUBMISSION']['id'] = "55"
 
-    #fix the put fixture
-    #with pytest.raises(Exception):
-    submitter.submit(unaligned2,True)
 
-    submitter.submit(unaligned, True)
+    assert submitter.submit(unaligned2,True) is None
 
+    #ctx.obj['SETTINGS']['ega_study_id'] = 'asdf'
+    assert submitter.submit(unaligned, True) is None
+    #ctx.obj['SETTINGS']['ega_study_id'] = None
 
     ctx.obj['CURRENT_DIR_TYPE'] = 'alignment'
-    submitter.submit(alignment,True)
+    assert submitter.submit(alignment,True) is None
 
 
     attributes = [Attribute('tag1', 'value1'), Attribute('tag2', 'value2')]
-    sample = Sample('alias','the title','the description',123,2,'head','test line','test region','a phenotype',33,'anonymized name',22,10,'some details',attributes,33)
+    sample = Sample('alias',
+                    'the title',
+                    'the description',
+                    123,
+                    2,
+                    'head',
+                    'test line',
+                    'test region',
+                    'a phenotype',
+                    33,
+                    'anonymized name',
+                    22,
+                    10,
+                    'some details',
+                    attributes,
+                    33)
     with pytest.raises(Exception):
         submitter.set_icgc_ids(sample, False)
 
@@ -46,7 +60,7 @@ def test_submitter(ctx, mock_server):
 
     #with pytest.raises(Exception):
     ctx.obj['SETTINGS']['icgc_id_service_token'] = True
-    submitter.set_icgc_ids(sample, True)
+    assert submitter.set_icgc_ids(sample, True) is None
     ctx.obj['SETTINGS']['icgc_id_service_token'] = None
 
 

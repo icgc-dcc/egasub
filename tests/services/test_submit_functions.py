@@ -96,3 +96,7 @@ def test_submit_submission(ctx):
     submit_submission(ctx, Unaligned('test_u').sample)
     #ctx.obj['SUBMISSION']['id'] = None
     os.chdir(current)
+
+def test_validate_submit_obj(ctx):
+    #_validate_submit_obj(ctx, )
+    pass

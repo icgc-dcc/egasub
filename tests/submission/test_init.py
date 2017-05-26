@@ -4,8 +4,7 @@ from egasub.submission.init import init_workspace, truncate_string, make_dummy_d
 from egasub.ega.entities import Dac, Policy, EgaEnums
 import pytest
 from mock import patch
-import __builtin__
-#from fabric.api import run, settings, prompt
+
 
 
 def test_init_function(ctx):
@@ -38,7 +37,6 @@ def test_make_dummy_dac():
 def test_make_dummy_policy():
     assert isinstance(make_dummy_policy(make_dummy_dac()), Policy)
 
-#@patch('click.prompt', return_value = '1')
 def test_init_workspace(ctx, mock_server):
     runner = CliRunner()
     ctx.obj['SETTINGS']['ega_submitter_account'] = 'test_account'
@@ -46,12 +44,8 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['EGA_ENUMS'] = EgaEnums()
     ctx.obj['SETTINGS']['ega_policy_id'] = 'test_id'
 
-    #mock_prompt.return_value = '1'
+
     with pytest.raises(IOError):
-    #init_workspace.input = lambda: '1'
-    #with settings(prompts = {'Select an existing study by entering the line number or enter 0 to create a new study: ': '1'}):
-        #run('apt-get update')
-        #   run('apt-get upgrade')
         init_workspace(ctx, 'test_ac', 'test_pass', 'test_token', 'test_code')
 
 
@@ -67,7 +61,9 @@ def test_initialize_dac_policy_study(ctx):
     origin_raw_input = click.prompt
 
     click.prompt = lambda x: "yes"
-    #initialize_dac_policy_study(ctx, "", 'sdfs', 'sdf')
+    #covered elsewhere. This causes crashes
+    #with pytest.raises(IOError):
+    #    initialize_dac_policy_study(ctx, "", 'sdfs', 'sdf')
 
 
     click.prompt = origin_raw_input

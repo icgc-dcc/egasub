@@ -114,23 +114,24 @@ def test_unaligned():
     assert unaligned.files == unaligned.run.files
 
     assert unaligned.local_validate(EgaEnums()) is None
-
+    #test bad object type
     unaligned.record_object_status('none', True, "test", "test")
-
+    #make sure no log was built
     assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
-
+    #make sure no record to restore
     unaligned.restore_latest_object_status('none')
-
+    #make sure no log was built
     assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
-
+    #proper run
     unaligned.record_object_status('sample', True, "test", "test")
-
+    #assert log file exists
     assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status/sample.log')) == True
-
+    #restore object from log
     unaligned.restore_latest_object_status('sample')
 
     assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
 
+    #delete log file path
     shutil.rmtree(os.path.join(cwd, 'ssample_y/.status'))
 
     os.chdir(initial_directory)
