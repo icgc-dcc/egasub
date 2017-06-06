@@ -158,3 +158,7 @@ def mock_server(ctx):
                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "status": ["SUBMITTED_DRAFT"]}]}}',
                            content_type="application/json",
                            Authorization= 'Bearer True')
+
+    httpretty.register_uri(httpretty.PUT, "%sanalysiss/555?action=SUBMIT" % (ctx.obj['SETTINGS']['apiUrl']),
+                           body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"555", "alias": "fgfg", "status": "VALIDATED"}]}}',
+                           content_type="application/json")

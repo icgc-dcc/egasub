@@ -53,19 +53,7 @@ def test_init_workspace(ctx, mock_server):
     ctx.obj['SETTINGS']['ega_submitter_password'] = None
     ctx.obj['SETTINGS']['ega_policy_id'] = None
 
-def test_initialize_dac_policy_study(ctx):
-    ctx.obj['SETTINGS']['ega_submitter_account'] = None
-    ctx.obj['SETTINGS']['ega_submitter_password'] = None
-    ctx.obj['SETTINGS']['ega_policy_id'] = None
-
-    origin_raw_input = click.prompt
-
-    click.prompt = lambda x: "yes"
-    #covered elsewhere. This causes crashes
-    #with pytest.raises(IOError):
-    #    initialize_dac_policy_study(ctx, "", 'sdfs', 'sdf')
-
-
-    click.prompt = origin_raw_input
-
-    pass
+# def test_initialize_dac_policy_study(ctx):
+#     ctx.obj['SETTINGS']['ega_submitter_account'] = None
+#     ctx.obj['SETTINGS']['ega_submitter_password'] = None
+#     ctx.obj['SETTINGS']['ega_policy_id'] = None

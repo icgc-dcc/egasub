@@ -4,7 +4,7 @@ import requests
 from egasub.ega.entities.submission_subset_data import SubmissionSubsetData
 from egasub.ega.entities.submission import Submission
 from egasub.exceptions import CredentialsError
-from egasub.submission.submittable.unaligned import Unaligned
+from egasub.submission.submittable import Unaligned, Variation
 import os
 
 
@@ -19,7 +19,7 @@ def test_login_function(ctx, mock_server):
 
     ctx.obj['SETTINGS']['ega_submitter_password'] = 'test_password'
 
-    login(ctx)
+    assert login(ctx) is None
     assert not ctx.obj['SUBMISSION']['sessionToken'] == None
     assert ctx.obj['SUBMISSION']['sessionToken'] == "abcdefg"
 
@@ -29,7 +29,7 @@ def test_prepare_submission(ctx):
     subset = SubmissionSubsetData([2,3],[5,2],[4,34],[54,1],[88,7],[1,3],[44,11],[2,11])
     submission = Submission('a title', 'a description', subset)
 
-    prepare_submission(ctx,submission)
+    assert prepare_submission(ctx,submission) is None
     assert ctx.obj['SUBMISSION']['id'] == "12345"
 
 def test_api_url(ctx):
@@ -93,10 +93,15 @@ def test_submit_submission(ctx):
     os.chdir(os.path.join(current,'tests/data/workspace/submittable'))
     ctx.obj['SUBMISSION']['id'] = "12345"
     ctx.obj['SUBMISSION']['sessionToken'] = "sdfsd"
-    submit_submission(ctx, Unaligned('test_u').sample)
+    assert submit_submission(ctx, Unaligned('test_u').sample) is None
     #ctx.obj['SUBMISSION']['id'] = None
     os.chdir(current)
 
-def test_validate_submit_obj(ctx):
-    #_validate_submit_obj(ctx, )
-    pass
+# def test_validate_submit_obj(ctx):
+#     current = os.getcwd()
+#     os.chdir(os.path.join(os.getcwd(), 'tests/data/workspace/submittable/'))
+#     variation = Variation('test_v')
+#     variation.id = 555
+#     _validate_submit_obj(ctx, variation, 'analysis','submit')
+#     pass
+#     os.chdir(current)
