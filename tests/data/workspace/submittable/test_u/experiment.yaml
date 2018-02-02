@@ -13,7 +13,7 @@ experiment:
   sampleId: 
   studyId: 
 sample:
-  alias: ssample_y
+  alias: test_u
   caseOrControlId: 2
   genderId: 1 # 0=female, 1=male, 2=unknown
   organismPart: 
@@ -28,4 +28,4 @@ sample:
 run:
   runFileTypeId: 0 # 0=BAM, 1=Complete Genomics, 2=CRAM, 3=Fasta, 4=One Fastq file (Single), 5=Two Fastq files (Paired),6=PacBio HDF5,7=SFF,8=SRF
 files:
-  - fileName: unaligned.20170110/ssample_y/sequence_file.paired_end.sample_y.fq.gz.gpg
+  - fileName: submittable/test_u/sequence_file.paired_end.sample_y.fq.gz.gpg

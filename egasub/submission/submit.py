@@ -72,6 +72,7 @@ def perform_submission(ctx, submission_dirs, dry_run=True):
 
     if not submittables:
         ctx.obj['LOGGER'].warning('Nothing to submit.')
+        #raise Exception
     else:
         submitter = Submitter(ctx)
         for submittable in submittables:
@@ -108,7 +109,7 @@ def submit_dataset(ctx, dry_run=True):
     for sub_folder in os.listdir(ctx.obj['CURRENT_DIR']):
         sub_folder_path = os.path.join(ctx.obj['CURRENT_DIR'],sub_folder)
         if ctx.obj['CURRENT_DIR_TYPE'] == "unaligned":
-            file_log = os.path.join(sub_folder_path,'.status','run.log')
+            file_log = os.path.join(sub_folder_path,'.status','analysis.log')
             yaml_file = os.path.join(sub_folder_path,'experiment.yaml')
             is_run = True
         else:

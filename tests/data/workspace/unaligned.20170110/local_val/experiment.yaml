@@ -1,0 +1,31 @@
+experiment:
+  title:
+  instrumentModelId: 9000  # should change these IDs to values
+  librarySourceId: 7000s
+  librarySelectionId: 3000f
+  libraryStrategyId: 5000g
+  designDescription:
+  libraryName:
+  libraryConstructionProtocol: 'Library construction protocol'
+  libraryLayoutId: 1r # 0=paired, 1=single
+  pairedNominalLength: 420
+  pairedNominalSdev: 36
+  sampleId: 
+  studyId: 
+sample:
+  alias: ssample_y.g.g
+  caseOrControlId: 2
+  genderId: 1 # 0=female, 1=male, 2=unknown
+  organismPart: 
+  cellLine: 
+  region:
+  phenotype: Breast cancer
+  subjectId: "abc"
+  anonymizedName: 
+  biosampleId: 
+  sampleAge: 
+  sampleDetail: 
+run:
+  runFileTypeId: 7000 # 0=BAM, 1=Complete Genomics, 2=CRAM, 3=Fasta, 4=One Fastq file (Single), 5=Two Fastq files (Paired),6=PacBio HDF5,7=SFF,8=SRF
+files:
+  - fileName: unaligned.20170110/ssample_y.g.g/sequence_file.paired_end.sample_y.fq.gz.gpg

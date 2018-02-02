@@ -2,6 +2,7 @@ import pytest
 import os
 import shutil
 from egasub.submission.submittable import Unaligned
+from egasub.submission.submittable.base import Experiment
 from egasub.ega.entities import Sample, EgaEnums, \
                                 Experiment as EExperiment, \
                                 Run as ERun
@@ -10,6 +11,7 @@ def test_unaligned():
     initial_directory = os.getcwd()
     os.chdir('tests/data/workspace/unaligned.20170110/')
     unaligned = Unaligned('ssample_y')
+    localval = Unaligned('local_val')
     #unaligned2 = Unaligned('sample_x')
 
     assert isinstance(unaligned.sample, Sample)
@@ -62,7 +64,7 @@ def test_unaligned():
                         {
                             'unencryptedChecksum': '66819a95fed1aaf5445a0792c328e124',
                             'checksum': '62c5105b86de105f56aafde8588ffbe5',
-                            'fileName': 'unaligned.20170110/sample_y/sequence_file.paired_end.sample_y.fq.gz.gpg',
+                            'fileName': 'unaligned.20170110/ssample_y/sequence_file.paired_end.sample_y.fq.gz.gpg',
                             'checksumMethod': 'md5',
                             'fileId': None
                         }
@@ -80,6 +82,7 @@ def test_unaligned():
     assert cmp(unaligned.experiment.to_dict(),reference_experiment)  == 0
     assert cmp(unaligned.run.to_dict(),reference_run)  == 0
 
+    localval.local_validate(EgaEnums())
 
     # Check if the md5 checksum is missing in the file
     with pytest.raises(Exception):
@@ -104,28 +107,31 @@ def test_unaligned():
     with pytest.raises(Exception):
         unaligned = Unaligned('^*#')
 
+    cwd = os.getcwd()
+
     assert unaligned.status == 'NEW'
 
     assert unaligned.files == unaligned.run.files
 
     assert unaligned.local_validate(EgaEnums()) is None
-
+    #test bad object type
     unaligned.record_object_status('none', True, "test", "test")
-
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
-
+    #make sure no log was built
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
+    #make sure no record to restore
     unaligned.restore_latest_object_status('none')
-
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
-
+    #make sure no log was built
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
+    #proper run
     unaligned.record_object_status('sample', True, "test", "test")
-
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status/sample.log')) == True
-
+    #assert log file exists
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status/sample.log')) == True
+    #restore object from log
     unaligned.restore_latest_object_status('sample')
 
-    assert os.path.isfile(os.path.join(os.getcwd(), 'ssample_y/.status')) == False
+    assert os.path.isfile(os.path.join(cwd, 'ssample_y/.status')) == False
 
-    shutil.rmtree(os.path.join(os.getcwd(), 'ssample_y/.status'))
+    #delete log file path
+    shutil.rmtree(os.path.join(cwd, 'ssample_y/.status'))
 
     os.chdir(initial_directory)
