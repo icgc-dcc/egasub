@@ -3,7 +3,7 @@ import click
 from egasub.submission.init import init_workspace, truncate_string, make_dummy_dac, make_dummy_policy, initialize_dac_policy_study
 from egasub.ega.entities import Dac, Policy, EgaEnums
 import pytest
-from mock import patch
+#from mock import patch
 
 
 
