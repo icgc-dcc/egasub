@@ -172,7 +172,8 @@ def submit_dataset(ctx, dry_run=True):
                             Attribute('_submitted_using', 'egasub %s' % ver),
                             Attribute('_icgc_project_code', ctx.obj['SETTINGS']['icgc_project_code']),
                             Attribute('_icgc_project_url', 'https://dcc.icgc.org/projects/%s' % ctx.obj['SETTINGS']['icgc_project_code'])
-                        ]
+                        ],
+                        prompt('Enter a dataset description')
                     )
 
     submission = Submission('Empty title', None, SubmissionSubsetData.create_empty())
