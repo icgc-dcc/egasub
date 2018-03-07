@@ -4,7 +4,7 @@ import pytest
 import os
 import shutil
 from egasub.submission.submittable import Unaligned, Variation, Alignment
-from mock import patch, Mock
+#from mock import patch, Mock
 import ftplib
 
 def test_submittable_status():

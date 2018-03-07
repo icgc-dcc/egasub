@@ -1,4 +1,4 @@
-from mock import patch, mock_open
+#from mock import patch , mock_open
 from egasub.ega.services.ftp import file_exists
 
 def test_file_exists():
