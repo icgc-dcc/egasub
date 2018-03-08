@@ -136,11 +136,11 @@ def mock_server(ctx):
                     content_type="application/json")
 
     # for submitter DELETE
-    httpretty.register_uri(httpretty.DELETE, "https://ega.crg.eu/submitterportal/v1/samples/12345",
+    httpretty.register_uri(httpretty.DELETE, "https://ega.crg.eu:443/submitterportal/v1/samples/12345",
                            body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
                            content_type="application/json")
 
-    httpretty.register_uri(httpretty.PUT, "https://ega.crg.eu/submitterportal/v1/submissions/12345?action=SUBMIT",
+    httpretty.register_uri(httpretty.PUT, "https://ega.crg.eu:443/submitterportal/v1/submissions/12345?action=SUBMIT",
                     body='{"header" : {"code" : "200"}, "response" : {"result" : [{ "id":"12345", "alias": "fgfg", "status": "VALIDATED"}]}}',
                     content_type="application/json",
                     X_Token= "sdfsd")

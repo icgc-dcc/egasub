@@ -109,7 +109,7 @@ def submit_dataset(ctx, dry_run=True):
     for sub_folder in os.listdir(ctx.obj['CURRENT_DIR']):
         sub_folder_path = os.path.join(ctx.obj['CURRENT_DIR'],sub_folder)
         if ctx.obj['CURRENT_DIR_TYPE'] == "unaligned":
-            file_log = os.path.join(sub_folder_path,'.status','analysis.log')
+            file_log = os.path.join(sub_folder_path,'.status','run.log')
             yaml_file = os.path.join(sub_folder_path,'experiment.yaml')
             is_run = True
         else:
@@ -202,4 +202,3 @@ def submittable_status(_file):
         return last.strip().split('\t')
     except Exception:
         return None
-
